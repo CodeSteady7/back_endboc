@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const powerFactor = sequelize.define(
-		"powerFactor",
+		'powerFactor',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			valuePowerfactor: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			createdAt: {
 				type: DataTypes.DATE,
@@ -30,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "powerfactor",
+			tableName: 'powerfactor',
 		}
-	)
-	return powerFactor
-}
+	);
+	return powerFactor;
+};

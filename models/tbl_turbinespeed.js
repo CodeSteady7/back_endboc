@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const tbl_turbinspeed = sequelize.define(
-		"tbl_turbinspeed",
+		'tbl_turbinspeed',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			value_rpm: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,
@@ -30,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "tbl_turbinspeed",
+			tableName: 'tbl_turbinspeed',
 		}
-	)
-	return tbl_turbinspeed
-}
+	);
+	return tbl_turbinspeed;
+};

@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const Mvar = sequelize.define(
-		"Mvar",
+		'Mvar',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -11,11 +11,9 @@ module.exports = (sequelize, DataTypes) => {
 
 			valueMeter_mvar: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			valueRecord_mvar: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			createdAt: {
 				type: DataTypes.DATE,
@@ -35,8 +33,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "mvar",
+			tableName: 'mvar',
 		}
-	)
-	return Mvar
-}
+	);
+	return Mvar;
+};

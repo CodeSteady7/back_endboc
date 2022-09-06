@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const tbl_lubeoil_bearingtemperature = sequelize.define(
-		"tbl_lubeoil_bearingtemperature",
+		'tbl_lubeoil_bearingtemperature',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			value_lubeoil_bearingtemperature: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,
@@ -30,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "tbl_lubeoil_bearingtemperature",
+			tableName: 'tbl_lubeoil_bearingtemperature',
 		}
-	)
-	return tbl_lubeoil_bearingtemperature
-}
+	);
+	return tbl_lubeoil_bearingtemperature;
+};

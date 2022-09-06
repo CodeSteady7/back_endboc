@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const tbl_seismic_vibration = sequelize.define(
-		"tbl_seismic_vibration",
+		'tbl_seismic_vibration',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,15 +10,12 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			IBRG_casing: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			comp_Casing: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			gen_BrgCasing: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			createdAt: {
 				type: DataTypes.DATE,
@@ -38,8 +35,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "tbl_seismic_vibration",
+			tableName: 'tbl_seismic_vibration',
 		}
-	)
-	return tbl_seismic_vibration
-}
+	);
+	return tbl_seismic_vibration;
+};

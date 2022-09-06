@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const tbl_gasflow = sequelize.define(
-		"tbl_gasflow",
+		'tbl_gasflow',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			value_M37H: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,
@@ -30,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "tbl_gasflow",
+			tableName: 'tbl_gasflow',
 		}
-	)
-	return tbl_gasflow
-}
+	);
+	return tbl_gasflow;
+};

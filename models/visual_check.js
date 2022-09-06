@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const visual_check = sequelize.define(
-		"visual_check",
+		'visual_check',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,15 +10,12 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			l_o: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			temp: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			sound: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,
@@ -38,8 +35,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "visual_check",
+			tableName: 'visual_check',
 		}
-	)
-	return visual_check
-}
+	);
+	return visual_check;
+};

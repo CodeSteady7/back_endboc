@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const rect_trafo_liquid_temp = sequelize.define(
-		"rect_trafo_liquid_temp",
+		'rect_trafo_liquid_temp',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			value_tblRect_trafo_liquid_temp: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,
@@ -30,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "rect_trafo_liquid_temp",
+			tableName: 'rect_trafo_liquid_temp',
 		}
-	)
-	return rect_trafo_liquid_temp
-}
+	);
+	return rect_trafo_liquid_temp;
+};

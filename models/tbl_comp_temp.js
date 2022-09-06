@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const tbl_comp_temp = sequelize.define(
-		"tbl_comp_temp",
+		'tbl_comp_temp',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,11 +10,9 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			value_discharge_anulr: {
 				type: DataTypes.FLOAT,
-				// allowNull: false,
 			},
 			value_inletair: {
 				type: DataTypes.FLOAT,
-				// allowNull: false,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,
@@ -34,8 +32,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "tbl_comp_temp",
+			tableName: 'tbl_comp_temp',
 		}
-	)
-	return tbl_comp_temp
-}
+	);
+	return tbl_comp_temp;
+};

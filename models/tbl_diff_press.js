@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const tbl_diffpress = sequelize.define(
-		"tbl_diffpress",
+		'tbl_diffpress',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,19 +10,15 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			value_inlethouse_filter: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			value_lubeoil_filter: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			value_controloil_filter: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			value_hydoil_filter: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,
@@ -42,8 +38,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "tbl_diffpress",
+			tableName: 'tbl_diffpress',
 		}
-	)
-	return tbl_diffpress
-}
+	);
+	return tbl_diffpress;
+};

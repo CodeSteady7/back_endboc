@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const tbl_hvdoil_press = sequelize.define(
-		"tbl_hvdoil_press",
+		'tbl_hvdoil_press',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			value_hvdoil_press: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,
@@ -30,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "tbl_hvdoil_press",
+			tableName: 'tbl_hvdoil_press',
 		}
-	)
-	return tbl_hvdoil_press
-}
+	);
+	return tbl_hvdoil_press;
+};

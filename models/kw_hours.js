@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const kw_hours = sequelize.define(
-		"kw_hours",
+		'kw_hours',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			value_tblkw_hours: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,
@@ -30,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "kw_hours",
+			tableName: 'kw_hours',
 		}
-	)
-	return kw_hours
-}
+	);
+	return kw_hours;
+};

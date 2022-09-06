@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const tbl_second_wheelspace = sequelize.define(
-		"tbl_second_wheelspace",
+		'tbl_second_wheelspace',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,19 +10,15 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			value_second_fwd2: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			value_second_fwd3: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			value_second_aft1: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			value_second_aft2: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,
@@ -42,8 +38,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "tbl_second_wheelspace",
+			tableName: 'tbl_second_wheelspace',
 		}
-	)
-	return tbl_second_wheelspace
-}
+	);
+	return tbl_second_wheelspace;
+};

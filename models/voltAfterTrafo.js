@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const voltAfterTrafo = sequelize.define(
-		"voltAfterTrafo",
+		'voltAfterTrafo',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,15 +10,12 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			valueVolta1_2: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			valueVolta2_3: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			valueVolta3_1: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			createdAt: {
 				type: DataTypes.DATE,
@@ -38,8 +35,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "voltaftertrafo",
+			tableName: 'voltaftertrafo',
 		}
-	)
-	return voltAfterTrafo
-}
+	);
+	return voltAfterTrafo;
+};

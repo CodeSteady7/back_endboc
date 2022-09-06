@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const tbl_exhaust_temp = sequelize.define(
-		"tbl_exhaust_temp",
+		'tbl_exhaust_temp',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,19 +10,15 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			value_1_exhaustTemp: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			value_2_exhaustTemp: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			value_3_exhaustTemp: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			value_4_exhaustTemp: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,
@@ -42,8 +38,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "tbl_exhaust_temp",
+			tableName: 'tbl_exhaust_temp',
 		}
-	)
-	return tbl_exhaust_temp
-}
+	);
+	return tbl_exhaust_temp;
+};

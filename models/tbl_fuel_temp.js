@@ -1,16 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
 	const tbl_fuel_temp = sequelize.define(
-		"tbl_fuel_temp",
+		'tbl_fuel_temp',
 		{
 			id: {
 				type: DataTypes.INTEGER,
 				primaryKey: true,
 				autoIncrement: true,
-				allowNull: false,
 			},
 			value_fuel_temp: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,
@@ -30,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "tbl_fuel_temp",
+			tableName: 'tbl_fuel_temp',
 		}
-	)
-	return tbl_fuel_temp
-}
+	);
+	return tbl_fuel_temp;
+};

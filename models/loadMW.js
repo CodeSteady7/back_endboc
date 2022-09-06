@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const loadMW = sequelize.define(
-		"loadMW",
+		'loadMW',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -11,11 +11,9 @@ module.exports = (sequelize, DataTypes) => {
 
 			valueMeter_loadmw: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			valueRecord_loadmw: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			createdAt: {
 				type: DataTypes.DATE,
@@ -35,8 +33,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "loadmw",
+			tableName: 'loadmw',
 		}
-	)
-	return loadMW
-}
+	);
+	return loadMW;
+};

@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const tbl_cooling_water = sequelize.define(
-		"tbl_cooling_water",
+		'tbl_cooling_water',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			value_temperature: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,
@@ -30,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "tbl_cooling_water",
+			tableName: 'tbl_cooling_water',
 		}
-	)
-	return tbl_cooling_water
-}
+	);
+	return tbl_cooling_water;
+};

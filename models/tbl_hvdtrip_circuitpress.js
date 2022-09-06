@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const tbl_hvdtrip_circuitpress = sequelize.define(
-		"tbl_hvdtrip_circuitpress",
+		'tbl_hvdtrip_circuitpress',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			value_hvdtrip_circuitpress: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,
@@ -30,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "tbl_hvdtrip_circuitpress",
+			tableName: 'tbl_hvdtrip_circuitpress',
 		}
-	)
-	return tbl_hvdtrip_circuitpress
-}
+	);
+	return tbl_hvdtrip_circuitpress;
+};

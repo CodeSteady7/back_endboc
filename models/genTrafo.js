@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const genTrafo = sequelize.define(
-		"genTrafo",
+		'genTrafo',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,15 +10,12 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			liquid_level: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			liquid_temp: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			wind_temp: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,
@@ -38,8 +35,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "genTrafo",
+			tableName: 'genTrafo',
 		}
-	)
-	return genTrafo
-}
+	);
+	return genTrafo;
+};

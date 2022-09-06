@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const tbl_fuelgas_press = sequelize.define(
-		"tbl_fuelgas_press",
+		'tbl_fuelgas_press',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,19 +10,15 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			value_hpgas_before: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			value_beforestop_value: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			value_aftergas_stopvalue: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			value_aftergas_controlvalue: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,
@@ -42,8 +38,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "tbl_fuelgas_press",
+			tableName: 'tbl_fuelgas_press',
 		}
-	)
-	return tbl_fuelgas_press
-}
+	);
+	return tbl_fuelgas_press;
+};

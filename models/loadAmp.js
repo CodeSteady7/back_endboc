@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const loadAmp = sequelize.define(
-		"loadAmp",
+		'loadAmp',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,15 +10,12 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			value1Loadamp: {
 				type: DataTypes.INTEGER,
-				allowNull: false,
 			},
 			value2Loadamp: {
 				type: DataTypes.INTEGER,
-				allowNull: false,
 			},
 			value3Loadamp: {
 				type: DataTypes.INTEGER,
-				allowNull: false,
 			},
 			createdAt: {
 				type: DataTypes.DATE,
@@ -38,8 +35,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "loadamp",
+			tableName: 'loadamp',
 		}
-	)
-	return loadAmp
-}
+	);
+	return loadAmp;
+};

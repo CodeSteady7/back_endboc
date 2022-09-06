@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const tbl_compdisch_airpress = sequelize.define(
-		"tbl_compdisch_airpress",
+		'tbl_compdisch_airpress',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,11 +10,9 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			value_afterporous_filter: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			value_for96cd: {
 				type: DataTypes.FLOAT,
-				allowNull: false,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,
@@ -34,8 +32,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "tbl_compdisch_airpress",
+			tableName: 'tbl_compdisch_airpress',
 		}
-	)
-	return tbl_compdisch_airpress
-}
+	);
+	return tbl_compdisch_airpress;
+};
