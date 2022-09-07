@@ -12,6 +12,7 @@ const form8Ctrl = require('../controllers/form8Ctrl');
 const form9Ctrl = require('../controllers/form9Ctrl');
 
 // Endpoint qrcode
+// Endpoint qrcode
 router.get('/qrcode', form1Ctrl.qrCode);
 
 // Getview_jam
