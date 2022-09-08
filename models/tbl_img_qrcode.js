@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const tbl_img_qrcode = sequelize.define(
-		"tbl_img_qrcode",
+		'tbl_img_qrcode',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -10,11 +10,12 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			pathQrcode: {
 				type: DataTypes.STRING,
-				allowNull: false,
 			},
 			imgQrcode: {
 				type: DataTypes.STRING,
-				allowNull: false,
+			},
+			codeNFC: {
+				type: DataTypes.STRING,
 			},
 			createdAt: {
 				type: DataTypes.DATE,
@@ -26,8 +27,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "tbl_img_qrcode",
+			tableName: 'tbl_img_qrcode',
 		}
-	)
-	return tbl_img_qrcode
-}
+	);
+	return tbl_img_qrcode;
+};

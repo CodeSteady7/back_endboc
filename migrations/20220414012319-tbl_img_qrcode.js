@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
@@ -11,15 +11,12 @@ module.exports = {
 			},
 			pathQrcode: {
 				type: Sequelize.STRING,
-				allowNull: false,
 			},
 			imgQrcode: {
 				type: Sequelize.STRING,
-				allowNull: false,
 			},
-			kode_jam: {
+			codeNFC: {
 				type: Sequelize.STRING,
-				allowNull: false,
 			},
 			createdAt: {
 				type: Sequelize.DATE,
@@ -29,10 +26,10 @@ module.exports = {
 				type: Sequelize.DATE,
 				allowNull: false,
 			},
-		})
+		});
 	},
 
 	down: async (queryInterface, Sequelize) => {
-		await queryInterface.dropTable('tbl_img_qrcode')
+		await queryInterface.dropTable('tbl_img_qrcode');
 	},
-}
+};
