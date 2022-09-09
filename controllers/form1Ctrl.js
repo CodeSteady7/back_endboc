@@ -63,6 +63,7 @@ const form1Ctrl = {
 				valueRecord_loadmw,
 				valueMeter_mvar,
 				valueRecord_mvar,
+				nameForm,
 			} = req.body;
 
 			console.log('req.body', req.body);
@@ -118,6 +119,11 @@ const form1Ctrl = {
 				name_table: 'M VAR',
 			});
 
+			const postFormID = await tbl_form01.create({
+				nameForm: nameForm,
+				kode_jam: kode_jam,
+			});
+
 			let data = req.body;
 			res.status(200).json({
 				// data,
@@ -129,6 +135,7 @@ const form1Ctrl = {
 				powerfactor,
 				get_loadmw,
 				get_mvar,
+				postFormID,
 				msg: 'Success',
 			});
 		} catch (error) {
@@ -136,24 +143,19 @@ const form1Ctrl = {
 		}
 	},
 
-	postFormId: async (req, res) => {
-		try {
-			const { nameForm, kode_jam, id_form01 } = req.body;
-			let a = req.body;
-			const postFormID = await tbl_form01.create({
-				nameForm: nameForm,
-				kode_jam: kode_jam,
-			});
+	// postFormId: async (req, res) => {
+	// 	try {
+	// 		const { nameForm, kode_jam, id_form01 } = req.body;
+	// 		let a = req.body;
+	// 		const postFormID = await tbl_form01.create({
+	// 			nameForm: nameForm,
+	// 			kode_jam: kode_jam,
+	// 		});
 
-			res.status(200).json({ postFormID, msg: 'success' });
-		} catch (error) {
-			return res.status(500).json({ msg: error.message });
-		}
-	},
-
-	// postFormID: async (req, res) => {
-	// 	// const {id_form01} = req.body
-	// 	// tbl_form01
+	// 		res.status(200).json({ postFormID, msg: 'success' });
+	// 	} catch (error) {
+	// 		return res.status(500).json({ msg: error.message });
+	// 	}
 	// },
 
 	updateForm01: async (req, res) => {

@@ -1,6 +1,6 @@
-const Validator = require("fastest-validator")
-let db = require("../models")
-const { QueryTypes } = require("sequelize")
+const Validator = require('fastest-validator');
+let db = require('../models');
+const { QueryTypes } = require('sequelize');
 
 const {
 	kw_hours,
@@ -13,26 +13,26 @@ const {
 	visual_check,
 	tbl_form02,
 	tbl_jam,
-} = require("../models")
+} = require('../models');
 
-const v = new Validator()
+const v = new Validator();
 const form2Ctrl = {
 	form2Add: async (req, res) => {
 		try {
 			const schema = {
-				liquid_level: "string",
-				liquid_temp: "string",
-				wind_temp: "string",
-				kode_jam: "string",
-				value_tblkw_hours: "string",
-				value_tblRect_trafo_liquid_temp: "string",
-				l_o: "string",
-				temp: "string",
-				sound: "string",
+				liquid_level: 'string',
+				liquid_temp: 'string',
+				wind_temp: 'string',
+				kode_jam: 'string',
+				value_tblkw_hours: 'string',
+				value_tblRect_trafo_liquid_temp: 'string',
+				l_o: 'string',
+				temp: 'string',
+				sound: 'string',
 				// createdAt: "string",
-			}
+			};
 
-			const validate = v.validate(req.body, schema)
+			const validate = v.validate(req.body, schema);
 			const {
 				liquid_level,
 				liquid_temp,
@@ -42,17 +42,18 @@ const form2Ctrl = {
 				l_o,
 				temp,
 				sound,
+				nameForm,
 				kode_jam,
-			} = req.body
-			if (validate.length) return res.status(400).json(validate)
+			} = req.body;
+			if (validate.length) return res.status(400).json(validate);
 
 			const getgenTrafo = await genTrafo.create({
 				liquid_level: liquid_level,
 				liquid_temp: liquid_temp,
 				wind_temp: wind_temp,
 				kode_jam: kode_jam,
-				name_table: "Gen Trafo",
-			})
+				name_table: 'Gen Trafo',
+			});
 
 			const getvisual_check = await visual_check.create({
 				l_o: l_o,
@@ -60,117 +61,123 @@ const form2Ctrl = {
 				sound: sound,
 				kode_jam: kode_jam,
 				// // createdAt: createdAt,
-				name_table: "Visual Check",
-			})
+				name_table: 'Visual Check',
+			});
 
 			const getkw_hours = await kw_hours.create({
 				value_tblkw_hours: value_tblkw_hours,
 				kode_jam: kode_jam,
-				name_table: "KW Hours",
-			})
+				name_table: 'KW Hours',
+			});
 
 			const getTblReact_trafoliquid = await rect_trafo_liquid_temp.create({
 				value_tblRect_trafo_liquid_temp: value_tblRect_trafo_liquid_temp,
 				kode_jam: kode_jam,
-				name_table: "React Trafo Liquid Temperature",
-			})
+				name_table: 'React Trafo Liquid Temperature',
+			});
 
-			console.log(req.body)
-			let data = req.body
+			const postFormID = await tbl_form02.create({
+				nameForm: nameForm,
+				kode_jam: kode_jam,
+			});
+
+			console.log(req.body);
+			let data = req.body;
 
 			res.status(200).json({
 				getTblReact_trafoliquid,
 				getkw_hours,
 				getgenTrafo,
 				getvisual_check,
-				msg: "success",
-			})
+				postFormID,
+				msg: 'success',
+			});
 		} catch (error) {
-			return res.status(500).json({ msg: error.message })
+			return res.status(500).json({ msg: error.message });
 		}
 	},
 
-	postFormId02: async (req, res) => {
-		try {
-			const { nameForm, kode_jam } = req.body
-			let body = req.body
-			const postFormID = await tbl_form02.create({
-				nameForm: nameForm,
-				kode_jam: kode_jam,
-			})
+	// postFormId02: async (req, res) => {
+	// 	try {
+	// 		const { nameForm, kode_jam } = req.body;
+	// 		let body = req.body;
+	// 		const postFormID = await tbl_form02.create({
+	// 			nameForm: nameForm,
+	// 			kode_jam: kode_jam,
+	// 		});
 
-			res.status(200).json({ postFormID, msg: "success" })
-		} catch (error) {
-			return res.status(500).json({ msg: error.message })
-		}
-	},
+	// 		res.status(200).json({ postFormID, msg: 'success' });
+	// 	} catch (error) {
+	// 		return res.status(500).json({ msg: error.message });
+	// 	}
+	// },
 
 	getForm02params: async (req, res) => {
 		try {
-			const genTrafos = await genTrafo.findAll({ where: { id: req.params.id } })
+			const genTrafos = await genTrafo.findAll({ where: { id: req.params.id } });
 			const visual_checks = await visual_check.findAll({
 				where: { id: req.params.id },
-			})
+			});
 			const kw_hourss = await kw_hours.findAll({
 				where: { id: req.params.id },
-			})
+			});
 			const rect_trafo_liquid_temps = await rect_trafo_liquid_temp.findAll({
 				where: { id: req.params.id },
-			})
+			});
 
 			res.status(200).json({
 				genTrafos,
 				visual_checks,
 				kw_hourss,
 				rect_trafo_liquid_temps,
-				msg: "Success",
-			})
+				msg: 'Success',
+			});
 		} catch (error) {
-			return res.status(500).json({ msg: error.message })
+			return res.status(500).json({ msg: error.message });
 		}
 	},
 
 	getFormId2: async (req, res) => {
 		try {
 			const getID = await db.sequelize.query(
-				"SELECT tbl_form02.id_form, tbl_form02.nameForm, tbl_form02.kode_jam, tbl_form02.createdAt, tbl_form02.updatedAt FROM tbl_form02 INNER JOIN gentrafo ON tbl_form02.id_form = gentrafo.id INNER JOIN visual_check ON tbl_form02.id_form = visual_check.id INNER JOIN kw_hours ON tbl_form02.id_form = kw_hours.id INNER JOIN rect_trafo_liquid_temp ON tbl_form02.id_form = rect_trafo_liquid_temp.id",
+				'SELECT tbl_form02.id_form, tbl_form02.nameForm, tbl_form02.kode_jam, tbl_form02.createdAt, tbl_form02.updatedAt FROM tbl_form02 INNER JOIN gentrafo ON tbl_form02.id_form = gentrafo.id INNER JOIN visual_check ON tbl_form02.id_form = visual_check.id INNER JOIN kw_hours ON tbl_form02.id_form = kw_hours.id INNER JOIN rect_trafo_liquid_temp ON tbl_form02.id_form = rect_trafo_liquid_temp.id',
 				{ type: QueryTypes.SELECT }
-			)
+			);
 
-			res.status(200).json({ getID, msg: "success" })
+			res.status(200).json({ getID, msg: 'success' });
 		} catch (error) {
-			return res.status(500).json({ msg: error.message })
+			return res.status(500).json({ msg: error.message });
 		}
 	},
 
 	getForm02: async (req, res) => {
 		try {
 			const gentrafo = await db.sequelize.query(
-				"SELECT gentrafo.*, tbl_jam.urutan_jam, tbl_jam.nilai_jam FROM gentrafo LEFT JOIN tbl_jam ON gentrafo.kode_jam = tbl_jam.nilai_jam",
+				'SELECT gentrafo.*, tbl_jam.urutan_jam, tbl_jam.nilai_jam FROM gentrafo LEFT JOIN tbl_jam ON gentrafo.kode_jam = tbl_jam.nilai_jam',
 				{ type: QueryTypes.SELECT }
-			)
+			);
 			const kw_hours = await db.sequelize.query(
-				"SELECT kw_hours.*, tbl_jam.urutan_jam, tbl_jam.nilai_jam FROM kw_hours LEFT JOIN tbl_jam ON kw_hours.kode_jam = tbl_jam.nilai_jam",
+				'SELECT kw_hours.*, tbl_jam.urutan_jam, tbl_jam.nilai_jam FROM kw_hours LEFT JOIN tbl_jam ON kw_hours.kode_jam = tbl_jam.nilai_jam',
 				{ type: QueryTypes.SELECT }
-			)
+			);
 			const rect_trafo_liquid_temp = await db.sequelize.query(
-				"SELECT rect_trafo_liquid_temp.*, tbl_jam.urutan_jam, tbl_jam.nilai_jam FROM rect_trafo_liquid_temp LEFT JOIN tbl_jam ON rect_trafo_liquid_temp.kode_jam = tbl_jam.nilai_jam",
+				'SELECT rect_trafo_liquid_temp.*, tbl_jam.urutan_jam, tbl_jam.nilai_jam FROM rect_trafo_liquid_temp LEFT JOIN tbl_jam ON rect_trafo_liquid_temp.kode_jam = tbl_jam.nilai_jam',
 				{ type: QueryTypes.SELECT }
-			)
+			);
 			const visual_check = await db.sequelize.query(
-				"SELECT visual_check.*, tbl_jam.nilai_jam, tbl_jam.urutan_jam FROM visual_check LEFT JOIN tbl_jam ON visual_check.kode_jam = tbl_jam.nilai_jam",
+				'SELECT visual_check.*, tbl_jam.nilai_jam, tbl_jam.urutan_jam FROM visual_check LEFT JOIN tbl_jam ON visual_check.kode_jam = tbl_jam.nilai_jam',
 				{ type: QueryTypes.SELECT }
-			)
+			);
 
 			res.status(200).json({
 				gentrafo,
 				kw_hours,
 				rect_trafo_liquid_temp,
 				visual_check,
-				msg: "success",
-			})
+				msg: 'success',
+			});
 		} catch (error) {
-			return res.status(500).json({ msg: error.message })
+			return res.status(500).json({ msg: error.message });
 		}
 	},
 
@@ -186,11 +193,11 @@ const form2Ctrl = {
 				temp,
 				sound,
 				kode_jam,
-			} = req.body
+			} = req.body;
 
 			let selector = {
 				where: { id: req.params.id },
-			}
+			};
 
 			const getgenTrafo = await genTrafo.update(
 				{
@@ -198,10 +205,10 @@ const form2Ctrl = {
 					liquid_temp: liquid_temp,
 					wind_temp: wind_temp,
 					kode_jam: kode_jam,
-					name_table: "Gen Trafo",
+					name_table: 'Gen Trafo',
 				},
 				selector
-			)
+			);
 
 			const getvisual_check = await visual_check.update(
 				{
@@ -209,44 +216,44 @@ const form2Ctrl = {
 					temp: temp,
 					sound: sound,
 					kode_jam: kode_jam,
-					name_table: "Visual Check",
+					name_table: 'Visual Check',
 				},
 				selector
-			)
+			);
 
 			const getkw_hours = await kw_hours.update(
 				{
 					value_tblkw_hours: value_tblkw_hours,
 					kode_jam: kode_jam,
-					name_table: "KW Hours",
+					name_table: 'KW Hours',
 				},
 				selector
-			)
+			);
 
 			const getTblReact_trafoliquid = await rect_trafo_liquid_temp.update(
 				{
 					value_tblRect_trafo_liquid_temp: value_tblRect_trafo_liquid_temp,
 					kode_jam: kode_jam,
-					name_table: "React Trafo Liquid Temperature",
+					name_table: 'React Trafo Liquid Temperature',
 				},
 				selector
-			)
+			);
 
 			res.status(200).json({
 				getTblReact_trafoliquid,
 				getkw_hours,
 				getgenTrafo,
 				getvisual_check,
-				msg: "success",
-			})
+				msg: 'success',
+			});
 		} catch (error) {
-			return res.status(500).json({ msg: error.message })
+			return res.status(500).json({ msg: error.message });
 		}
 	},
 	// =======================================================================
-}
+};
 
-module.exports = form2Ctrl
+module.exports = form2Ctrl;
 
 // getgenTrafo: async (req, res) => {
 // 	try {
