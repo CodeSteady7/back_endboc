@@ -14,18 +14,20 @@ const v = new Validator();
 const form4Ctrl = {
 	form4add: async (req, res) => {
 		try {
-			const schema = {
-				value_hvdoil_press: 'string',
-				value_hvdtrip_circuitpress: 'string',
-				value_lubeoil_bearingtemperature: 'string',
-				value_main_oil_pump: 'string',
-				value_fwdfilter: 'string',
-				value_turbinebearing_header: 'string',
-				value_gen_bearingheader: 'string',
-				value_lubeoil_tanktemp: 'string',
-				kode_jam: 'string',
-			};
-			const validate = v.validate(req.body, schema);
+			// const schema = {
+			// 	value_hvdoil_press: 'string',
+			// 	value_hvdtrip_circuitpress: 'string',
+			// 	value_lubeoil_bearingtemperature: 'string',
+			// 	value_main_oil_pump: 'string',
+			// 	value_fwdfilter: 'string',
+			// 	value_turbinebearing_header: 'string',
+			// 	value_gen_bearingheader: 'string',
+			// 	value_lubeoil_tanktemp: 'string',
+			// 	kode_jam: 'string',
+			// };
+			// const validate = v.validate(req.body, schema);
+			// if (validate.length) return res.status(400).json(validate);
+
 			const {
 				value_hvdoil_press,
 				value_hvdtrip_circuitpress,
@@ -39,7 +41,6 @@ const form4Ctrl = {
 				kode_jam,
 			} = req.body;
 
-			if (validate.length) return res.status(400).json(validate);
 			let data = req.body;
 
 			const gettbl_lubeoil_bearingtemperature = await tbl_lubeoil_bearingtemperature.create({

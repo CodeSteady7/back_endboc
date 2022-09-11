@@ -19,20 +19,22 @@ const v = new Validator();
 const form2Ctrl = {
 	form2Add: async (req, res) => {
 		try {
-			const schema = {
-				liquid_level: 'string',
-				liquid_temp: 'string',
-				wind_temp: 'string',
-				kode_jam: 'string',
-				value_tblkw_hours: 'string',
-				value_tblRect_trafo_liquid_temp: 'string',
-				l_o: 'string',
-				temp: 'string',
-				sound: 'string',
-				// createdAt: "string",
-			};
+			// const schema = {
+			// 	liquid_level: 'string',
+			// 	liquid_temp: 'string',
+			// 	wind_temp: 'string',
+			// 	kode_jam: 'string',
+			// 	value_tblkw_hours: 'string',
+			// 	value_tblRect_trafo_liquid_temp: 'string',
+			// 	l_o: 'string',
+			// 	temp: 'string',
+			// 	sound: 'string',
+			// 	// createdAt: "string",
+			// };
 
-			const validate = v.validate(req.body, schema);
+			// if (validate.length) return res.status(400).json(validate);
+			// const validate = v.validate(req.body, schema);
+
 			const {
 				liquid_level,
 				liquid_temp,
@@ -45,7 +47,6 @@ const form2Ctrl = {
 				nameForm,
 				kode_jam,
 			} = req.body;
-			if (validate.length) return res.status(400).json(validate);
 
 			const getgenTrafo = await genTrafo.create({
 				liquid_level: liquid_level,

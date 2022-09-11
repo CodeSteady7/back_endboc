@@ -15,24 +15,25 @@ const v = new Validator();
 const form3Ctrl = {
 	form3Add: async (req, res) => {
 		try {
-			const schema = {
-				value_vce: 'string',
-				value_rpm: 'string',
-				value_dsp: 'string',
-				value_M37H: 'string',
-				value_oilcooler_inlet: 'string',
-				value_oilcooler_outlet: 'string',
-				value_journaland_thrustdrain: 'string',
-				value_no2_bearingdrain: 'string',
-				value_gearpinion_no1: 'string',
-				value_gearwheel_no2: 'string',
-				value_gearwheel_no3: 'string',
-				value_gearwheel_no4: 'string',
-				value_gearwheel_no5: 'string',
-				value_generator_drain: 'string',
-				kode_jam: 'string',
-			};
-			const validate = v.validate(req.body, schema);
+			// const schema = {
+			// 	value_vce: 'string',
+			// 	value_rpm: 'string',
+			// 	value_dsp: 'string',
+			// 	value_M37H: 'string',
+			// 	value_oilcooler_inlet: 'string',
+			// 	value_oilcooler_outlet: 'string',
+			// 	value_journaland_thrustdrain: 'string',
+			// 	value_no2_bearingdrain: 'string',
+			// 	value_gearpinion_no1: 'string',
+			// 	value_gearwheel_no2: 'string',
+			// 	value_gearwheel_no3: 'string',
+			// 	value_gearwheel_no4: 'string',
+			// 	value_gearwheel_no5: 'string',
+			// 	value_generator_drain: 'string',
+			// 	kode_jam: 'string',
+			// };
+			// const validate = v.validate(req.body, schema);
+			// if (validate.length) return res.status(400).json(validate);
 
 			const {
 				value_vce,
@@ -53,7 +54,6 @@ const form3Ctrl = {
 				kode_jam,
 			} = req.body;
 
-			if (validate.length) return res.status(400).json(validate);
 			let data = req.body;
 
 			const gettbl_dsp = await tbl_dsp.create({

@@ -13,30 +13,31 @@ const v = new Validator();
 const form6Ctrl = {
 	form6add: async (req, res) => {
 		try {
-			const schema = {
-				value_1_exhaustTemp: 'string',
-				value_2_exhaustTemp: 'string',
-				value_3_exhaustTemp: 'string',
-				value_4_exhaustTemp: 'string',
-				value_5_exhaustFluegas: 'string',
-				value_6_exhaustFluegas: 'string',
-				value_7_exhaustFluegas: 'string',
-				value_8_exhaustFluegas: 'string',
-				value_9_exhaustFluegas: 'string',
-				value_10_exhaustFluegas: 'string',
-				value_11_exhaustFluegas: 'string',
-				value_12_exhaustFluegas: 'string',
-				value_AVETX_exhaustFluegas: 'string',
-				value_T1_exhaustFluegas: 'string',
-				value_T2_exhaustFluegas: 'string',
-				value_T3_exhaustFluegas: 'string',
-				value_T4_exhaustFluegas: 'string',
-				value_T5_exhaustFluegas: 'string',
-				value_T6_exhaustFluegas: 'string',
-				value_inletair: 'string',
-				kode_jam: 'string',
-			};
-			const validate = v.validate(req.body, schema);
+			// const schema = {
+			// 	value_1_exhaustTemp: 'string',
+			// 	value_2_exhaustTemp: 'string',
+			// 	value_3_exhaustTemp: 'string',
+			// 	value_4_exhaustTemp: 'string',
+			// 	value_5_exhaustFluegas: 'string',
+			// 	value_6_exhaustFluegas: 'string',
+			// 	value_7_exhaustFluegas: 'string',
+			// 	value_8_exhaustFluegas: 'string',
+			// 	value_9_exhaustFluegas: 'string',
+			// 	value_10_exhaustFluegas: 'string',
+			// 	value_11_exhaustFluegas: 'string',
+			// 	value_12_exhaustFluegas: 'string',
+			// 	value_AVETX_exhaustFluegas: 'string',
+			// 	value_T1_exhaustFluegas: 'string',
+			// 	value_T2_exhaustFluegas: 'string',
+			// 	value_T3_exhaustFluegas: 'string',
+			// 	value_T4_exhaustFluegas: 'string',
+			// 	value_T5_exhaustFluegas: 'string',
+			// 	value_T6_exhaustFluegas: 'string',
+			// 	value_inletair: 'string',
+			// 	kode_jam: 'string',
+			// };
+			// const validate = v.validate(req.body, schema);
+			// if (validate.length) return res.status(400).json(validate);
 
 			const {
 				value_1_exhaustTemp,
@@ -62,8 +63,7 @@ const form6Ctrl = {
 				nameForm,
 				kode_jam,
 			} = req.body;
-			if (validate.length) return res.status(400).json(validate);
-			let data = req.body;
+			// let data = req.body;
 
 			const gettbl_exhaust_flue_gas_temperature = await tbl_exhaust_flue_gas_temperature.create({
 				value_5_exhaustFluegas: value_5_exhaustFluegas,

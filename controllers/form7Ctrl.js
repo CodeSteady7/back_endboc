@@ -13,21 +13,21 @@ const v = new Validator();
 const form7Ctrl = {
 	form7Add: async (req, res) => {
 		try {
-			const schema = {
-				value_hpgas_before: 'string',
-				value_beforestop_value: 'string',
-				value_aftergas_stopvalue: 'string',
-				value_aftergas_controlvalue: 'string',
-				value_afterporous_filter: 'string',
-				value_for96cd: 'string',
-				value_inlethouse_filter: 'string',
-				value_lubeoil_filter: 'string',
-				value_controloil_filter: 'string',
-				value_hydoil_filter: 'string',
-				value_temperature: 'string',
-				kode_jam: 'string',
-			};
-			const validate = v.validate(req.body, schema);
+			// const schema = {
+			// 	value_hpgas_before: 'string',
+			// 	value_beforestop_value: 'string',
+			// 	value_aftergas_stopvalue: 'string',
+			// 	value_aftergas_controlvalue: 'string',
+			// 	value_afterporous_filter: 'string',
+			// 	value_for96cd: 'string',
+			// 	value_inlethouse_filter: 'string',
+			// 	value_lubeoil_filter: 'string',
+			// 	value_controloil_filter: 'string',
+			// 	value_hydoil_filter: 'string',
+			// 	value_temperature: 'string',
+			// 	kode_jam: 'string',
+			// };
+			// const validate = v.validate(req.body, schema);
 
 			const {
 				value_hpgas_before,
@@ -44,7 +44,7 @@ const form7Ctrl = {
 				nameForm,
 				kode_jam,
 			} = req.body;
-			if (validate.length) return res.status(400).json(validate);
+			// if (validate.length) return res.status(400).json(validate);
 
 			const gettbl_fuelgas_press = await tbl_fuelgas_press.create({
 				value_hpgas_before: value_hpgas_before,

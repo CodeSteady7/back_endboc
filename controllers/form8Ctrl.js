@@ -8,26 +8,26 @@ const v = new Validator();
 const form8Ctrl = {
 	form8Add: async (req, res) => {
 		try {
-			const schema = {
-				thrustBrg_1_A: 'string',
-				thrustBrg_1_B: 'string',
-				No1Brg_rv101_V: 'string',
-				No1Brg_rv101_H: 'string',
-				No2Brg_rv102_V: 'string',
-				No2Brg_rv102_H: 'string',
-				GenBrg_rv103_V: 'string',
-				GenBrg_rv103_H: 'string',
-				GearturbineBrg_rv104_V: 'string',
-				GearturbineBrg_rv104_H: 'string',
-				GearpinionBrg_rv105_V: 'string',
-				GearpinionBrg_rv105_H: 'string',
-				GearwheelturbineBrg_rv106_V: 'string',
-				GearwheelturbineBrg_rv106_H: 'string',
-				GearwheelGen_Brg_rv107_V: 'string',
-				GearwheelGen_Brg_rv107_H: 'string',
-				kode_jam: 'string',
-			};
-			const validate = v.validate(req.body, schema);
+			// const schema = {
+			// 	thrustBrg_1_A: 'string',
+			// 	thrustBrg_1_B: 'string',
+			// 	No1Brg_rv101_V: 'string',
+			// 	No1Brg_rv101_H: 'string',
+			// 	No2Brg_rv102_V: 'string',
+			// 	No2Brg_rv102_H: 'string',
+			// 	GenBrg_rv103_V: 'string',
+			// 	GenBrg_rv103_H: 'string',
+			// 	GearturbineBrg_rv104_V: 'string',
+			// 	GearturbineBrg_rv104_H: 'string',
+			// 	GearpinionBrg_rv105_V: 'string',
+			// 	GearpinionBrg_rv105_H: 'string',
+			// 	GearwheelturbineBrg_rv106_V: 'string',
+			// 	GearwheelturbineBrg_rv106_H: 'string',
+			// 	GearwheelGen_Brg_rv107_V: 'string',
+			// 	GearwheelGen_Brg_rv107_H: 'string',
+			// 	kode_jam: 'string',
+			// };
+			// const validate = v.validate(req.body, schema);
 
 			const {
 				thrustBrg_1_A,
@@ -50,8 +50,8 @@ const form8Ctrl = {
 				kode_jam,
 			} = req.body;
 
-			let data = req.body;
-			if (validate.length) return res.status(400).json(validate);
+			// let data = req.body;
+			// if (validate.length) return res.status(400).json(validate);
 
 			const gettbl_bently_vibr_unfilter = await tbl_bently_vibr_unfilter.create({
 				thrustBrg_1_A: thrustBrg_1_A,

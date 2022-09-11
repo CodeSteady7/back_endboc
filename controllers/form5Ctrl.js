@@ -14,21 +14,21 @@ const v = new Validator();
 const form5Ctrl = {
 	form5add: async (req, res) => {
 		try {
-			const schema = {
-				value_first_fwd2: 'string',
-				value_first_fwd3: 'string',
-				value_first_afd2: 'string',
-				value_first_afd3: 'string',
-				value_second_fwd2: 'string',
-				value_second_fwd3: 'string',
-				value_second_aft1: 'string',
-				value_second_aft2: 'string',
-				value_discharge_anulr: 'string',
-				// value_inletair: 'string',
-				value_fuel_temp: 'string',
-				kode_jam: 'string',
-			};
-			const validate = v.validate(req.body, schema);
+			// const schema = {
+			// 	value_first_fwd2: 'string',
+			// 	value_first_fwd3: 'string',
+			// 	value_first_afd2: 'string',
+			// 	value_first_afd3: 'string',
+			// 	value_second_fwd2: 'string',
+			// 	value_second_fwd3: 'string',
+			// 	value_second_aft1: 'string',
+			// 	value_second_aft2: 'string',
+			// 	value_discharge_anulr: 'string',
+			// 	// value_inletair: 'string',
+			// 	value_fuel_temp: 'string',
+			// 	kode_jam: 'string',
+			// };
+			// const validate = v.validate(req.body, schema);
 			const {
 				value_first_fwd2,
 				value_first_fwd3,
@@ -44,8 +44,8 @@ const form5Ctrl = {
 				kode_jam,
 			} = req.body;
 
-			if (validate.length) return res.status(400).json(validate);
-			let data = req.body;
+			// if (validate.length) return res.status(400).json(validate);
+			// let data = req.body;
 
 			const gettbl_firststage_wheelspace = await tbl_firststage_wheelspace.create({
 				value_first_fwd2: value_first_fwd2,

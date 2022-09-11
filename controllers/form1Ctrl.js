@@ -29,23 +29,23 @@ const form1Ctrl = {
 
 	form1Add: async (req, res) => {
 		try {
-			const schemaField = {
-				valueVField: 'string',
-				valueAField: 'string',
-				kode_jam: 'string',
-				valueV_BT: 'string',
-				valueVolta1_2: 'string',
-				valueVolta2_3: 'string',
-				valueVolta3_1: 'string',
-				value1Loadamp: 'string',
-				value2Loadamp: 'string',
-				value3Loadamp: 'string',
-				valuePowerfactor: 'string',
-				valueMeter_loadmw: 'string',
-				valueRecord_loadmw: 'string',
-				valueMeter_mvar: 'string',
-				valueRecord_mvar: 'string',
-			};
+			// const schemaField = {
+			// 	valueVField: 'string',
+			// 	valueAField: 'string',
+			// 	kode_jam: 'string',
+			// 	valueV_BT: 'string',
+			// 	valueVolta1_2: 'string',
+			// 	valueVolta2_3: 'string',
+			// 	valueVolta3_1: 'string',
+			// 	value1Loadamp: 'string',
+			// 	value2Loadamp: 'string',
+			// 	value3Loadamp: 'string',
+			// 	valuePowerfactor: 'string',
+			// 	valueMeter_loadmw: 'string',
+			// 	valueRecord_loadmw: 'string',
+			// 	valueMeter_mvar: 'string',
+			// 	valueRecord_mvar: 'string',
+			// };
 
 			const {
 				valueVField,
@@ -67,11 +67,11 @@ const form1Ctrl = {
 			} = req.body;
 
 			console.log('req.body', req.body);
-			const validate = v.validate(req.body, schemaField);
+			// const validate = v.validate(req.body, schemaField);
 
-			if (validate.length) {
-				return res.status(400).json(validate);
-			}
+			// if (validate.length) {
+			// return res.status(400).json(validate);
+			// }
 			const field = await Field.create({
 				valueVField: valueVField,
 				valueAField: valueAField,

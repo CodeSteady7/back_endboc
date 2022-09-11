@@ -8,18 +8,18 @@ const v = new Validator();
 const form9Ctrl = {
 	form9Add: async (req, res) => {
 		try {
-			const schema = {
-				IBRG_casing: 'string',
-				comp_Casing: 'string',
-				gen_BrgCasing: 'string',
-				kode_jam: 'string',
-			};
-			const validate = v.validate(req.body, schema);
+			// const schema = {
+			// 	IBRG_casing: 'string',
+			// 	comp_Casing: 'string',
+			// 	gen_BrgCasing: 'string',
+			// 	kode_jam: 'string',
+			// };
+			// const validate = v.validate(req.body, schema);
 
 			const { IBRG_casing, comp_Casing, gen_BrgCasing, kode_jam, nameForm } = req.body;
 
-			let data = req.body;
-			if (validate.length) return res.status(400).json(validate);
+			// let data = req.body;
+			// if (validate.length) return res.status(400).json(validate);
 
 			const gettbl_seismic_vibration = await tbl_seismic_vibration.create({
 				IBRG_casing: IBRG_casing,
