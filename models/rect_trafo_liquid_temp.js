@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			value_tblRect_trafo_liquid_temp: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,

@@ -9,13 +9,13 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			value1Loadamp: {
-				type: DataTypes.INTEGER,
+				type: DataTypes.STRING,
 			},
 			value2Loadamp: {
-				type: DataTypes.INTEGER,
+				type: DataTypes.STRING,
 			},
 			value3Loadamp: {
-				type: DataTypes.INTEGER,
+				type: DataTypes.STRING,
 			},
 			createdAt: {
 				type: DataTypes.DATE,

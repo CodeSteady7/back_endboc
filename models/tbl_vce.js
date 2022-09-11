@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			value_vce: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,

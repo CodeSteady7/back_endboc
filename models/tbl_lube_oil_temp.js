@@ -9,34 +9,34 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			value_oilcooler_inlet: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_oilcooler_outlet: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_journaland_thrustdrain: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_no2_bearingdrain: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_gearpinion_no1: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_gearwheel_no2: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_gearwheel_no3: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_gearwheel_no4: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_gearwheel_no5: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_generator_drain: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,

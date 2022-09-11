@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
 				autoIncrement: true,
 			},
 			value_fuel_temp: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,

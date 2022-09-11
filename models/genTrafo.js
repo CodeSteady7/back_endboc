@@ -9,13 +9,13 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			liquid_level: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			liquid_temp: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			wind_temp: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,

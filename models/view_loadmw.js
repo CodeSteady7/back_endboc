@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
 			},
 
 			valueMeter_loadmw: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 				allowNull: false,
 			},
 			valueRecord_loadmw: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 				allowNull: false,
 			},
 			kode_jam: {

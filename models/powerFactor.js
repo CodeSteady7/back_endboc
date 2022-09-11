@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			valuePowerfactor: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			createdAt: {
 				type: DataTypes.DATE,

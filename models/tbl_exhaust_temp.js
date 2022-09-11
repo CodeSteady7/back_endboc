@@ -9,16 +9,16 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			value_1_exhaustTemp: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_2_exhaustTemp: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_3_exhaustTemp: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_4_exhaustTemp: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,

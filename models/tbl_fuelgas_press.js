@@ -9,16 +9,16 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			value_hpgas_before: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_beforestop_value: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_aftergas_stopvalue: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_aftergas_controlvalue: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,

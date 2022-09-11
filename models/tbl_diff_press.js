@@ -9,16 +9,16 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			value_inlethouse_filter: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_lubeoil_filter: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_controloil_filter: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_hydoil_filter: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,

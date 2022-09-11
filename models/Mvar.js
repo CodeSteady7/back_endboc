@@ -10,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
 			},
 
 			valueMeter_mvar: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			valueRecord_mvar: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			createdAt: {
 				type: DataTypes.DATE,

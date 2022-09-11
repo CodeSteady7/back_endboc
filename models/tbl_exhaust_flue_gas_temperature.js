@@ -9,49 +9,49 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			value_5_exhaustFluegas: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_6_exhaustFluegas: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_7_exhaustFluegas: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_8_exhaustFluegas: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_9_exhaustFluegas: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_10_exhaustFluegas: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_11_exhaustFluegas: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_12_exhaustFluegas: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_AVETX_exhaustFluegas: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_T1_exhaustFluegas: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_T2_exhaustFluegas: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_T3_exhaustFluegas: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_T4_exhaustFluegas: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_T5_exhaustFluegas: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_T6_exhaustFluegas: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,

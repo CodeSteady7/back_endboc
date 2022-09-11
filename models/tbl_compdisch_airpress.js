@@ -9,10 +9,10 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			value_afterporous_filter: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_for96cd: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,

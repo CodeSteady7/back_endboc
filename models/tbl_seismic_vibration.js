@@ -9,13 +9,13 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			IBRG_casing: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			comp_Casing: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			gen_BrgCasing: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			createdAt: {
 				type: DataTypes.DATE,

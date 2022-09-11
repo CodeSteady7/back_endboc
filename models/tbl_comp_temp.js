@@ -9,10 +9,10 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			value_discharge_anulr: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			value_inletair: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			kode_jam: {
 				type: DataTypes.STRING,

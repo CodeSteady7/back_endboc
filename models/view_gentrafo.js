@@ -9,15 +9,15 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			liquid_level: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 				allowNull: false,
 			},
 			liquid_temp: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 				allowNull: false,
 			},
 			wind_temp: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 				allowNull: false,
 			},
 			kode_jam: {

@@ -9,10 +9,10 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			valueVField: {
-				type: DataTypes.INTEGER,
+				type: DataTypes.STRING,
 			},
 			valueAField: {
-				type: DataTypes.INTEGER,
+				type: DataTypes.STRING,
 			},
 			createdAt: {
 				type: DataTypes.DATE,

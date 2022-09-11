@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			valueV_BT: {
-				type: DataTypes.INTEGER,
+				type: DataTypes.STRING,
 				allowNull: false,
 			},
 			kode_jam: {

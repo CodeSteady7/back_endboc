@@ -9,11 +9,11 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			valueMeter_mvar: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 				allowNull: false,
 			},
 			valueRecord_mvar: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 				allowNull: false,
 			},
 			kode_jam: {

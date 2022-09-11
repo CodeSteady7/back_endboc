@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const tbl_bently_vibr_unfilter = sequelize.define(
-		"tbl_bently_vibr_unfilter",
+		'tbl_bently_vibr_unfilter',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -74,8 +74,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: "tbl_bently_vibr_unfilter",
+			tableName: 'tbl_bently_vibr_unfilter',
 		}
-	)
-	return tbl_bently_vibr_unfilter
-}
+	);
+	return tbl_bently_vibr_unfilter;
+};

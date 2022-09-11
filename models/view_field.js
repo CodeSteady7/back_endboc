@@ -9,11 +9,11 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			valueVField: {
-				type: DataTypes.INTEGER,
+				type: DataTypes.STRING,
 				allowNull: false,
 			},
 			valueAField: {
-				type: DataTypes.INTEGER,
+				type: DataTypes.STRING,
 				allowNull: false,
 			},
 			createdAt: {

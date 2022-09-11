@@ -9,15 +9,15 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			l_o: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 				allowNull: false,
 			},
 			temp: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 				allowNull: false,
 			},
 			sound: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 				allowNull: false,
 			},
 			kode_jam: {

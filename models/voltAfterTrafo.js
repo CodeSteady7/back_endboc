@@ -9,13 +9,13 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			valueVolta1_2: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			valueVolta2_3: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			valueVolta3_1: {
-				type: DataTypes.FLOAT,
+				type: DataTypes.STRING,
 			},
 			createdAt: {
 				type: DataTypes.DATE,

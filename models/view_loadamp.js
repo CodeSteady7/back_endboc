@@ -9,11 +9,11 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			value1Loadamp: {
-				type: DataTypes.INTEGER,
+				type: DataTypes.STRING,
 				allowNull: false,
 			},
 			value2Loadamp: {
-				type: DataTypes.INTEGER,
+				type: DataTypes.STRING,
 				allowNull: false,
 			},
 			value3Loadamp: {
