@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: 'genTrafo',
+			tableName: 'gentrafo',
 		}
 	);
 	return genTrafo;
