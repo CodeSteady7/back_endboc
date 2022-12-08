@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/style-doc.css" />
+  </head>
+  <body>
+    <div style="width: 1230px">
+      <!--  -->
+      <% if( checkDate && page == 1) { %>
+      <!--  -->
+      <%- include ./sheet1.ejs %>
+      <!--  -->
+      <%}%>
+
+      <!--  -->
+
+      <% if(checkDate && page == 2) { %>
+      <!--  -->
+      <%- include ./sheet2.ejs %>
+      <!--  -->
+      <%}%>
+
+      <!--  -->
+      <% if(checkDate && page == 3) { %>
+      <!--  -->
+      <%- include ./sheet3.ejs %>
+      <!--  -->
+      <%}%>
+
+      <!--  -->
+      <% if(checkDate && page == 4) { %>
+      <!--  -->
+      <%- include ./sheet4.ejs %>
+      <!--  -->
+      <%}%>
+
+      <!--  -->
+      <% if(checkDate && page == 5) { %>
+      <!--  -->
+      <%- include ./sheet5.ejs %>
+      <!--  -->
+      <%}%>
+    </div>
+  </body>
+</html>

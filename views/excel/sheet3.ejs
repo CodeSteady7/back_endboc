@@ -1,0 +1,331 @@
+<div style="width: 1230px">
+  <div
+    style="
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      border: solid;
+      border-width: 1px;
+      align-items: center;
+      position: relative;
+    "
+  >
+    <div>
+      <img src="/images/ic-pertaarungas.png" style="width: 100px" />
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center">
+      <span style="padding: 3px 0px; font-weight: 700; font-size: 20px"
+        >POWER GENERATION SYSTEM UNIT - 90</span
+      >
+      <span style="padding: 3px 0px; font-weight: 700; font-size: 20px"
+        >PG-9001</span
+      >
+      <span style="padding: 8px 0px 0px 0px; font-weight: 600; font-size: 17px">
+        Date : <%= data.queryDate %>
+      </span>
+    </div>
+    <div>
+      <span>PAG-408</span>
+    </div>
+    <div style="position: absolute; right: 9px; bottom: 0px">
+      <h5>SHEET : 3 OF 5</h5>
+    </div>
+  </div>
+  <div>
+    <table class="styleBorder" style="width: 1230px">
+      <thead>
+        <tr>
+          <th rowspan="3" style="padding: 50px 10px">Hours</th>
+
+          <th colspan="9" style="padding: 10px 0px">
+            FIRST STAGE WHEEL SPACE TEMPERATURE °C
+          </th>
+          <th colspan="9">SECOND STAGE WHEEL SPACE TEMPERATURE °C</th>
+          <th colspan="4">COMP TEMP ( °C )</th>
+          <th colspan="4">EXHAUST TEMP ( °C )</th>
+          <th rowspan="3">REMARKS</th>
+        </tr>
+        <tr>
+          <th class="verticalTable">FWD 2</th>
+          <th class="verticalTable">FWD 3</th>
+          <th class="verticalTable">DIFF FWD 2-3</th>
+          <th class="verticalTable">AVE FWD 2-3</th>
+          <th class="verticalTable">AFD 2</th>
+          <th class="verticalTable">AFD 3</th>
+          <th class="verticalTable">DIFF AFD 2-3</th>
+          <th class="verticalTable">AVE AFT 2-3</th>
+          <th class="verticalTable">DIFF FWD - AFD</th>
+          <!--  -->
+          <th class="verticalTable">FWD 2</th>
+          <th class="verticalTable">FWD 3</th>
+          <th class="verticalTable">DIFF FWD 2-3</th>
+          <th class="verticalTable">AVE FWD 2-3</th>
+          <th class="verticalTable">AFT 1</th>
+          <th class="verticalTable">AFT 2</th>
+          <th class="verticalTable">DIFF AFT 1-2</th>
+          <th class="verticalTable">AVE AFT 1-2</th>
+          <th class="verticalTable">DIFF FWD - AFT</th>
+          <!--  -->
+          <th class="verticalTable">DISCHARGE ANUL L</th>
+          <th class="verticalTable">DISCHARGE ANUL R</th>
+          <th class="verticalTable">DIFF L - R</th>
+          <th class="verticalTable">INLET AIR</th>
+          <!--  -->
+          <th>1</th>
+          <th>2</th>
+          <th>3</th>
+          <th>4</th>
+        </tr>
+        <tr>
+          <th class="paddingTable">427</th>
+          <th class="paddingTable">427</th>
+          <th class="paddingTable">83</th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable">427</th>
+          <th class="paddingTable">427</th>
+          <th class="paddingTable">83</th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable">83</th>
+          <th class="paddingTable">427</th>
+          <th class="paddingTable">427</th>
+          <th class="paddingTable">83</th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable">427</th>
+          <th class="paddingTable">427</th>
+          <th class="paddingTable">83</th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable">83</th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable">11</th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+        </tr>
+      </thead>
+      <tbody style="text-align: center">
+        <!--  -->
+        <% for(let i = 0; i < data.temp.length; i++) { %>
+
+        <tr>
+          <td><%= data.temp[i].clock %></td>
+          <td><%= data.temp[i].value.get_tbl_firststage_wheelspace[0]?.value_first_fwd2 %></td>
+          <td><%= data.temp[i].value.get_tbl_firststage_wheelspace[0]?.value_first_fwd3 %></td>
+          <td>?</td>
+          <td>?</td>
+          <td><%= data.temp[i].value.get_tbl_firststage_wheelspace[0]?.value_first_afd2 %></td>
+          <td><%= data.temp[i].value.get_tbl_firststage_wheelspace[0]?.value_first_afd3 %></td>
+          <td>?</td>
+          <td>?</td>
+          <td>?</td>
+          <td><%= data.temp[i].value.get_tbl_second_wheelspace[0]?.value_second_fwd2 %></td>
+          <td><%= data.temp[i].value.get_tbl_second_wheelspace[0]?.value_second_fwd3 %></td>
+          <td>?</td>
+          <td>?</td>
+          <td><%= data.temp[i].value.get_tbl_second_wheelspace[0]?.value_second_aft1 %></td>
+          <td><%= data.temp[i].value.get_tbl_second_wheelspace[0]?.value_second_aft2 %></td>
+          <td>?</td>
+          <td>?</td>
+          <td>?</td>
+          <td>?</td>
+          <td><%= data.temp[i].value.get_tbl_comp_temp[0]?.value_discharge_anulr %></td>
+          <td>?</td>
+          <td><%= data.temp[i].value.get_tbl_comp_temp[0]?.value_inletair %></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_temp[0]?.value_1_exhaustTemp %></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_temp[0]?.value_2_exhaustTemp %></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_temp[0]?.value_3_exhaustTemp %></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_temp[0]?.value_4_exhaustTemp %></td>
+        </tr>
+        <%}%>
+      </tbody>
+    </table>
+    <table class="styleBorder" style="width: 1230px">
+      <thead>
+        <tr>
+          <th rowspan="3" style="padding: 50px 10px">Hours</th>
+          <th colspan="25" style="padding: 10px 0px">
+            EXHAUST FUEL GAS TEMPERATURE °C
+          </th>
+        </tr>
+        <tr>
+          <th>5</th>
+          <th>6</th>
+          <th>7</th>
+          <th>8</th>
+          <th>9</th>
+          <th>10</th>
+          <th>11</th>
+          <th>12</th>
+          <th>AT </br> 1-12</th>
+          <th>Ave </br>TX</th>
+          <th>T1</th>
+          <th>T2</th>
+          <th>T3</th>
+          <th>T4</th>
+          <th>T5</th>
+          <th>T6</th>
+          <th class="verticalTable">OTA</th>
+          <th class="verticalTable">OTB</th>
+          <th class="verticalTable">OTC</th>
+          <th class="verticalTable">T-Ave</th>
+          <th class="verticalTable">T-TX</th>
+          <th class="verticalTable">T-OTA</th>
+          <th class="verticalTable">T-OTB</th>
+          <th class="verticalTable">T-OTC</th>
+          <th>FUEL </br> TEMP( °C )</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable">28</th>
+          <th class="paddingTable">28</th>
+          <th class="paddingTable">28</th>
+          <th class="paddingTable">28</th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+        </tr>
+      </thead>
+      <tbody style="text-align: center">
+        <!--  -->
+        <% for(let i = 0; i < data.temp.length; i++) { %>
+
+        <tr>
+          <td><%= data.temp[i].clock %></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_flue_gas_temperature[0]?.value_5_exhaustFluegas %></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_flue_gas_temperature[0]?.value_6_exhaustFluegas %></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_flue_gas_temperature[0]?.value_7_exhaustFluegas %></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_flue_gas_temperature[0]?.value_8_exhaustFluegas %></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_flue_gas_temperature[0]?.value_9_exhaustFluegas %></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_flue_gas_temperature[0]?.value_10_exhaustFluegas %></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_flue_gas_temperature[0]?.value_11_exhaustFluegas %></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_flue_gas_temperature[0]?.value_12_exhaustFluegas %></td>
+          <td></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_flue_gas_temperature[0]?.value_AVETX_exhaustFluegas %></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_flue_gas_temperature[0]?.value_T1_exhaustFluegas %></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_flue_gas_temperature[0]?.value_T2_exhaustFluegas %></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_flue_gas_temperature[0]?.value_T3_exhaustFluegas %></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_flue_gas_temperature[0]?.value_T4_exhaustFluegas %></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_flue_gas_temperature[0]?.value_T5_exhaustFluegas %></td>
+          <td><%= data.temp[i].value.get_tbl_exhaust_flue_gas_temperature[0]?.value_T6_exhaustFluegas %></td>
+          <td>?</td>
+          <td>?</td>
+          <td>?</td>
+          <td>?</td>
+          <td>?</td>
+          <td>?</td>
+          <td>?</td>
+          <td>?</td>
+          <td><%= data.temp[i].value.get_tbl_fuel_temp[0]?.value_fuel_temp %></td>
+          <td></td>
+        </tr>
+        <%}%>
+      </tbody>
+    </table>
+  </div>
+  <div style="border: solid; border-width: 1px; display: flex">
+    <div class="signature" style="position: relative">
+      <span style="position: absolute; top: 10px; left: 10px"
+        >00:00 ~ 08:00</span
+      >
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          padding: 0px 5px;
+          position: absolute;
+          bottom: 0px;
+        "
+      >
+        <h4 style="padding-right: 10px">Opr.: ____________</h4>
+        <h4>Supv./Panelman : ____________</h4>
+      </div>
+    </div>
+    <div class="signature" style="position: relative">
+      <span style="position: absolute; top: 10px; left: 10px"
+        >08:00 ~ 16:00</span
+      >
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          padding: 0px 5px;
+          position: absolute;
+          bottom: 0px;
+        "
+      >
+        <h4 style="padding-right: 10px">Opr.: ____________</h4>
+        <h4>Supv./Panelman : ____________</h4>
+      </div>
+    </div>
+    <div class="signature" style="position: relative">
+      <span style="position: absolute; top: 10px; left: 10px"
+        >16:00 ~ 00:00</span
+      >
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          padding: 0px 5px;
+          position: absolute;
+          bottom: 0px;
+        "
+      >
+        <h4 style="padding-right: 10px">Opr.: ____________</h4>
+        <h4>Supv./Panelman : ____________</h4>
+      </div>
+    </div>
+  </div>
+  <div style="display: flex; justify-content: space-between; margin: 40px 10px 20px 0px">
+    <a
+      type="button"
+      href="/data/getonedata?queryDate=<%= data.queryDate %>&page=2"
+      style="
+        font-size: 15px;
+        background-color: #e35a67;
+        padding: 10px 20px;
+        border: none;
+        font-weight: 700;
+        color: white;
+        text-decoration: none;
+        border-radius: 7px;
+      "
+      >Back</a
+    >
+    <a
+      type="button"
+      href="/data/getonedata?queryDate=<%= data.queryDate %>&page=4"
+      style="
+        font-size: 15px;
+        background-color: #e35a67;
+        padding: 10px 20px;
+        border: none;
+        font-weight: 700;
+        color: white;
+        text-decoration: none;
+        border-radius: 7px;
+      "
+      >Next Page</a
+    >
+  </div>
+</div>

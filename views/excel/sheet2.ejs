@@ -1,0 +1,238 @@
+<div style="width: 1230px">
+  <div
+    style="
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      border: solid;
+      border-width: 1px;
+      align-items: center;
+      position: relative;
+    "
+  >
+    <div>
+      <img src="/images/ic-pertaarungas.png" style="width: 100px" />
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center">
+      <span style="padding: 3px 0px; font-weight: 700; font-size: 20px"
+        >POWER GENERATION SYSTEM UNIT - 90</span
+      >
+      <span style="padding: 3px 0px; font-weight: 700; font-size: 20px"
+        >PG-9001</span
+      >
+      <span style="padding: 8px 0px 0px 0px; font-weight: 600; font-size: 17px">
+        Date : <%= data.queryDate %>
+      </span>
+    </div>
+    <div>
+      <span>PAG-408</span>
+    </div>
+    <div style="position: absolute; right: 9px; bottom: 0px">
+      <h5>SHEET : 2 OF 5</h5>
+    </div>
+  </div>
+  <div>
+    <table class="styleBorder" style="width: 1230px">
+      <thead>
+        <tr>
+          <th rowspan="3" style="padding: 50px 10px">Hours</th>
+          <th rowspan="2" class="verticalTable">TURBINE SPEED</th>
+          <th rowspan="2" class="verticalTable">VCE</th>
+          <th rowspan="2" class="verticalTable">DSP</th>
+          <th rowspan="2" class="verticalTable">GAS FLOW</th>
+          <th rowspan="2" class="verticalTable">LOAD</th>
+          <th rowspan="2" class="verticalTable">FIRED TIME</th>
+          <th rowspan="2" class="verticalTable">PEAK FIRED TIME</th>
+          <th rowspan="2" class="verticalTable">FIRED STARTS</th>
+          <th rowspan="2" class="verticalTable">MANUAL INITIATED START</th>
+          <th rowspan="2" class="verticalTable">FAST START</th>
+          <th colspan="10">TEMPERATURE ( °C )</th>
+          <th rowspan="2" class="verticalTable">LUBE OIL TANK TEMP</th>
+          <th rowspan="2" class="verticalTable">LUBE OIL BEARING TEMP</th>
+          <th rowspan="2" class="verticalTable">DIESEL ENGINE COOLING </br> WATER TEMP</th>
+          <th colspan="7">LUBE OIL PRESS</th>
+          <th rowspan="2" class="verticalTable">HYD. TRIP CIRCUIT  PRESS</th>
+          <th rowspan="2" class="verticalTable">HYD. OIL PRESS  (FOR 63HQ)</th>
+        </tr>
+        <tr>
+          <th class="verticalTable">OIL COOLER INLET</th>
+          <th class="verticalTable">OIL COOLER OUTLET</th>
+          <th class="verticalTable">JOURNAL AND THRUST DRAIN</th>
+          <th class="verticalTable">BEARING DRAIN NO.2</th>
+          <th class="verticalTable">GEAR PINION NO. 1</th>
+          <th class="verticalTable">GEAR WHEEL NO. 2</th>
+          <th class="verticalTable">GEAR WHEEL NO. 3</th>
+          <th class="verticalTable">GEAR WHEEL NO. 4</th>
+          <th class="verticalTable">GEAR WHEEL NO. 5</th>
+          <th class="verticalTable">GENERATOR DRAIN</th>
+          <th class="verticalTable">MAIN OIL PUMP </br> DISCH</th>
+          <th class="verticalTable">AUX OIL PUMP </br> DISCH</th>
+          <th class="verticalTable">ENGINE OIL </br> PUMP DISCH</th>
+          <th class="verticalTable">FWD FILTER</th>
+          <th class="verticalTable">TURBINE BEARING </br> HEADER</th>
+          <th class="verticalTable">GEN. BEARING HEADER</th>
+          <th class="verticalTable">( FOR 63 HR )</th>
+        </tr>
+        <tr>
+          <th class="paddingTable">RPM</th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable">V</th>
+          <th class="paddingTable">M³/Hr</th>
+          <th class="paddingTable">MW</th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+          <th class="paddingTable"></th>
+        </tr>
+      </thead>
+      <tbody style="text-align: center">
+        <!--  -->
+        <% for(let i = 0; i < data.temp.length; i++) { %>
+
+        <tr>
+        <td><%= data.temp[i].clock %></td>
+          <td><%= data.temp[i].value.get_tbl_turbinspeed[0]?.value_rpm %></td>
+          <td><%= data.temp[i].value.get_tbl_vce[0]?.value_vce %></td>
+          <td><%= data.temp[i].value.get_tbl_dsp[0]?.value_dsp %></td>
+          <td><%= data.temp[i].value.get_tbl_gasflow[0]?.value_M37H %></td>
+          <td>?</td>
+          <td>?</td>
+          <td>?</td>
+          <td>?</td>
+          <td>?</td>
+          <td>?</td>
+          <td><%= data.temp[i].value.get_tbl_lube_oil_temp[0]?.value_oilcooler_inlet %></td>
+          <td><%= data.temp[i].value.get_tbl_lube_oil_temp[0]?.value_oilcooler_outlet %></td>
+          <td><%= data.temp[i].value.get_tbl_lube_oil_temp[0]?.value_journaland_thrustdrain %></td>
+          <td><%= data.temp[i].value.get_tbl_lube_oil_temp[0]?.value_no2_bearingdrain %></td>
+          <td><%= data.temp[i].value.get_tbl_lube_oil_temp[0]?.value_gearpinion_no1 %></td>
+          <td><%= data.temp[i].value.get_tbl_lube_oil_temp[0]?.value_gearwheel_no2 %></td>
+          <td><%= data.temp[i].value.get_tbl_lube_oil_temp[0]?.value_gearwheel_no3 %></td>
+          <td><%= data.temp[i].value.get_tbl_lube_oil_temp[0]?.value_gearwheel_no4 %></td>
+          <td><%= data.temp[i].value.get_tbl_lube_oil_temp[0]?.value_gearwheel_no5 %></td>
+          <td><%= data.temp[i].value.get_tbl_lube_oil_temp[0]?.value_generator_drain %></td>
+          <td><%= data.temp[i].value.get_tbl_lubeoil_tanktemp[0]?.value_lubeoil_tanktemp %></td>
+          <td><%= data.temp[i].value.get_tbl_lubeoil_bearingtemperature[0]?.value_lubeoil_bearingtemperature %></td>
+          <td>?</td>
+          <td><%= data.temp[i].value.get_tbl_lubeoil_press[0]?.value_main_oil_pump %></td>
+          <td>?</td>
+          <td>?</td>
+          <td><%= data.temp[i].value.get_tbl_lubeoil_press[0]?.value_fwdfilter %></td>
+          <td><%= data.temp[i].value.get_tbl_lubeoil_press[0]?.value_turbinebearing_header %></td>
+          <td><%= data.temp[i].value.get_tbl_lubeoil_press[0]?.value_gen_bearingheader %></td>
+          <td>?</td>
+          <td><%= data.temp[i].value.get_tbl_hvdtrip_circuitpress[0]?.value_hvdtrip_circuitpress %></td>
+          <td><%= data.temp[i].value.get_tbl_hvdoil_press[0]?.value_hvdoil_press %></td>
+        <%}%>
+      </tbody>
+    </table>
+  </div>
+  <div style="border: solid; border-width: 1px; display: flex">
+    <div class="signature" style="position: relative">
+      <span style="position: absolute; top: 10px; left: 10px"
+        >00:00 ~ 08:00</span
+      >
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          padding: 0px 5px;
+          position: absolute;
+          bottom: 0px;
+        "
+      >
+        <h4 style="padding-right: 10px">Opr.: ____________</h4>
+        <h4>Supv./Panelman : ____________</h4>
+      </div>
+    </div>
+    <div class="signature" style="position: relative">
+      <span style="position: absolute; top: 10px; left: 10px"
+        >08:00 ~ 16:00</span
+      >
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          padding: 0px 5px;
+          position: absolute;
+          bottom: 0px;
+        "
+      >
+        <h4 style="padding-right: 10px">Opr.: ____________</h4>
+        <h4>Supv./Panelman : ____________</h4>
+      </div>
+    </div>
+    <div class="signature" style="position: relative">
+      <span style="position: absolute; top: 10px; left: 10px"
+        >16:00 ~ 00:00</span
+      >
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          padding: 0px 5px;
+          position: absolute;
+          bottom: 0px;
+        "
+      >
+        <h4 style="padding-right: 10px">Opr.: ____________</h4>
+        <h4>Supv./Panelman : ____________</h4>
+      </div>
+    </div>
+  </div>
+  <div style="display: flex; justify-content: space-between; margin: 40px 10px 0px 0px">
+    <a
+      type="button"
+      href="/data/getonedata?queryDate=<%= data.queryDate %>&page=1"
+      style="
+        font-size: 15px;
+        background-color: #e35a67;
+        padding: 10px 20px;
+        border: none;
+        font-weight: 700;
+        color: white;
+        text-decoration: none;
+        border-radius: 7px;
+      "
+      >Back </a
+    >
+    <a
+      type="button"
+      href="/data/getonedata?queryDate=<%= data.queryDate %>&page=3"
+      style="
+        font-size: 15px;
+        background-color: #e35a67;
+        padding: 10px 20px;
+        border: none;
+        font-weight: 700;
+        color: white;
+        text-decoration: none;
+        border-radius: 7px;
+      "
+      >Next Page</a
+    >
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<%- include ../partials/header.ejs %>
+<!--  -->
+<%- include ../partials/navbar.ejs %>
+<!--  -->
+<%- include ../partials/sidebar.ejs %>
+
+<div class="content-wrapper pt-4">
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">FORM BALOG</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Tanggal</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for(let i = 0; i < data.length; i++) {%>
+                  <tr>
+                    <td><%= i + 1 %></td>
+                    <td><%= data[i].date %></td>
+                    <td class="d-flex" style="justify-content: center">
+                      <a
+                        href="/data/getonedata?queryDate=<%=data[i].date%>&page=1"
+                        class="btn btn-secondary buttons-html5"
+                        type="button"
+                        target="_blank"
+                      >
+                        <span>DOC</span>
+                      </a>
+                    </td>
+                  </tr>
+                  <%}%>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+</div>
+<!--  -->
+<%- include ../partials/footer.ejs %>
+<!--  -->
+<%- include ../partials/js.ejs %>
