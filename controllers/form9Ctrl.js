@@ -8,19 +8,26 @@ const v = new Validator();
 const form9Ctrl = {
   form9Add: async (req, res) => {
     try {
-      // const schema = {
-      // 	IBRG_casing: 'string',
-      // 	comp_Casing: 'string',
-      // 	gen_BrgCasing: 'string',
-      // 	kode_jam: 'string',
-      // };
-      // const validate = v.validate(req.body, schema);
+      const {
+        IBRG_casing,
+        comp_Casing,
+        gen_BrgCasing,
+        kode_jam,
+        nameForm,
+        createdAt,
+      } = req.body;
 
-      const { IBRG_casing, comp_Casing, gen_BrgCasing, kode_jam, nameForm } =
-        req.body;
+      let checkDate = await tbl_historyDate.findOne({
+        where: { createdAt: createdAt },
+      });
 
-      // let data = req.body;
-      // if (validate.length) return res.status(400).json(validate);
+      let check = checkDate
+        ? ""
+        : await tbl_historyDate.create({
+            createdAt,
+            updatedAt,
+            user_id: 1,
+          });
 
       const gettbl_seismic_vibration = await tbl_seismic_vibration.create({
         IBRG_casing: IBRG_casing,
@@ -37,7 +44,7 @@ const form9Ctrl = {
 
       res
         .status(200)
-        .json({ gettbl_seismic_vibration, postFormID, msg: "success" });
+        .json({ check, gettbl_seismic_vibration, postFormID, msg: "success" });
     } catch (error) {
       return res.status(500).json({ msg: error.message });
     }

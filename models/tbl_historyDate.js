@@ -1,4 +1,4 @@
-module.export = (sequelize, DataType) => {
+module.exports = (sequelize, DataTypes) => {
   const tbl_historyDate = sequelize.define(
     "tbl_historyDate",
     {
@@ -25,7 +25,7 @@ module.export = (sequelize, DataType) => {
         },
       },
       user_id: {
-        type: DataTypes.INTENGER,
+        type: DataTypes.INTEGER,
       },
     },
     {

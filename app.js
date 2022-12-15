@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const cors = require("cors");
+const methodOverride = require("method-override");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
@@ -13,7 +14,8 @@ const fromRouter = require("./routes/form");
 //
 const dashboardRouter = require("./app/dashboard/router");
 const dataRouter = require("./app/data/router");
-const formRouter = require("./app/form/router");
+const reportRouter = require("./app/report/router");
+const chartsRouter = require("./app/charts/router");
 
 const app = express();
 
@@ -46,6 +48,7 @@ app.use(function (req, res, next) {
   );
   next();
 });
+app.use(methodOverride("_method"));
 app.use(logger("dev"));
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
@@ -56,6 +59,7 @@ app.use(cookieParser());
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "app")));
 app.use(express.static(path.join(__dirname, "src")));
 app.use(
   "/adminlte",
@@ -70,7 +74,8 @@ app.use("/form", fromRouter);
 // view engine
 app.use("/dashboard", dashboardRouter);
 app.use("/data", dataRouter);
-app.use("/form", formRouter);
+app.use("/report", reportRouter);
+app.use("/charts", chartsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

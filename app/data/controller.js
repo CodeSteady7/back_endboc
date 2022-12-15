@@ -33,96 +33,230 @@ const {
   tbl_bently_vibr_unfilter,
   tbl_seismic_vibration,
   tbl_jam,
+  tbl_historyDate,
 } = require("../../models");
 const { QueryTypes, Sequelize } = require("sequelize");
 const db = require("../../models");
 let { temp_ } = require("./control_getonedata");
 module.exports = {
   getAllData: async (req, res) => {
-    let CreatedData = ["2022-09-23", "2022-12-03", "2022-09-25"];
+    try {
+      let CreatedData = ["2022-09-23", "2022-12-03", "2022-09-25"];
+      let history = await tbl_historyDate.findAll();
 
-    let temp = [];
-    for (let i = 0; i < CreatedData.length; i++) {
-      // console.log("=>", CreatedData[i]);
-      let value = [
-        await Field.findAll({
-          where: {
-            createdAt: `${CreatedData[i]}`,
-          },
-        }),
-        await loadAmp.findAll({
-          where: {
-            createdAt: `${CreatedData[i]}`,
-          },
-        }),
-        await loadMW.findAll({
-          where: {
-            createdAt: `${CreatedData[i]}`,
-          },
-        }),
-        await Mvar.findAll({
-          where: {
-            createdAt: `${CreatedData[i]}`,
-          },
-        }),
-        await powerFactor.findAll({
-          where: {
-            createdAt: `${CreatedData[i]}`,
-          },
-        }),
-        await voltAfterTrafo.findAll({
-          where: {
-            createdAt: `${CreatedData[i]}`,
-          },
-        }),
-        await voltBeforeTrafo.findAll({
-          where: {
-            createdAt: `${CreatedData[i]}`,
-          },
-        }),
-        await kw_hours.findAll({
-          where: {
-            createdAt: `${CreatedData[i]}`,
-          },
-        }),
-        await genTrafo.findAll({
-          where: {
-            createdAt: `${CreatedData[i]}`,
-          },
-        }),
-      ];
-      // console.log("data => ", value);
-      temp.push({ value, date: CreatedData[i] });
+      // set_history.push(history__);
+      let temp = [];
+
+      for (let i = 0; i < history.length; i++) {
+        console.log("=>", history[i].createdAt);
+        let value = [
+          await Field.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await loadAmp.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await loadMW.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await Mvar.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await powerFactor.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await voltAfterTrafo.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await voltBeforeTrafo.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await kw_hours.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await genTrafo.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await rect_trafo_liquid_temp.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await visual_check.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+
+          //
+          await tbl_dsp.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_gasflow.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_lube_oil_temp.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_turbinspeed.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_vce.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+
+          await tbl_lubeoil_bearingtemperature.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_hvdoil_press.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_hvdtrip_circuitpress.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_lubeoil_press.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_lubeoil_tanktemp.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_firststage_wheelspace.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_second_wheelspace.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_comp_temp.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_fuel_temp.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+
+          await tbl_exhaust_flue_gas_temperature.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_exhaust_temp.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_fuelgas_press.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_compdisch_airpress.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_diffpress.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_cooling_water.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_bently_vibr_unfilter.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+          await tbl_seismic_vibration.findAll({
+            where: {
+              createdAt: `${history[i].createdAt}`,
+            },
+          }),
+        ];
+        // console.log("data => ", value);
+        temp.push({ value, date: history[i].createdAt });
+      }
+
+      // console.log("object", temp);
+      res.render("admin/table.ejs", {
+        data: temp,
+      });
+      // res.status(200).json({ data: temp });
+    } catch (err) {
+      console.log(err);
     }
-    res.render("admin/table.ejs", {
-      data: temp,
-    });
-    // res.status(200).json({ data: temp });
-    // console.log("data");
-    // let data = [
-    //   await Field.findAll(),
-    //   await loadAmp.findAll(),
-    //   await loadMW.findAll(),
-    //   await Mvar.findAll(),
-    //   await powerFactor.findAll(),
-    //   await voltAfterTrafo.findAll(),
-    //   await voltBeforeTrafo.findAll(),
-    //   await kw_hours.findAll(),
-    //   await genTrafo.findAll(),
-    // ];
   },
-
   getOneData: async (req, res) => {
     try {
       const { queryDate } = req.query;
+      console.log("queryDate", queryDate);
       const page = req.query.page * 1 || 5;
       let createdAtdata = ["2022-09-23", "2022-12-03", "2022-09-25"];
+
+      let set_history = [];
+      let history__ = await tbl_historyDate.findAll({
+        attributes: ["createdAt"],
+      });
+
+      history__.map((item) => {
+        set_history.push(item.createdAt);
+      });
+
+      console.log("object", set_history);
+
       let checkDate;
       let temp;
-      checkDate = createdAtdata.includes(`${queryDate}`);
+      checkDate = set_history.includes(`${queryDate}`);
       temp = await temp_(queryDate);
       let indexArray = [2, 8, 12];
-      // let temp___ = indexArray.map((i) => temp[i].clock);
+      // let temp___ = indexArray.map((i) => => {} temp[i].clock);
       // console.log("sample", temp___);
       // console.log("temp_ ===> ", temp);
 
@@ -130,6 +264,7 @@ module.exports = {
         checkDate,
         indexArray,
         page,
+        set_history,
         data: { queryDate, temp },
       });
 
@@ -145,7 +280,6 @@ module.exports = {
       console.log("err", err);
     }
   },
-
   paginatePage: async (req, res) => {
     try {
       const page = req.query.page * 1 || 5;

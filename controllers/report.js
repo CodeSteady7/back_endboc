@@ -25,17 +25,17 @@ const reportCtrl = {
   img: async (req, res) => {
     {
       try {
-        const { judul, lokasi, deskripsi } = req.body;
+        const { judul, lokasi, deskripsi, status } = req.body;
         const tempPath = req.file;
-        console.log(
-          "🚀 ~ file: report.js ~ line 49 ~ img: ~ req.files",
-          req.files
-        );
+        // console.log(
+        // "🚀 ~ file: report.js ~ line 49 ~ img: ~ req.files",
+        // req.files
+        // );
         const tempBody = req.body;
-        console.log(
-          "🚀 ~ file: report.js ~ line 50 ~ img: ~ req.body",
-          req.body
-        );
+        // console.log(
+        //   "🚀 ~ file: report.js ~ line 50 ~ img: ~ req.body",
+        //   req.body
+        // );
         // const targetPath = path.join(__dirname, "./uploads/image.png")
 
         if (req.file) {
@@ -47,9 +47,9 @@ const reportCtrl = {
           // let filename = req.file.filename
           // let filename = `${req.file.filename}` + "." + originaExt
           let filename = `${req.file.filename}`;
-          console.log("originaExt", originaExt);
-          console.log("filename", filename);
-          console.log("req.file", req.file);
+          // console.log("originaExt", originaExt);
+          // console.log("filename", filename);
+          // console.log("req.file", req.file);
           let target_path = path.resolve(
             config.rootPath,
             `public/data/uploads/${filename}.jpeg`
@@ -66,12 +66,13 @@ const reportCtrl = {
                 lokasi: lokasi,
                 deskripsi: deskripsi,
                 imageBase64: `${filename}.jpeg`,
+                status: "01",
               });
 
-              console.log("req.body => ", req.body);
-              console.log("req.files => ", tempPath);
-              console.log(" => ", tempBody.judul);
-              console.log("/// ", data);
+              // console.log("req.body => ", req.body);
+              // console.log("req.files => ", tempPath);
+              // console.log(" => ", tempBody.judul);
+              // console.log("/// ", data);
               res.status(200).json({ data, msg: "success" });
             } catch (error) {
               console.log(error);

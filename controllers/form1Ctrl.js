@@ -30,24 +30,6 @@ const form1Ctrl = {
 
   form1Add: async (req, res) => {
     try {
-      // const schemaField = {
-      // 	valueVField: 'string',
-      // 	valueAField: 'string',
-      // 	kode_jam: 'string',
-      // 	valueV_BT: 'string',
-      // 	valueVolta1_2: 'string',
-      // 	valueVolta2_3: 'string',
-      // 	valueVolta3_1: 'string',
-      // 	value1Loadamp: 'string',
-      // 	value2Loadamp: 'string',
-      // 	value3Loadamp: 'string',
-      // 	valuePowerfactor: 'string',
-      // 	valueMeter_loadmw: 'string',
-      // 	valueRecord_loadmw: 'string',
-      // 	valueMeter_mvar: 'string',
-      // 	valueRecord_mvar: 'string',
-      // };
-
       const {
         valueVField,
         valueAField,
@@ -70,13 +52,17 @@ const form1Ctrl = {
         user_id,
       } = req.body;
 
-      console.log("req.body", req.body);
-
-      const get_tbl_historyDate = await tbl_historyDate.create({
-        createdAt,
-        updatedAt,
-        user_id,
+      let checkDate = await tbl_historyDate.findOne({
+        where: { createdAt: createdAt },
       });
+
+      let check = checkDate
+        ? ""
+        : await tbl_historyDate.create({
+            createdAt,
+            updatedAt,
+            user_id: 1,
+          });
 
       const field = await Field.create({
         valueVField: valueVField,
@@ -131,9 +117,11 @@ const form1Ctrl = {
       });
 
       let data = req.body;
+
       res.status(200).json({
+        check,
+        // checkDate,
         // data,
-        get_tbl_historyDate,
         field,
         before,
         voltAfter,

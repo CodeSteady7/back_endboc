@@ -1,0 +1,231 @@
+<%- include ../partials/header.ejs %>
+<!--  -->
+<%- include ../partials/navbar.ejs %>
+<!--  -->
+<%- include ../partials/sidebar.ejs %>
+<!--  -->
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <h2 class="text-center display-4">PG0001</h2>
+          <form action="/charts" method="POST">
+            <div class="row mt-4">
+              <div class="col-md-10 offset-md-1">
+                <div class="row" style="justify-content: center">
+                  <div class="col-6">
+                    <!-- Date -->
+                    <div class="form-group">
+                      <div
+                        class="input-group date"
+                        id="reservationdate"
+                        data-target-input="nearest"
+                      >
+                        <input
+                          type="text"
+                          class="form-control datetimepicker-input"
+                          data-target="#reservationdate"
+                          name="setDate"
+                        />
+                        <div
+                          class="input-group-append"
+                          data-target="#reservationdate"
+                          data-toggle="datetimepicker"
+                        >
+                          <div class="input-group-text">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                        </div>
+                        <div class="ml-3">
+                          <button type="submit" class="btn btn-secondary">
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-6">
+              <!-- BAR CHART FIELD -->
+              <div class="card card-success">
+                <div
+                  class="card-header"
+                  style="display: flex; justify-content: center"
+                >
+                  <h3 class="card-title">FIELD</h3>
+                </div>
+                <div class="card-body">
+                  <div class="chart">
+                    <canvas
+                      id="barChart"
+                      style="
+                        min-height: 250px;
+                        height: 250px;
+                        max-height: 250px;
+                        max-width: 100%;
+                      "
+                    ></canvas>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+
+              <!-- BAR CHART FIELD VOLTAGE BEFORE TRAFO-->
+              <div class="card card-primary">
+                <div
+                  class="card-header"
+                  style="display: flex; justify-content: center"
+                >
+                  <h3 class="card-title">VOLTAGE BEFORE TRAFO</h3>
+                </div>
+                <div class="card-body">
+                  <div class="chart">
+                    <canvas
+                      id="voltBeforeTrafoChart"
+                      style="
+                        min-height: 250px;
+                        height: 250px;
+                        max-height: 250px;
+                        max-width: 100%;
+                      "
+                    ></canvas>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+              <!-- LINE CHART  VOLTAGE AFTER TRAFO-->
+              <div class="card card-info">
+                <div class="card-header">
+                  <h3 class="card-title">VOLTAGE AFTER TRAFO</h3>
+
+                  <div class="card-tools">
+                    <button
+                      type="button"
+                      class="btn btn-tool"
+                      data-card-widget="collapse"
+                    >
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-tool"
+                      data-card-widget="remove"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="chart">
+                    <canvas
+                      id="voltAfterTrafoChart"
+                      style="
+                        min-height: 250px;
+                        height: 250px;
+                        max-height: 250px;
+                        max-width: 100%;
+                      "
+                    ></canvas>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col (RIGHT) -->
+            <div class="col-md-6">
+              <!-- LINE CHART LOAD AMP-->
+              <div class="card card-info">
+                <div class="card-header">
+                  <h3 class="card-title">LOAD AMP</h3>
+
+                  <div class="card-tools">
+                    <button
+                      type="button"
+                      class="btn btn-tool"
+                      data-card-widget="collapse"
+                    >
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-tool"
+                      data-card-widget="remove"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="chart">
+                    <canvas
+                      id="loadAmpChart"
+                      style="
+                        min-height: 250px;
+                        height: 250px;
+                        max-height: 250px;
+                        max-width: 100%;
+                      "
+                    ></canvas>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+              <!-- BAR CHART FIELD -->
+              <div class="card card-success">
+                <div
+                  class="card-header"
+                  style="display: flex; justify-content: center"
+                >
+                  <h3 class="card-title">POWER FACTOR</h3>
+                </div>
+                <div class="card-body">
+                  <div class="chart">
+                    <canvas
+                      id="powerfactorChart"
+                      style="
+                        min-height: 250px;
+                        height: 250px;
+                        max-height: 250px;
+                        max-width: 100%;
+                      "
+                    ></canvas>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+      <!-- <%= console.log("err", check) %> -->
+    </div>
+  </div>
+</body>
+<!--  -->
+<%- include ../partials/footer.ejs %>
+<!--  -->
+<%- include ../partials/js.ejs %>
+
+<script src="/charts/valueChart.js"></script>

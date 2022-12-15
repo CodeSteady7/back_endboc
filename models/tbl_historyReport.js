@@ -1,12 +1,18 @@
 module.exports = (sequelize, DataTypes) => {
-  const tbl_report = sequelize.define(
-    "tbl_report",
+  const tbl_historyReport = sequelize.define(
+    "tbl_historyReport",
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
+      },
+      report_id: {
+        type: DataTypes.INTEGER,
+      },
+      reportRepair: {
+        type: DataTypes.STRING,
       },
       user_id: {
         type: DataTypes.INTEGER,
@@ -38,21 +44,25 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       createdAt: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         get: function () {
-          return this.getDataValue("createdAt")?.toLocaleString("en-GB", {
+          return this.getDataValue("createdAt").toLocaleString("en-GB", {
             timeZone: "UTC",
           });
         },
       },
       updatedAt: {
         type: DataTypes.DATE,
-        allowNull: false,
+        get: function () {
+          return this.getDataValue("updatedAt").toLocaleString("en-GB", {
+            timeZone: "UTC",
+          });
+        },
       },
     },
     {
-      tableName: "tbl_report",
+      tableName: "tbl_historyReport",
     }
   );
-  return tbl_report;
+  return tbl_historyReport;
 };
