@@ -1,0 +1,1144 @@
+<script type="module">
+  import {
+    myFunction,
+    setChartBar,
+    setChartLine,
+    setAreaChartOptions,
+    setChartMultiLine,
+  } from "/Chart/setChart.js";
+
+  $(async function () {
+    /* ChartJS
+     * -------
+     * Here we will create a few charts using ChartJS
+     */
+
+    // console.log("check query = <%= query %> || <%= date %>");
+    let api_date = `http://localhost:4000/charts/date?date=<%=date%>`;
+    let setData;
+    let fetchData = await fetch(api_date, { method: "GET" })
+      .then((response) => response.json())
+      .then((data) => {
+        setData = data;
+      });
+
+    // console.log("object", setData);
+
+    // -----------------------------------------------------
+    let setClock = [];
+    //-FIELD
+    let setValueA_Field = [];
+    let setValueV_Field = [];
+    //-VOLTAGE BEFORE TRAFO
+    let setValueV_VoltBeforeTrafo = [];
+    //-VOLTAGE AFTER TRAFO
+    let valueVolta1_2_VoltAfterTrafo = [];
+    let valueVolta2_3_VoltAfterTrafo = [];
+    let valueVolta3_1_VoltAfterTrafo = [];
+    //-LOAD (AMP)
+    let _1_LoadAmp = [];
+    let _2_LoadAmp = [];
+    let _3_LoadAmp = [];
+    //-POWER FACTOR
+    let _powerfactor = [];
+    //-LOAD MW
+    let meter_loadMW = [];
+    let record_loadMW = [];
+    //-M VAR
+    let meter_Mvar = [];
+    let record_Mvar = [];
+    //-Gen Trafo
+    let liquidLevel_gentrafo = [];
+    let liquidTemp_gentrafo = [];
+    let windTemp_gentrafo = [];
+    // RECT. TRAFO LIQUID TEMP.
+    let value_rectTrafoTemp = [];
+    // KW HOURS
+    let value_kwHours = [];
+    // VISUAL CHECK
+    let l_o_visualCheck = [];
+    let temp_visualCheck = [];
+    let sound_visualCheck = [];
+    // TURBINE SPEED
+    let rpm_turbineSpeed = [];
+    // VCE
+    let value_vce = [];
+    // DSP
+    let value_dsp = [];
+
+    // GAS FLOW
+    let valueM3HR_gasFlow = [];
+
+    // lubeOilTempChart
+    let value_oilcooler_inlet_lubeOilTempChart = [];
+    let value_oilcooler_outlet_lubeOilTempChart = [];
+    let value_journaland_thrustdrain_lubeOilTempChart = [];
+    let value_no2_bearingdrain_lubeOilTempChart = [];
+    let value_gearpinion_no1_lubeOilTempChart = [];
+    let value_gearwheel_no2_lubeOilTempChart = [];
+    let value_gearwheel_no3_lubeOilTempChart = [];
+    let value_gearwheel_no4_lubeOilTempChart = [];
+    let value_gearwheel_no5_lubeOilTempChart = [];
+    let value_generator_drain_lubeOilTempChart = [];
+
+    // lubeoilTankTemp
+    let value_lubeoil_tanktemp_lubeoilTankTemp = [];
+
+    // lubeoilTankTemp
+    let value_lubeoil_bearingtemperature_lubeoilBearingTemp = [];
+
+    // hydTripCircuitPress
+    let value_hvdtrip_circuitpress_hydTripCircuitPress = [];
+
+    // hydOilPress
+    let value_hvdoil_press_hydOilPress = [];
+
+    // lubeOilPress
+    let value_main_oil_pump_lubeOilPress = [];
+    let value_fwdfilter_lubeOilPress = [];
+    let value_turbinebearing_header_lubeOilPress = [];
+    let value_gen_bearingheader_lubeOilPress = [];
+
+    for (let i = 0; i < setData.data.length; i++) {
+      setClock.push(setData.data[i].clock);
+
+      //Field
+      setValueA_Field.push(
+        setData.data[i].value.get_field[0]?.valueAField === undefined
+          ? 0
+          : setData.data[i].value.get_field[0]?.valueAField
+      );
+      setValueV_Field.push(
+        setData.data[i].value.get_field[0]?.valueVField === undefined
+          ? 0
+          : setData.data[i].value.get_field[0]?.valueVField
+      );
+
+      //VoltBeforeTrafo
+      setValueV_VoltBeforeTrafo.push(
+        setData.data[i].value.get_voltBeforeTrafo[0]?.valueV_BT === undefined
+          ? 0
+          : setData.data[i].value.get_voltBeforeTrafo[0]?.valueV_BT
+      );
+
+      //VoltAfterTrafo
+      valueVolta1_2_VoltAfterTrafo.push(
+        setData.data[i].value.get_voltAfterTrafo[0]?.valueVolta1_2 === undefined
+          ? 0
+          : setData.data[i].value.get_voltAfterTrafo[0]?.valueVolta1_2
+      );
+      valueVolta2_3_VoltAfterTrafo.push(
+        setData.data[i].value.get_voltAfterTrafo[0]?.valueVolta2_3 === undefined
+          ? 0
+          : setData.data[i].value.get_voltAfterTrafo[0]?.valueVolta2_3
+      );
+      valueVolta3_1_VoltAfterTrafo.push(
+        setData.data[i].value.get_voltAfterTrafo[0]?.valueVolta3_1 === undefined
+          ? 0
+          : setData.data[i].value.get_voltAfterTrafo[0]?.valueVolta3_1
+      );
+
+      //LoadAmp
+      _1_LoadAmp.push(
+        setData.data[i].value.get_loadamp[0]?.value1Loadamp === undefined
+          ? 0
+          : setData.data[i].value.get_loadamp[0]?.value1Loadamp
+      );
+      _2_LoadAmp.push(
+        setData.data[i].value.get_loadamp[0]?.value2Loadamp === undefined
+          ? 0
+          : setData.data[i].value.get_loadamp[0]?.value2Loadamp
+      );
+      _3_LoadAmp.push(
+        setData.data[i].value.get_loadamp[0]?.value3Loadamp === undefined
+          ? 0
+          : setData.data[i].value.get_loadamp[0]?.value3Loadamp
+      );
+
+      //powerfactor
+      _powerfactor.push(
+        setData.data[i].value.get_powerfactor[0]?.valuePowerfactor === undefined
+          ? 0
+          : setData.data[i].value.get_powerfactor[0]?.valuePowerfactor
+      );
+
+      //loadMW
+      meter_loadMW.push(
+        setData.data[i].value.get_loadmw[0]?.valueMeter_loadmw === undefined
+          ? 0
+          : setData.data[i].value.get_loadmw[0]?.valueMeter_loadmw
+      );
+      record_loadMW.push(
+        setData.data[i].value.get_loadmw[0]?.valueRecord_loadmw === undefined
+          ? 0
+          : setData.data[i].value.get_loadmw[0]?.valueRecord_loadmw
+      );
+
+      //MVar
+      meter_Mvar.push(
+        setData.data[i].value.get_mvar[0]?.valueMeter_mvar === undefined
+          ? 0
+          : setData.data[i].value.get_mvar[0]?.valueMeter_mvar
+      );
+      record_Mvar.push(
+        setData.data[i].value.get_mvar[0]?.valueRecord_mvar === undefined
+          ? 0
+          : setData.data[i].value.get_mvar[0]?.valueRecord_mvar
+      );
+
+      // Gen Trafo
+      liquidLevel_gentrafo.push(
+        setData.data[i].value.get_genTrafo[0]?.liquid_level === undefined
+          ? 0
+          : setData.data[i].value.get_genTrafo[0]?.liquid_level
+      );
+      liquidTemp_gentrafo.push(
+        setData.data[i].value.get_genTrafo[0]?.liquid_temp === undefined
+          ? 0
+          : setData.data[i].value.get_genTrafo[0]?.liquid_temp
+      );
+      windTemp_gentrafo.push(
+        setData.data[i].value.get_genTrafo[0]?.wind_temp === undefined
+          ? 0
+          : setData.data[i].value.get_genTrafo[0]?.wind_temp
+      );
+
+      // RECT. TRAFO LIQUID TEMP.
+      value_rectTrafoTemp.push(
+        setData.data[i].value.get_rect_trafo_liquid_temp[0]
+          ?.value_tblRect_trafo_liquid_temp === undefined
+          ? 0
+          : setData.data[i].value.get_rect_trafo_liquid_temp[0]
+              ?.value_tblRect_trafo_liquid_temp
+      );
+
+      //KW HOURS
+      value_kwHours.push(
+        setData.data[i].value.get_kw_hours[0]?.value_tblkw_hours === undefined
+          ? 0
+          : setData.data[i].value.get_kw_hours[0]?.value_tblkw_hours
+      );
+
+      //Visual Check
+      l_o_visualCheck.push(
+        setData.data[i].value.get_visual_check[0]?.l_o === undefined
+          ? 0
+          : setData.data[i].value.get_visual_check[0]?.l_o
+      );
+      temp_visualCheck.push(
+        setData.data[i].value.get_visual_check[0]?.temp === undefined
+          ? 0
+          : setData.data[i].value.get_visual_check[0]?.temp
+      );
+      sound_visualCheck.push(
+        setData.data[i].value.get_visual_check[0]?.sound === undefined
+          ? 0
+          : setData.data[i].value.get_visual_check[0]?.sound
+      );
+
+      // Turbine Speeed
+      rpm_turbineSpeed.push(
+        setData.data[i].value.get_tbl_turbinspeed[0]?.value_rpm === undefined
+          ? 0
+          : setData.data[i].value.get_tbl_turbinspeed[0]?.value_rpm
+      );
+
+      // VCE
+      value_vce.push(
+        setData.data[i].value.get_tbl_vce[0]?.value_vce === undefined
+          ? 0
+          : setData.data[i].value.get_tbl_vce[0]?.value_vce
+      );
+
+      // DSP
+      value_dsp.push(
+        setData.data[i].value.get_tbl_dsp[0]?.value_dsp === undefined
+          ? 0
+          : setData.data[i].value.get_tbl_dsp[0]?.value_dsp
+      );
+
+      // DSP
+      valueM3HR_gasFlow.push(
+        setData.data[i].value.get_tbl_gasflow[0]?.value_M37H === undefined
+          ? 0
+          : setData.data[i].value.get_tbl_gasflow[0]?.value_M37H
+      );
+
+      // lubeOilTempChart
+      value_oilcooler_inlet_lubeOilTempChart.push(
+        setData.data[i].value.get_tbl_lube_oil_temp[0]
+          ?.value_oilcooler_inlet === undefined
+          ? 0
+          : setData.data[i].value.get_tbl_lube_oil_temp[0]
+              ?.value_oilcooler_inlet
+      );
+      value_oilcooler_outlet_lubeOilTempChart.push(
+        setData.data[i].value.get_tbl_lube_oil_temp[0]
+          ?.value_oilcooler_outlet === undefined
+          ? 0
+          : setData.data[i].value.get_tbl_lube_oil_temp[0]
+              ?.value_oilcooler_outlet
+      );
+      value_journaland_thrustdrain_lubeOilTempChart.push(
+        setData.data[i].value.get_tbl_lube_oil_temp[0]
+          ?.value_journaland_thrustdrain === undefined
+          ? 0
+          : setData.data[i].value.get_tbl_lube_oil_temp[0]
+              ?.value_journaland_thrustdrain
+      );
+      value_no2_bearingdrain_lubeOilTempChart.push(
+        setData.data[i].value.get_tbl_lube_oil_temp[0]
+          ?.value_no2_bearingdrain === undefined
+          ? 0
+          : setData.data[i].value.get_tbl_lube_oil_temp[0]
+              ?.value_no2_bearingdrain
+      );
+      value_gearpinion_no1_lubeOilTempChart.push(
+        setData.data[i].value.get_tbl_lube_oil_temp[0]?.value_gearpinion_no1 ===
+          undefined
+          ? 0
+          : setData.data[i].value.get_tbl_lube_oil_temp[0]?.value_gearpinion_no1
+      );
+      value_gearwheel_no2_lubeOilTempChart.push(
+        setData.data[i].value.get_tbl_lube_oil_temp[0]?.value_gearwheel_no2 ===
+          undefined
+          ? 0
+          : setData.data[i].value.get_tbl_lube_oil_temp[0]?.value_gearwheel_no2
+      );
+      value_gearwheel_no3_lubeOilTempChart.push(
+        setData.data[i].value.get_tbl_lube_oil_temp[0]?.value_gearwheel_no3 ===
+          undefined
+          ? 0
+          : setData.data[i].value.get_tbl_lube_oil_temp[0]?.value_gearwheel_no3
+      );
+      value_gearwheel_no4_lubeOilTempChart.push(
+        setData.data[i].value.get_tbl_lube_oil_temp[0]?.value_gearwheel_no4 ===
+          undefined
+          ? 0
+          : setData.data[i].value.get_tbl_lube_oil_temp[0]?.value_gearwheel_no4
+      );
+      value_gearwheel_no5_lubeOilTempChart.push(
+        setData.data[i].value.get_tbl_lube_oil_temp[0]?.value_gearwheel_no5 ===
+          undefined
+          ? 0
+          : setData.data[i].value.get_tbl_lube_oil_temp[0]?.value_gearwheel_no5
+      );
+      value_generator_drain_lubeOilTempChart.push(
+        setData.data[i].value.get_tbl_lube_oil_temp[0]
+          ?.value_generator_drain === undefined
+          ? 0
+          : setData.data[i].value.get_tbl_lube_oil_temp[0]
+              ?.value_generator_drain
+      );
+
+      // lubeoilTankTemp
+      value_lubeoil_tanktemp_lubeoilTankTemp.push(
+        setData.data[i].value.get_tbl_lubeoil_tanktemp[0]
+          ?.value_lubeoil_tanktemp === undefined
+          ? 0
+          : setData.data[i].value.get_tbl_lubeoil_tanktemp[0]
+              ?.value_lubeoil_tanktemp
+      );
+
+      // lubeoilBearingTemp
+      value_lubeoil_bearingtemperature_lubeoilBearingTemp.push(
+        setData.data[i].value.get_tbl_lubeoil_bearingtemperature[0]
+          ?.value_lubeoil_bearingtemperature === undefined
+          ? 0
+          : setData.data[i].value.get_tbl_lubeoil_bearingtemperature[0]
+              ?.value_lubeoil_bearingtemperature
+      );
+
+      // lubeoilBearingTemp
+
+      value_hvdtrip_circuitpress_hydTripCircuitPress.push(
+        setData.data[i].value.get_tbl_hvdtrip_circuitpress[0]
+          ?.value_hvdtrip_circuitpress === undefined
+          ? 0
+          : setData.data[i].value.get_tbl_hvdtrip_circuitpress[0]
+              ?.value_hvdtrip_circuitpress
+      );
+
+      // value_hvdoil_press_hydOilPress
+
+      value_hvdoil_press_hydOilPress.push(
+        setData.data[i].value.get_tbl_hvdoil_press[0]?.value_hvdoil_press ===
+          undefined
+          ? 0
+          : setData.data[i].value.get_tbl_hvdoil_press[0]?.value_hvdoil_press
+      );
+
+      // lubeOilPress
+      value_main_oil_pump_lubeOilPress.push(
+        setData.data[i].value.get_tbl_lubeoil_press[0]?.value_main_oil_pump ===
+          undefined
+          ? 0
+          : setData.data[i].value.get_tbl_lubeoil_press[0]?.value_main_oil_pump
+      );
+      value_fwdfilter_lubeOilPress.push(
+        setData.data[i].value.get_tbl_lubeoil_press[0]?.value_fwdfilter ===
+          undefined
+          ? 0
+          : setData.data[i].value.get_tbl_lubeoil_press[0]?.value_fwdfilter
+      );
+      value_turbinebearing_header_lubeOilPress.push(
+        setData.data[i].value.get_tbl_lubeoil_press[0]
+          ?.value_turbinebearing_header === undefined
+          ? 0
+          : setData.data[i].value.get_tbl_lubeoil_press[0]
+              ?.value_turbinebearing_header
+      );
+      value_gen_bearingheader_lubeOilPress.push(
+        setData.data[i].value.get_tbl_lubeoil_press[0]
+          ?.value_gen_bearingheader === undefined
+          ? 0
+          : setData.data[i].value.get_tbl_lubeoil_press[0]
+              ?.value_gen_bearingheader
+      );
+
+      // console.log("object", rpm_turbineSpeed);
+    }
+
+    let data_field = await setChartBar(
+      2,
+      setClock,
+      "V",
+      setValueV_Field,
+      "A",
+      setValueA_Field
+    );
+
+    let chartField = {
+      labels: data_field.labels,
+      datasets: data_field.datasets,
+    };
+    //
+
+    let data_voltBefTrafo = await setChartBar(
+      1,
+      setClock,
+      "V",
+      setValueV_VoltBeforeTrafo
+    );
+
+    let chartVoltageBeforeTrafo = {
+      labels: data_voltBefTrafo.labels,
+      datasets: data_voltBefTrafo.datasets,
+    };
+    //
+
+    let data_voltAft = await setChartLine(
+      setClock,
+      "1-2",
+      valueVolta1_2_VoltAfterTrafo,
+      "2-3",
+      valueVolta2_3_VoltAfterTrafo,
+      "3-1",
+      valueVolta3_1_VoltAfterTrafo
+    );
+
+    let voltAfterChartData = {
+      labels: data_voltAft.labels,
+      datasets: data_voltAft.datasets,
+    };
+    //
+
+    let data_powerfactor = await setChartBar(
+      1,
+      setClock,
+      "VALUE",
+      _powerfactor
+    );
+
+    let chartPowerFactor = {
+      labels: data_powerfactor.labels,
+      datasets: data_powerfactor.datasets,
+    };
+    //
+
+    let data_loadAMP = await setChartLine(
+      setClock,
+      "1",
+      _1_LoadAmp,
+      "2",
+      _2_LoadAmp,
+      "3",
+      _3_LoadAmp
+    );
+
+    let loadAMPChartData = {
+      labels: data_loadAMP.labels,
+      datasets: data_loadAMP.datasets,
+    };
+    //
+
+    let data_loadmw = await setChartBar(
+      2,
+      setClock,
+      "METER",
+      meter_loadMW,
+      "RECORD",
+      record_loadMW
+    );
+
+    let chartloadmw = {
+      labels: data_loadmw.labels,
+      datasets: data_loadmw.datasets,
+    };
+    //
+
+    let data_mvar = await setChartBar(
+      2,
+      setClock,
+      "METER",
+      meter_Mvar,
+      "RECORD",
+      record_Mvar
+    );
+
+    let chartmvar = {
+      labels: data_mvar.labels,
+      datasets: data_mvar.datasets,
+    };
+    //
+
+    let data_genTrafo = await setChartLine(
+      setClock,
+      "LIQUID LEVEL",
+      liquidLevel_gentrafo,
+      "LIQUID TEMP",
+      liquidTemp_gentrafo,
+      "WIND. TEMP.",
+      windTemp_gentrafo
+    );
+
+    let genTrafoChartData = {
+      labels: data_genTrafo.labels,
+      datasets: data_genTrafo.datasets,
+    };
+    //
+
+    let data_rectTrafoTemp = await setChartBar(
+      1,
+      setClock,
+      "VALUE",
+      value_rectTrafoTemp
+    );
+
+    let rectTrafoTempChart = {
+      labels: data_rectTrafoTemp.labels,
+      datasets: data_rectTrafoTemp.datasets,
+    };
+    //
+
+    let data_kwHours = await setChartBar(1, setClock, "VALUE", value_kwHours);
+
+    let kwHoursChart = {
+      labels: data_kwHours.labels,
+      datasets: data_kwHours.datasets,
+    };
+    //
+
+    let data_visualCheck = await setChartLine(
+      setClock,
+      "L/o",
+      l_o_visualCheck,
+      "TEMP",
+      temp_visualCheck,
+      "SOUND",
+      sound_visualCheck
+    );
+
+    let visualCheckChartData = {
+      labels: data_visualCheck.labels,
+      datasets: data_visualCheck.datasets,
+    };
+    //
+
+    let data_turbineSpeed = await setChartBar(
+      1,
+      setClock,
+      "RPM",
+      rpm_turbineSpeed
+    );
+
+    let chartturbineSpeed = {
+      labels: data_turbineSpeed.labels,
+      datasets: data_turbineSpeed.datasets,
+    };
+    //
+
+    let data_vce = await setChartBar(1, setClock, "VALUE", value_vce);
+
+    let chartVCE = {
+      labels: data_vce.labels,
+      datasets: data_vce.datasets,
+    };
+    //
+
+    let data_dsp = await setChartBar(1, setClock, "V", value_dsp);
+
+    let chartDSP = {
+      labels: data_dsp.labels,
+      datasets: data_dsp.datasets,
+    };
+    //
+
+    let data_gasFlow = await setChartBar(
+      1,
+      setClock,
+      "M³/Hr",
+      valueM3HR_gasFlow
+    );
+
+    let chartgasFlow = {
+      labels: data_gasFlow.labels,
+      datasets: data_gasFlow.datasets,
+    };
+    //
+
+    let data_lubeOilTemp = await setChartMultiLine(
+      10,
+      setClock,
+      "15",
+      value_oilcooler_inlet_lubeOilTempChart,
+      "16",
+      value_oilcooler_outlet_lubeOilTempChart,
+      "17",
+      value_journaland_thrustdrain_lubeOilTempChart,
+      "18",
+      value_no2_bearingdrain_lubeOilTempChart,
+      "19",
+      value_gearpinion_no1_lubeOilTempChart,
+      "20",
+      value_gearwheel_no2_lubeOilTempChart,
+      "21",
+      value_gearwheel_no3_lubeOilTempChart,
+      "22",
+      value_gearwheel_no4_lubeOilTempChart,
+      "23",
+      value_gearwheel_no5_lubeOilTempChart,
+      "24",
+      value_generator_drain_lubeOilTempChart
+    );
+
+    let lubeOilTempChartData = {
+      labels: data_lubeOilTemp.labels,
+      datasets: data_lubeOilTemp.datasets,
+    };
+    //
+
+    let data_lubeoilTankTemp = await setChartBar(
+      1,
+      setClock,
+      "VALUE",
+      value_lubeoil_tanktemp_lubeoilTankTemp
+    );
+
+    let chartlubeoilTankTemp = {
+      labels: data_lubeoilTankTemp.labels,
+      datasets: data_lubeoilTankTemp.datasets,
+    };
+    //
+
+    let data_lubeoilBearingTemp = await setChartBar(
+      1,
+      setClock,
+      "VALUE",
+      value_lubeoil_bearingtemperature_lubeoilBearingTemp
+    );
+
+    let chartlubeoilBearingTemp = {
+      labels: data_lubeoilBearingTemp.labels,
+      datasets: data_lubeoilBearingTemp.datasets,
+    };
+    //
+
+    let data_hydTripCircuitPress = await setChartBar(
+      1,
+      setClock,
+      "VALUE",
+      value_hvdtrip_circuitpress_hydTripCircuitPress
+    );
+
+    let charthydTripCircuitPress = {
+      labels: data_hydTripCircuitPress.labels,
+      datasets: data_hydTripCircuitPress.datasets,
+    };
+
+    //
+    let data_hydOilPress = await setChartBar(
+      1,
+      setClock,
+      "VALUE",
+      value_hvdoil_press_hydOilPress
+    );
+
+    let charthydOilPress = {
+      labels: data_hydOilPress.labels,
+      datasets: data_hydOilPress.datasets,
+    };
+    //
+
+    let lubeOilPressChartData = await setChartMultiLine(
+      4,
+      setClock,
+      "MAIN OIL PUMP DISCH",
+      value_main_oil_pump_lubeOilPress,
+      "FWD FILTER",
+      value_fwdfilter_lubeOilPress,
+      "TURBINE BEARING HEADER",
+      value_turbinebearing_header_lubeOilPress,
+      "GEN. BEARING HEADER",
+      value_gen_bearingheader_lubeOilPress
+    );
+
+    let areaChartOptions = await setAreaChartOptions();
+
+    // --------------------------------------------------------------------
+
+    //-------------
+    //- BAR CHART FIELD -
+    //-------------
+    let fieldChartCanvas = $("#barChart").get(0).getContext("2d");
+    let fieldChartData = $.extend(true, {}, chartField);
+    let field_temp0 = chartField.datasets[0];
+    let field_temp1 = chartField.datasets[1];
+    fieldChartData.datasets[0] = field_temp1;
+    fieldChartData.datasets[1] = field_temp0;
+
+    let fieldChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+    };
+
+    new Chart(fieldChartCanvas, {
+      type: "bar",
+      data: fieldChartData,
+      options: fieldChartOptions,
+    });
+
+    //-------------
+    //- BAR CHART VOLTBEFTRAFO -
+    //-------------
+    let voltBefTrafoChartCanvas = $("#voltBeforeTrafoChart")
+      .get(0)
+      .getContext("2d");
+    let voltBefTrafoChartData = $.extend(true, {}, chartVoltageBeforeTrafo);
+    let voltbefore_temp0 = chartVoltageBeforeTrafo.datasets[0];
+    voltBefTrafoChartData.datasets[0] = voltbefore_temp0;
+
+    let voltBefTrafoChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+    };
+
+    new Chart(voltBefTrafoChartCanvas, {
+      type: "bar",
+      data: voltBefTrafoChartData,
+      options: voltBefTrafoChartOptions,
+    });
+
+    //-------------
+    //- LINE CHART - VOLTAGE AFTER TRAFO
+    //--------------
+    let voltafterChartCanvas = $("#voltAfterTrafoChart")
+      .get(0)
+      .getContext("2d");
+    let voltafterChartOptions = $.extend(true, {}, areaChartOptions);
+    let voltafterChartData = $.extend(true, {}, voltAfterChartData);
+    voltafterChartData.datasets[0].fill = false;
+    voltafterChartData.datasets[1].fill = false;
+    voltafterChartData.datasets[2].fill = false;
+    voltafterChartOptions.datasetFill = false;
+
+    let voltafterChart = new Chart(voltafterChartCanvas, {
+      type: "line",
+      data: voltafterChartData,
+      options: voltafterChartOptions,
+    });
+
+    //-------------
+    //- LINE CHART -LOAD AMP CHART
+    //--------------
+    let loadampChartCanvas = $("#loadAmpChart").get(0).getContext("2d");
+    let loadampChartOptions = $.extend(true, {}, areaChartOptions);
+    let loadampChartData = $.extend(true, {}, loadAMPChartData);
+    loadampChartData.datasets[0].fill = false;
+    loadampChartData.datasets[1].fill = false;
+    loadampChartData.datasets[2].fill = false;
+    loadampChartOptions.datasetFill = false;
+
+    let loadampChart = new Chart(loadampChartCanvas, {
+      type: "line",
+      data: loadampChartData,
+      options: loadampChartOptions,
+    });
+
+    //-------------
+    //- BAR CHART POWER FACTOR -
+    //-------------
+    let powerfactorChartCanvas = $("#powerfactorChart").get(0).getContext("2d");
+    let powerfactorChartData = $.extend(true, {}, chartPowerFactor);
+    let powerfactor_temp0 = chartPowerFactor.datasets[0];
+    powerfactorChartData.datasets[0] = powerfactor_temp0;
+
+    let powerfactorChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+    };
+
+    new Chart(powerfactorChartCanvas, {
+      type: "bar",
+      data: powerfactorChartData,
+      options: powerfactorChartOptions,
+    });
+
+    //-------------
+    //- BAR CHART LOAD MW -
+    //-------------
+    let loadmwChartCanvas = $("#loadmwChart").get(0).getContext("2d");
+    let loadmwChartData = $.extend(true, {}, chartloadmw);
+    let loadmw_temp0 = chartloadmw.datasets[0];
+    let loadmw_temp1 = chartloadmw.datasets[1];
+    loadmwChartData.datasets[0] = loadmw_temp1;
+    loadmwChartData.datasets[1] = loadmw_temp0;
+
+    let loadmwChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+    };
+
+    new Chart(loadmwChartCanvas, {
+      type: "bar",
+      data: loadmwChartData,
+      options: loadmwChartOptions,
+    });
+
+    //-------------
+    //- BAR CHART MVAR-
+    //-------------
+    let mvarChartCanvas = $("#mvarChart").get(0).getContext("2d");
+    let mvarChartData = $.extend(true, {}, chartmvar);
+    let mvar_temp0 = chartmvar.datasets[0];
+    let mvar_temp1 = chartmvar.datasets[1];
+    mvarChartData.datasets[0] = mvar_temp1;
+    mvarChartData.datasets[1] = mvar_temp0;
+
+    let mvarChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+    };
+
+    new Chart(mvarChartCanvas, {
+      type: "bar",
+      data: mvarChartData,
+      options: mvarChartOptions,
+    });
+
+    //-------------
+    //- LINE CHART - GEN TRAFO
+    //--------------
+    let genTrafoChartCanvas = $("#genTrafoChart").get(0).getContext("2d");
+    let genTrafoChartOptions = $.extend(true, {}, areaChartOptions);
+    let genTrafo_ChartData = $.extend(true, {}, genTrafoChartData);
+    genTrafo_ChartData.datasets[0].fill = false;
+    genTrafo_ChartData.datasets[1].fill = false;
+    genTrafo_ChartData.datasets[2].fill = false;
+    genTrafoChartOptions.datasetFill = false;
+
+    let genTrafoChart = new Chart(genTrafoChartCanvas, {
+      type: "line",
+      data: genTrafo_ChartData,
+      options: genTrafoChartOptions,
+    });
+    // rectTrafoTempChart;
+    //-------------
+    //- BAR RECT. TRAFO LIQUID TEMP.-
+    //-------------
+    let rectTrafoTempChartCanvas = $("#rectTrafoTempChart")
+      .get(0)
+      .getContext("2d");
+    let rectTrafoTempChartData = $.extend(true, {}, rectTrafoTempChart);
+    let rectTrafoTemp_temp0 = rectTrafoTempChart.datasets[0];
+    rectTrafoTempChartData.datasets[0] = rectTrafoTemp_temp0;
+
+    let rectTrafoTempChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+    };
+
+    new Chart(rectTrafoTempChartCanvas, {
+      type: "bar",
+      data: rectTrafoTempChartData,
+      options: rectTrafoTempChartOptions,
+    });
+
+    //-------------
+    //- BAR KW HOURS-
+    //-------------
+    let kwHoursChartCanvas = $("#kwHoursChart").get(0).getContext("2d");
+    let kwHoursChartData = $.extend(true, {}, kwHoursChart);
+    let kwHours_temp0 = kwHoursChart.datasets[0];
+    kwHoursChartData.datasets[0] = kwHours_temp0;
+
+    let kwHoursChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+    };
+
+    new Chart(kwHoursChartCanvas, {
+      type: "bar",
+      data: kwHoursChartData,
+      options: kwHoursChartOptions,
+    });
+    //
+
+    //-------------
+    //- LINE CHART - Visual Check
+    //--------------
+
+    let visualCheckChartCanvas = $("#visualCheckChart").get(0).getContext("2d");
+    let visualCheckChartOptions = $.extend(true, {}, areaChartOptions);
+    let visualCheck_ChartData = $.extend(true, {}, visualCheckChartData);
+    visualCheck_ChartData.datasets[0].fill = false;
+    visualCheck_ChartData.datasets[1].fill = false;
+    visualCheck_ChartData.datasets[2].fill = false;
+    visualCheckChartOptions.datasetFill = false;
+
+    let visualCheckChart = new Chart(visualCheckChartCanvas, {
+      type: "line",
+      data: visualCheck_ChartData,
+      options: visualCheckChartOptions,
+    });
+
+    //-------------
+    //- BAR CHART TURBINE SPEED -
+    //-------------
+    let turbineSpeedChartCanvas = $("#turbineSpeedChart")
+      .get(0)
+      .getContext("2d");
+    let turbineSpeedChartData = $.extend(true, {}, chartturbineSpeed);
+    let turbineSpeed_temp0 = chartturbineSpeed.datasets[0];
+    turbineSpeedChartData.datasets[0] = turbineSpeed_temp0;
+
+    let turbineSpeedChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+    };
+
+    new Chart(turbineSpeedChartCanvas, {
+      type: "bar",
+      data: turbineSpeedChartData,
+      options: turbineSpeedChartOptions,
+    });
+
+    //-------------
+    //- BAR CHART VCE -
+    //-------------
+    let VCEChartCanvas = $("#VCEChart").get(0).getContext("2d");
+    let VCEChartData = $.extend(true, {}, chartVCE);
+    let VCE_temp0 = chartVCE.datasets[0];
+    VCEChartData.datasets[0] = VCE_temp0;
+
+    let VCEChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+    };
+
+    new Chart(VCEChartCanvas, {
+      type: "bar",
+      data: VCEChartData,
+      options: VCEChartOptions,
+    });
+
+    //-------------
+    //- BAR CHART VCE -
+    //-------------
+    let DSPChartCanvas = $("#DSPChart").get(0).getContext("2d");
+    let DSPChartData = $.extend(true, {}, chartDSP);
+    let DSP_temp0 = chartDSP.datasets[0];
+    DSPChartData.datasets[0] = DSP_temp0;
+
+    let DSPChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+    };
+
+    new Chart(DSPChartCanvas, {
+      type: "bar",
+      data: DSPChartData,
+      options: DSPChartOptions,
+    });
+
+    //-------------
+    //- BAR CHART GAS FLOW -
+    //-------------
+    let gasFlowChartCanvas = $("#gasFlowChart").get(0).getContext("2d");
+    let gasFlowChartData = $.extend(true, {}, chartgasFlow);
+    let gasFlow_temp0 = chartgasFlow.datasets[0];
+    gasFlowChartData.datasets[0] = gasFlow_temp0;
+
+    let gasFlowChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+    };
+
+    new Chart(gasFlowChartCanvas, {
+      type: "bar",
+      data: gasFlowChartData,
+      options: gasFlowChartOptions,
+    });
+
+    //-------------
+    //- LINE CHART -LUBE OIL TEMPERATURE
+    //--------------
+
+    let lubeOilTempChartCanvas = $("#lubeOilTempChart").get(0).getContext("2d");
+    let lubeOilTempChartOptions = $.extend(true, {}, areaChartOptions);
+    let lubeOilTemp_ChartData = $.extend(true, {}, lubeOilTempChartData);
+    lubeOilTemp_ChartData.datasets[0].fill = false;
+    lubeOilTemp_ChartData.datasets[1].fill = false;
+    lubeOilTemp_ChartData.datasets[2].fill = false;
+    lubeOilTemp_ChartData.datasets[3].fill = false;
+    lubeOilTemp_ChartData.datasets[4].fill = false;
+    lubeOilTemp_ChartData.datasets[5].fill = false;
+    lubeOilTemp_ChartData.datasets[6].fill = false;
+    lubeOilTemp_ChartData.datasets[7].fill = false;
+    lubeOilTemp_ChartData.datasets[8].fill = false;
+    lubeOilTemp_ChartData.datasets[9].fill = false;
+    lubeOilTempChartOptions.datasetFill = false;
+
+    let lubeOilTempChart = new Chart(lubeOilTempChartCanvas, {
+      type: "line",
+      data: lubeOilTemp_ChartData,
+      options: lubeOilTempChartOptions,
+    });
+
+    //-------------
+    //- BAR CHART Lube Oil Tank Temp Chart -
+    //-------------
+    let lubeoilTankTempChartCanvas = $("#lubeoilTankTempChart")
+      .get(0)
+      .getContext("2d");
+    let lubeoilTankTempChartData = $.extend(true, {}, chartlubeoilTankTemp);
+    let lubeoilTankTemp_temp0 = chartlubeoilTankTemp.datasets[0];
+    lubeoilTankTempChartData.datasets[0] = lubeoilTankTemp_temp0;
+
+    let lubeoilTankTempChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+    };
+
+    new Chart(lubeoilTankTempChartCanvas, {
+      type: "bar",
+      data: lubeoilTankTempChartData,
+      options: lubeoilTankTempChartOptions,
+    });
+
+    //-------------
+    //- BAR CHART Lube Oil Bearing Temp Chart -
+    //-------------
+    let lubeoilBearingTempChartCanvas = $("#lubeoilBearingTempChart")
+      .get(0)
+      .getContext("2d");
+    let lubeoilBearingTempChartData = $.extend(
+      true,
+      {},
+      chartlubeoilBearingTemp
+    );
+    let lubeoilBearingTemp_temp0 = chartlubeoilBearingTemp.datasets[0];
+    lubeoilBearingTempChartData.datasets[0] = lubeoilBearingTemp_temp0;
+
+    let lubeoilBearingTempChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+    };
+
+    new Chart(lubeoilBearingTempChartCanvas, {
+      type: "bar",
+      data: lubeoilBearingTempChartData,
+      options: lubeoilBearingTempChartOptions,
+    });
+
+    //-------------
+    //- BAR CHART hydTripCircuitPress -
+    //-------------
+    let hydTripCircuitPressChartCanvas = $("#hydTripCircuitPressChart")
+      .get(0)
+      .getContext("2d");
+    let hydTripCircuitPressChartData = $.extend(
+      true,
+      {},
+      charthydTripCircuitPress
+    );
+    let hydTripCircuitPress_temp0 = charthydTripCircuitPress.datasets[0];
+    hydTripCircuitPressChartData.datasets[0] = hydTripCircuitPress_temp0;
+
+    let hydTripCircuitPressChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+    };
+
+    new Chart(hydTripCircuitPressChartCanvas, {
+      type: "bar",
+      data: hydTripCircuitPressChartData,
+      options: hydTripCircuitPressChartOptions,
+    });
+
+    //-------------
+    //- BAR CHART HYD. OIL PRESS (FOR 63HQ) -
+    //-------------
+    let hydOilPressChartCanvas = $("#hydOilPressChart").get(0).getContext("2d");
+    let hydOilPressChartData = $.extend(true, {}, charthydOilPress);
+    let hydOilPress_temp0 = charthydOilPress.datasets[0];
+    hydOilPressChartData.datasets[0] = hydOilPress_temp0;
+
+    let hydOilPressChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+    };
+
+    new Chart(hydOilPressChartCanvas, {
+      type: "bar",
+      data: hydOilPressChartData,
+      options: hydOilPressChartOptions,
+    });
+
+    //-------------
+    //- LINE CHART - lubeOilPressChart
+    //--------------
+
+    let lubeOilPressChartCanvas = $("#lubeOilPressChart")
+      .get(0)
+      .getContext("2d");
+    let lubeOilPressChartOptions = $.extend(true, {}, areaChartOptions);
+    let lubeOilPress_ChartData = $.extend(true, {}, lubeOilPressChartData);
+    lubeOilPress_ChartData.datasets[0].fill = false;
+    lubeOilPress_ChartData.datasets[1].fill = false;
+    lubeOilPress_ChartData.datasets[2].fill = false;
+    lubeOilPress_ChartData.datasets[3].fill = false;
+    lubeOilPressChartOptions.datasetFill = false;
+
+    let lubeOilPressChart = new Chart(lubeOilPressChartCanvas, {
+      type: "line",
+      data: lubeOilPress_ChartData,
+      options: lubeOilPressChartOptions,
+    });
+  });
+</script>

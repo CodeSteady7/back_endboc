@@ -5,21 +5,12 @@ module.exports = {
   getIndexDate: async (req, res) => {
     try {
       let startDate = "2022-09-23";
+      const { date } = req.query;
       let check;
-      // = [
-      //   await Field.findAll({
-      //     where: {
-      //       createdAt: `${startDate}`,
-      //     },
-      //   }),
-      //   await voltAfterTrafo.findAll({
-      //     where: {
-      //       createdAt: `${startDate}`,
-      //     },
-      //   }),
-      // ];
 
-      check = await temp_(startDate);
+      // let testing = date ? "false" : "2022-09-23";
+
+      check = await temp_(date ? date : startDate);
 
       res.status(200).json({ data: check });
     } catch (err) {
@@ -27,50 +18,49 @@ module.exports = {
     }
   },
 
+  //
   index: async (req, res) => {
-    let startDate = "2022-09-23";
-    let endDate = "2022-12-05";
     try {
-      let check = await Field.findAll({
-        where: {
-          createdAt: {
-            [Op.between]: [`${startDate}`, `${endDate}`],
+      let startDate = "2022-09-24";
+      const { date } = req.query;
+      let query = "";
+
+      let check;
+      check = await temp_(date === "" ? `${startDate}` : date);
+      let chartField = (setClock, setValueV_Field, setValueA_Field) => ({
+        labels: setClock,
+        datasets: [
+          {
+            label: "V",
+            backgroundColor: "rgba(60,141,188,0.9)",
+            borderColor: "rgba(60,141,188,0.8)",
+            pointRadius: false,
+            pointColor: "#3b8bba",
+            pointStrokeColor: "rgba(60,141,188,1)",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(60,141,188,1)",
+            data: setValueV_Field,
           },
-        },
-      });
-
-      let date = check.map((item) => {
-        return item.createdAt;
-      });
-
-      console.log("check", date);
-
-      // res.status(200).json({ data: check });
-      res.render("admin/view_charts", { check, date });
-    } catch (err) {
-      console.log(err);
-    }
-  },
-
-  actionDateRange: async (req, res) => {
-    try {
-      const { setDate } = req.body;
-      //
-      console.log("setDate", setDate);
-      let startDate = "";
-      let endDate = "";
-      let check = await Field.findAll({
-        where: {
-          createdAt: {
-            [Op.between]: [`${startDate}`, `${endDate}`],
+          {
+            label: "A",
+            backgroundColor: "rgba(210, 214, 222, 1)",
+            borderColor: "rgba(210, 214, 222, 1)",
+            pointRadius: false,
+            pointColor: "rgba(210, 214, 222, 1)",
+            pointStrokeColor: "#c1c7d1",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: setValueA_Field,
           },
-        },
+        ],
       });
 
-      res.redirect(`/charts/${setDate}`);
-      //
-      // res.status(200).json({ data: setDate });
-      //
+      res.render("admin/view_charts", {
+        valuesdata: check,
+        query,
+        date,
+        chartField,
+      });
     } catch (err) {
       console.log(err);
     }
@@ -78,7 +68,10 @@ module.exports = {
 
   getIndexDateDetail: async (req, res) => {
     try {
-      console.log("err", req.params);
+      const startDate = req.params;
+      let check = await temp_(startDate);
+
+      res.status(200).json({ data: check });
     } catch (err) {
       console.log(err);
     }

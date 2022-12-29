@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
             timeZone: "UTC",
           });
         },
-        allowNull: false,
       },
       updatedAt: {
         type: DataTypes.DATE,
@@ -27,7 +26,6 @@ module.exports = (sequelize, DataTypes) => {
             timeZone: "UTC",
           });
         },
-        allowNull: false,
       },
       kode_jam: {
         type: DataTypes.STRING,
@@ -39,7 +37,6 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      timestamps: false,
       tableName: "voltbeforetrafo",
     }
   );

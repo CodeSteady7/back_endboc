@@ -7,28 +7,13 @@ const {
   tbl_diffpress,
   tbl_cooling_water,
   tbl_form07,
+  tbl_historyDate,
 } = require("../models");
 
 const v = new Validator();
 const form7Ctrl = {
   form7Add: async (req, res) => {
     try {
-      // const schema = {
-      // 	value_hpgas_before: 'string',
-      // 	value_beforestop_value: 'string',
-      // 	value_aftergas_stopvalue: 'string',
-      // 	value_aftergas_controlvalue: 'string',
-      // 	value_afterporous_filter: 'string',
-      // 	value_for96cd: 'string',
-      // 	value_inlethouse_filter: 'string',
-      // 	value_lubeoil_filter: 'string',
-      // 	value_controloil_filter: 'string',
-      // 	value_hydoil_filter: 'string',
-      // 	value_temperature: 'string',
-      // 	kode_jam: 'string',
-      // };
-      // const validate = v.validate(req.body, schema);
-
       const {
         value_hpgas_before,
         value_beforestop_value,
@@ -43,66 +28,133 @@ const form7Ctrl = {
         value_temperature,
         nameForm,
         kode_jam,
-        createdAt,
+        user_id,
       } = req.body;
 
+      const date = new Date();
+      let vDate = date.toLocaleString("en-GB");
+      let createdAt = vDate.split(",");
+      let setcreatedAt = createdAt[0];
       let checkDate = await tbl_historyDate.findOne({
-        where: { createdAt: createdAt },
+        where: { createdAt: setcreatedAt },
       });
 
-      let check = checkDate
-        ? ""
-        : await tbl_historyDate.create({
-            createdAt,
-            updatedAt,
-            user_id: 1,
+      let checkLastRow = [
+        await tbl_fuelgas_press.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await tbl_compdisch_airpress.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await tbl_diffpress.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await tbl_cooling_water.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+      ];
+
+      let lastRowtbl_form = await tbl_form07.findOne({
+        attributes: ["id_form"],
+        order: [["id_form", "DESC"]],
+      });
+
+      let data = checkLastRow.map((item) => {
+        console.log("item", item.id, lastRowtbl_form.id_form);
+        return item.id == lastRowtbl_form.id_form;
+      });
+
+      let checkInclude = data.includes(false);
+
+      const t = await db.sequelize.transaction();
+
+      if (checkInclude == false) {
+        try {
+          let check =
+            checkDate == null || ""
+              ? ""
+              : await tbl_historyDate.create(
+                  {
+                    setcreatedAt,
+                    setcreatedAt,
+                    user_id: user_id,
+                  },
+                  { transaction: t }
+                );
+
+          const gettbl_fuelgas_press = await tbl_fuelgas_press.create(
+            {
+              value_hpgas_before: value_hpgas_before,
+              value_beforestop_value: value_beforestop_value,
+              value_aftergas_stopvalue: value_aftergas_stopvalue,
+              value_aftergas_controlvalue: value_aftergas_controlvalue,
+              kode_jam: kode_jam,
+              name_table: "FUEL GAS TEMPERATURE",
+            },
+            { transaction: t }
+          );
+
+          const gettbl_compdisch_airpress = await tbl_compdisch_airpress.create(
+            {
+              value_afterporous_filter: value_afterporous_filter,
+              value_for96cd: value_for96cd,
+              kode_jam: kode_jam,
+              name_table: "COMPDISCH AIR PRESS",
+            },
+            { transaction: t }
+          );
+
+          const gettbl_diff_press = await tbl_diffpress.create(
+            {
+              value_inlethouse_filter: value_inlethouse_filter,
+              value_lubeoil_filter: value_lubeoil_filter,
+              value_controloil_filter: value_controloil_filter,
+              value_hydoil_filter: value_hydoil_filter,
+              kode_jam: kode_jam,
+              name_table: "DIFF PRESS",
+            },
+            { transaction: t }
+          );
+
+          const gettbl_cooling_water = await tbl_cooling_water.create(
+            {
+              value_temperature: value_temperature,
+              kode_jam: kode_jam,
+              name_table: "COOLING WATER",
+            },
+            { transaction: t }
+          );
+
+          const postFormID = await tbl_form07.create(
+            {
+              nameForm: nameForm,
+              kode_jam: kode_jam,
+            },
+            { transaction: t }
+          );
+
+          await t.commit();
+
+          res.status(200).json({
+            check,
+            gettbl_fuelgas_press,
+            gettbl_compdisch_airpress,
+            gettbl_diff_press,
+            gettbl_cooling_water,
+            postFormID,
+            msg: "success",
           });
-
-      const gettbl_fuelgas_press = await tbl_fuelgas_press.create({
-        value_hpgas_before: value_hpgas_before,
-        value_beforestop_value: value_beforestop_value,
-        value_aftergas_stopvalue: value_aftergas_stopvalue,
-        value_aftergas_controlvalue: value_aftergas_controlvalue,
-        kode_jam: kode_jam,
-        name_table: "FUEL GAS TEMPERATURE",
-      });
-
-      const gettbl_compdisch_airpress = await tbl_compdisch_airpress.create({
-        value_afterporous_filter: value_afterporous_filter,
-        value_for96cd: value_for96cd,
-        kode_jam: kode_jam,
-        name_table: "COMPDISCH AIR PRESS",
-      });
-
-      const gettbl_diff_press = await tbl_diffpress.create({
-        value_inlethouse_filter: value_inlethouse_filter,
-        value_lubeoil_filter: value_lubeoil_filter,
-        value_controloil_filter: value_controloil_filter,
-        value_hydoil_filter: value_hydoil_filter,
-        kode_jam: kode_jam,
-        name_table: "DIFF PRESS",
-      });
-
-      const gettbl_cooling_water = await tbl_cooling_water.create({
-        value_temperature: value_temperature,
-        kode_jam: kode_jam,
-        name_table: "COOLING WATER",
-      });
-
-      const postFormID = await tbl_form07.create({
-        nameForm: nameForm,
-        kode_jam: kode_jam,
-      });
-
-      res.status(200).json({
-        check,
-        gettbl_fuelgas_press,
-        gettbl_compdisch_airpress,
-        gettbl_diff_press,
-        gettbl_cooling_water,
-        postFormID,
-        msg: "success",
-      });
+        } catch (err) {
+          console.log(err);
+          await t.rollback();
+        }
+      } else {
+        return res.status(500).json({ msg: "contact an IT engineer" });
+      }
     } catch (error) {
       return res.status(500).json({ msg: error.message });
     }

@@ -19,6 +19,6 @@ router.post(
   multer({ dest: os.tmpdir() }).single("image"),
   actionCreateHistoryReport
 );
-router.post("/:id", actionDelete);
+router.delete("/:id", actionDelete);
 
 module.exports = router;

@@ -3,17 +3,13 @@ $(async function () {
    * -------
    * Here we will create a few charts using ChartJS
    */
-
-  // console.log("err", "<%=check%>")
-  let api_date = "http://localhost:4000/charts/date";
+  let api_date = `http://localhost:4000/charts/date`;
   let setData;
-  let fetchData = await fetch(api_date, { method: "GET" })
+  await fetch(api_date, { method: "GET" })
     .then((response) => response.json())
     .then((data) => {
       setData = data;
     });
-
-  // console.log("object", setData);
 
   // -----------------------------------------------------
   let setClock = [];
@@ -31,10 +27,17 @@ $(async function () {
   let _2_LoadAmp = [];
   let _3_LoadAmp = [];
   //-POWER FACTOR
+  let _powerfactor = [];
+  //-LOAD MW
+  let meter_loadMW = [];
+  let record_loadMW = [];
+  //-M VAR
+  let meter_Mvar = [];
+  let record_Mvar = [];
 
   for (let i = 0; i < setData.data.length; i++) {
     setClock.push(setData.data[i].clock);
-    //
+    //Field
     setValueA_Field.push(
       setData.data[i].value.get_field[0]?.valueAField === undefined
         ? 0
@@ -45,13 +48,13 @@ $(async function () {
         ? 0
         : setData.data[i].value.get_field[0]?.valueVField
     );
-    //
+    //VoltBeforeTrafo
     setValueV_VoltBeforeTrafo.push(
       setData.data[i].value.get_voltBeforeTrafo[0]?.valueV_BT === undefined
         ? 0
         : setData.data[i].value.get_voltBeforeTrafo[0]?.valueV_BT
     );
-    //
+    //VoltAfterTrafo
     valueVolta1_2_VoltAfterTrafo.push(
       setData.data[i].value.get_voltAfterTrafo[0]?.valueVolta1_2 === undefined
         ? 0
@@ -67,7 +70,7 @@ $(async function () {
         ? 0
         : setData.data[i].value.get_voltAfterTrafo[0]?.valueVolta3_1
     );
-    //
+    //LoadAmp
     _1_LoadAmp.push(
       setData.data[i].value.get_loadamp[0]?.value1Loadamp === undefined
         ? 0
@@ -83,11 +86,39 @@ $(async function () {
         ? 0
         : setData.data[i].value.get_loadamp[0]?.value3Loadamp
     );
+    //powerfactor
+    _powerfactor.push(
+      setData.data[i].value.get_powerfactor[0]?.valuePowerfactor === undefined
+        ? 0
+        : setData.data[i].value.get_powerfactor[0]?.valuePowerfactor
+    );
+    //loadMW
+    meter_loadMW.push(
+      setData.data[i].value.get_loadmw[0]?.valueMeter_loadmw === undefined
+        ? 0
+        : setData.data[i].value.get_loadmw[0]?.valueMeter_loadmw
+    );
+    record_loadMW.push(
+      setData.data[i].value.get_loadmw[0]?.valueRecord_loadmw === undefined
+        ? 0
+        : setData.data[i].value.get_loadmw[0]?.valueRecord_loadmw
+    );
+    //MVar
+    meter_Mvar.push(
+      setData.data[i].value.get_mvar[0]?.valueMeter_mvar === undefined
+        ? 0
+        : setData.data[i].value.get_mvar[0]?.valueMeter_mvar
+    );
+    record_Mvar.push(
+      setData.data[i].value.get_mvar[0]?.valueRecord_mvar === undefined
+        ? 0
+        : setData.data[i].value.get_mvar[0]?.valueRecord_mvar
+    );
 
     // console.log("object", _1_LoadAmp);
   }
 
-  var chartField = {
+  let chartField = {
     labels: setClock,
     datasets: [
       {
@@ -114,8 +145,8 @@ $(async function () {
       },
     ],
   };
-
-  var chartVoltageBeforeTrafo = {
+  //
+  let chartVoltageBeforeTrafo = {
     labels: setClock,
     datasets: [
       {
@@ -133,7 +164,7 @@ $(async function () {
   };
   //
 
-  var voltAfterChartData = {
+  let voltAfterChartData = {
     labels: setClock,
     datasets: [
       {
@@ -173,7 +204,7 @@ $(async function () {
   };
   //
 
-  var chartPowerFactor = {
+  let chartPowerFactor = {
     labels: setClock,
     datasets: [
       {
@@ -185,14 +216,14 @@ $(async function () {
         pointStrokeColor: "rgba(60,141,188,1)",
         pointHighlightFill: "#fff",
         pointHighlightStroke: "rgba(60,141,188,1)",
-        data: setValueV_Field,
+        data: _powerfactor,
       },
     ],
   };
 
   //
 
-  var loadAMPChartData = {
+  let loadAMPChartData = {
     labels: setClock,
     datasets: [
       {
@@ -232,6 +263,64 @@ $(async function () {
   };
   //
 
+  let chartloadmw = {
+    labels: setClock,
+    datasets: [
+      {
+        label: "V",
+        backgroundColor: "rgba(60,141,188,0.9)",
+        borderColor: "rgba(60,141,188,0.8)",
+        pointRadius: false,
+        pointColor: "#3b8bba",
+        pointStrokeColor: "rgba(60,141,188,1)",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(60,141,188,1)",
+        data: meter_loadMW,
+      },
+      {
+        label: "A",
+        backgroundColor: "rgba(210, 214, 222, 1)",
+        borderColor: "rgba(210, 214, 222, 1)",
+        pointRadius: false,
+        pointColor: "rgba(210, 214, 222, 1)",
+        pointStrokeColor: "#c1c7d1",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(220,220,220,1)",
+        data: record_loadMW,
+      },
+    ],
+  };
+  //
+
+  let chartmvar = {
+    labels: setClock,
+    datasets: [
+      {
+        label: "V",
+        backgroundColor: "rgba(60,141,188,0.9)",
+        borderColor: "rgba(60,141,188,0.8)",
+        pointRadius: false,
+        pointColor: "#3b8bba",
+        pointStrokeColor: "rgba(60,141,188,1)",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(60,141,188,1)",
+        data: [10, 23, 21, 21],
+      },
+      {
+        label: "A",
+        backgroundColor: "rgba(210, 214, 222, 1)",
+        borderColor: "rgba(210, 214, 222, 1)",
+        pointRadius: false,
+        pointColor: "rgba(210, 214, 222, 1)",
+        pointStrokeColor: "#c1c7d1",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(220,220,220,1)",
+        data: [21, 32, 12, 43],
+      },
+    ],
+  };
+  //
+
   let areaChartOptions = {
     maintainAspectRatio: false,
     responsive: true,
@@ -255,18 +344,21 @@ $(async function () {
       ],
     },
   };
+  //
+
+  // --------------------------------------------------------------------
 
   //-------------
   //- BAR CHART FIELD -
   //-------------
-  var fieldChartCanvas = $("#barChart").get(0).getContext("2d");
-  var fieldChartData = $.extend(true, {}, chartField);
-  var field_temp0 = chartField.datasets[0];
-  var field_temp1 = chartField.datasets[1];
+  let fieldChartCanvas = $("#barChart").get(0).getContext("2d");
+  let fieldChartData = $.extend(true, {}, chartField);
+  let field_temp0 = chartField.datasets[0];
+  let field_temp1 = chartField.datasets[1];
   fieldChartData.datasets[0] = field_temp1;
   fieldChartData.datasets[1] = field_temp0;
 
-  var fieldChartOptions = {
+  let fieldChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     datasetFill: false,
@@ -283,14 +375,14 @@ $(async function () {
   //-------------
   //- BAR CHART VOLTBEFTRAFO -
   //-------------
-  var voltBefTrafoChartCanvas = $("#voltBeforeTrafoChart")
+  let voltBefTrafoChartCanvas = $("#voltBeforeTrafoChart")
     .get(0)
     .getContext("2d");
-  var voltBefTrafoChartData = $.extend(true, {}, chartVoltageBeforeTrafo);
-  var voltbefore_temp0 = chartVoltageBeforeTrafo.datasets[0];
+  let voltBefTrafoChartData = $.extend(true, {}, chartVoltageBeforeTrafo);
+  let voltbefore_temp0 = chartVoltageBeforeTrafo.datasets[0];
   voltBefTrafoChartData.datasets[0] = voltbefore_temp0;
 
-  var voltBefTrafoChartOptions = {
+  let voltBefTrafoChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     datasetFill: false,
@@ -305,46 +397,46 @@ $(async function () {
   //-------------
   //- LINE CHART - VOLTAGE AFTER TRAFO
   //--------------
-  var lineChartCanvas = $("#voltAfterTrafoChart").get(0).getContext("2d");
-  var lineChartOptions = $.extend(true, {}, areaChartOptions);
-  var lineChartData = $.extend(true, {}, voltAfterChartData);
-  lineChartData.datasets[0].fill = false;
-  lineChartData.datasets[1].fill = false;
-  lineChartData.datasets[2].fill = false;
-  lineChartOptions.datasetFill = false;
+  let voltafterChartCanvas = $("#voltAfterTrafoChart").get(0).getContext("2d");
+  let voltafterChartOptions = $.extend(true, {}, areaChartOptions);
+  let voltafterChartData = $.extend(true, {}, voltAfterChartData);
+  voltafterChartData.datasets[0].fill = false;
+  voltafterChartData.datasets[1].fill = false;
+  voltafterChartData.datasets[2].fill = false;
+  voltafterChartOptions.datasetFill = false;
 
-  var lineChart = new Chart(lineChartCanvas, {
+  let voltafterChart = new Chart(voltafterChartCanvas, {
     type: "line",
-    data: lineChartData,
-    options: lineChartOptions,
+    data: voltafterChartData,
+    options: voltafterChartOptions,
   });
 
   //-------------
   //- LINE CHART -LOAD AMP CHART
   //--------------
-  var lineChartCanvas = $("#loadAmpChart").get(0).getContext("2d");
-  var lineChartOptions = $.extend(true, {}, areaChartOptions);
-  var lineChartData = $.extend(true, {}, loadAMPChartData);
-  lineChartData.datasets[0].fill = false;
-  lineChartData.datasets[1].fill = false;
-  lineChartData.datasets[2].fill = false;
-  lineChartOptions.datasetFill = false;
+  let loadampChartCanvas = $("#loadAmpChart").get(0).getContext("2d");
+  let loadampChartOptions = $.extend(true, {}, areaChartOptions);
+  let loadampChartData = $.extend(true, {}, loadAMPChartData);
+  loadampChartData.datasets[0].fill = false;
+  loadampChartData.datasets[1].fill = false;
+  loadampChartData.datasets[2].fill = false;
+  loadampChartOptions.datasetFill = false;
 
-  var lineChart = new Chart(lineChartCanvas, {
+  let loadampChart = new Chart(loadampChartCanvas, {
     type: "line",
-    data: lineChartData,
-    options: lineChartOptions,
+    data: loadampChartData,
+    options: loadampChartOptions,
   });
 
   //-------------
   //- BAR CHART FIELD -
   //-------------
-  var powerfactorChartCanvas = $("#powerfactorChart").get(0).getContext("2d");
-  var powerfactorChartData = $.extend(true, {}, chartPowerFactor);
-  var powerfactor_temp0 = chartPowerFactor.datasets[0];
+  let powerfactorChartCanvas = $("#powerfactorChart").get(0).getContext("2d");
+  let powerfactorChartData = $.extend(true, {}, chartPowerFactor);
+  let powerfactor_temp0 = chartPowerFactor.datasets[0];
   powerfactorChartData.datasets[0] = powerfactor_temp0;
 
-  var powerfactorChartOptions = {
+  let powerfactorChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     datasetFill: false,
@@ -355,4 +447,50 @@ $(async function () {
     data: powerfactorChartData,
     options: powerfactorChartOptions,
   });
+
+  //-------------
+  //- BAR CHART LOAD MW -
+  //-------------
+  let loadmwChartCanvas = $("#loadmwChart").get(0).getContext("2d");
+  let loadmwChartData = $.extend(true, {}, chartloadmw);
+  let loadmw_temp0 = chartloadmw.datasets[0];
+  let loadmw_temp1 = chartloadmw.datasets[1];
+  loadmwChartData.datasets[0] = loadmw_temp1;
+  loadmwChartData.datasets[1] = loadmw_temp0;
+
+  let loadmwChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    datasetFill: false,
+  };
+
+  new Chart(loadmwChartCanvas, {
+    type: "bar",
+    data: loadmwChartData,
+    options: loadmwChartOptions,
+  });
+
+  //-------------
+  //- BAR CHART MVAR-
+  //-------------
+  let mvarChartCanvas = $("#mvarChart").get(0).getContext("2d");
+  let mvarChartData = $.extend(true, {}, chartmvar);
+  let mvar_temp0 = chartmvar.datasets[0];
+  let mvar_temp1 = chartmvar.datasets[1];
+  mvarChartData.datasets[0] = mvar_temp1;
+  mvarChartData.datasets[1] = mvar_temp0;
+
+  let mvarChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    datasetFill: false,
+  };
+
+  new Chart(mvarChartCanvas, {
+    type: "bar",
+    data: mvarChartData,
+    options: mvarChartOptions,
+  });
+
+  //
 });

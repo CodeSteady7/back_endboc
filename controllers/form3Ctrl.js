@@ -8,6 +8,7 @@ const {
   tbl_turbinspeed,
   tbl_vce,
   tbl_jam,
+  tbl_historyDate,
   tbl_form03,
 } = require("../models");
 
@@ -32,78 +33,159 @@ const form3Ctrl = {
         value_generator_drain,
         nameForm,
         kode_jam,
-        createdAt,
+        user_id,
       } = req.body;
 
-      // let data = req.body;
+      // console.log("req", req.body);
+      const date = new Date();
+      let vDate = date.toLocaleString("en-GB");
+      let createdAt = vDate.split(",");
+      let setcreatedAt = createdAt[0];
       let checkDate = await tbl_historyDate.findOne({
-        where: { createdAt: createdAt },
+        where: { createdAt: setcreatedAt },
       });
 
-      let check = checkDate
-        ? ""
-        : await tbl_historyDate.create({
-            createdAt,
-            updatedAt,
-            user_id: 1,
+      let checkLastRow = [
+        await tbl_dsp.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await tbl_gasflow.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await tbl_lube_oil_temp.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await tbl_turbinspeed.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await tbl_vce.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+      ];
+
+      let lastRowtbl_form = await tbl_form03.findOne({
+        attributes: ["id_form"],
+        order: [["id_form", "DESC"]],
+      });
+
+      let data = checkLastRow.map((item) => {
+        // console.log("item", item.id, lastRowtbl_form.id_form);
+        return item.id == lastRowtbl_form.id_form;
+      });
+
+      let checkInclude = data.includes(false);
+
+      // let setData = {
+      //   checkInclude,
+      //   checkLastRow,
+      //   lastRowtbl_form,
+      // };
+
+      const t = await db.sequelize.transaction();
+
+      if (checkInclude == false) {
+        try {
+          let check =
+            checkDate == null || ""
+              ? ""
+              : await tbl_historyDate.create(
+                  {
+                    setcreatedAt,
+                    setcreatedAt,
+                    user_id: user_id,
+                  },
+                  { transaction: t }
+                );
+
+          const gettbl_dsp = await tbl_dsp.create(
+            {
+              value_dsp: value_dsp,
+              kode_jam: kode_jam,
+              name_table: "DSP",
+            },
+            { transaction: t }
+          );
+
+          const gettbl_gasflow = await tbl_gasflow.create(
+            {
+              value_M37H: value_M37H,
+              kode_jam: kode_jam,
+              name_table: "GASFLOW",
+            },
+            { transaction: t }
+          );
+
+          const gettbl_lube_oil_temp = await tbl_lube_oil_temp.create(
+            {
+              value_oilcooler_inlet: value_oilcooler_inlet,
+              value_oilcooler_outlet: value_oilcooler_outlet,
+              value_journaland_thrustdrain: value_journaland_thrustdrain,
+              value_no2_bearingdrain: value_no2_bearingdrain,
+              value_gearpinion_no1: value_gearpinion_no1,
+              value_gearwheel_no2: value_gearwheel_no2,
+              value_gearwheel_no3: value_gearwheel_no3,
+              value_gearwheel_no4: value_gearwheel_no4,
+              value_gearwheel_no5: value_gearwheel_no5,
+              value_generator_drain: value_generator_drain,
+              kode_jam: kode_jam,
+              name_table: "Lube Oil Temperature",
+            },
+            { transaction: t }
+          );
+
+          const gettbl_turbinespeed = await tbl_turbinspeed.create(
+            {
+              value_rpm: value_rpm,
+              kode_jam: kode_jam,
+              name_table: "Turbine Speed",
+            },
+            { transaction: t }
+          );
+
+          const gettbl_vce = await tbl_vce.create(
+            {
+              value_vce: value_vce,
+              kode_jam: kode_jam,
+              name_table: "VCE",
+            },
+            { transaction: t }
+          );
+
+          const postFormID = await tbl_form03.create(
+            {
+              nameForm: nameForm,
+              kode_jam: kode_jam,
+            },
+            { transaction: t }
+          );
+
+          await t.commit();
+
+          res.status(200).json({
+            // setData,
+            check,
+            gettbl_dsp,
+            gettbl_gasflow,
+            gettbl_lube_oil_temp,
+            gettbl_turbinespeed,
+            gettbl_vce,
+            postFormID,
+            msg: "success",
           });
-
-      const gettbl_dsp = await tbl_dsp.create({
-        value_dsp: value_dsp,
-        kode_jam: kode_jam,
-        name_table: "DSP",
-      });
-
-      const gettbl_gasflow = await tbl_gasflow.create({
-        value_M37H: value_M37H,
-        kode_jam: kode_jam,
-        name_table: "GASFLOW",
-      });
-
-      const gettbl_lube_oil_temp = await tbl_lube_oil_temp.create({
-        value_oilcooler_inlet: value_oilcooler_inlet,
-        value_oilcooler_outlet: value_oilcooler_outlet,
-        value_journaland_thrustdrain: value_journaland_thrustdrain,
-        value_no2_bearingdrain: value_no2_bearingdrain,
-        value_gearpinion_no1: value_gearpinion_no1,
-        value_gearwheel_no2: value_gearwheel_no2,
-        value_gearwheel_no3: value_gearwheel_no3,
-        value_gearwheel_no4: value_gearwheel_no4,
-        value_gearwheel_no5: value_gearwheel_no5,
-        value_generator_drain: value_generator_drain,
-        kode_jam: kode_jam,
-        name_table: "Lube Oil Temperature",
-      });
-
-      const gettbl_turbinespeed = await tbl_turbinspeed.create({
-        value_rpm: value_rpm,
-        kode_jam: kode_jam,
-        name_table: "Turbine Speed",
-      });
-
-      const gettbl_vce = await tbl_vce.create({
-        value_vce: value_vce,
-        kode_jam: kode_jam,
-        name_table: "VCE",
-      });
-
-      const postFormID = await tbl_form03.create({
-        nameForm: nameForm,
-        kode_jam: kode_jam,
-      });
-
-      console.log(req.body);
-      res.status(200).json({
-        check,
-        gettbl_dsp,
-        gettbl_gasflow,
-        gettbl_lube_oil_temp,
-        gettbl_turbinespeed,
-        gettbl_vce,
-        postFormID,
-        msg: "success",
-      });
+        } catch (err) {
+          await t.rollback();
+        }
+      } else {
+        return res.status(500).json({ msg: "contact an IT engineer" });
+      }
     } catch (error) {
+      console.log("err", error);
+
       return res.status(500).json({ msg: error.message });
     }
   },

@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       createdAt: {
         type: DataTypes.DATEONLY,
         get: function () {
-          return this.getDataValue("createdAt").toLocaleString("en-GB", {
+          return this.getDataValue("createdAt")?.toLocaleString("en-GB", {
             timeZone: "UTC",
           });
         },

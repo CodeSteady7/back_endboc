@@ -1,15 +1,17 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="index3.html" class="brand-link">
-    <img
-      src="/adminlte/dist/img/AdminLTELogo.png"
-      alt="AdminLTE Logo"
-      class="brand-image img-circle elevation-3"
-      style="opacity: 0.8"
-    />
-    <span class="brand-text font-weight-light">BALOG +</span>
-  </a>
+  <div style="">
+    <a
+      href="/dashboard"
+      class="brand-link"
+      style="display: flex; justify-content: center">
+      <img
+        src="/images/logo_boc+-01.png"
+        alt="AdminLTE Logo"
+        style="width: 100px" />
+    </a>
+  </div>
 
   <!-- Sidebar -->
   <div class="sidebar">
@@ -19,8 +21,7 @@
         class="nav nav-pills nav-sidebar flex-column"
         data-widget="treeview"
         role="menu"
-        data-accordion="false"
-      >
+        data-accordion="false">
         <li class="nav-item">
           <a href="/dashboard" class="nav-link">
             <i class="nav-icon fas fa-home"></i>
@@ -48,12 +49,14 @@
             <p>Report</p>
           </a>
         </li>
-        <!-- <li class="nav-item"> -->
-        <!-- <a href="/report" class="nav-link"> -->
-        <!-- <i class="nav-icon far fa-file"></i> -->
-        <!-- <p>History</p> -->
-        <!-- </a> -->
-        <!-- </li> -->
+
+        <li class="nav-header">History</li>
+        <li class="nav-item">
+          <a href="/history" class="nav-link">
+            <i class="nav-icon far fa-file"></i>
+            <p>History</p>
+          </a>
+        </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

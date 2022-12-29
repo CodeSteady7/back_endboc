@@ -8,6 +8,7 @@ const {
   tbl_comp_temp,
   tbl_fuel_temp,
   tbl_form05,
+  tbl_historyDate,
 } = require("../models");
 
 const v = new Validator();
@@ -27,67 +28,220 @@ const form5Ctrl = {
         value_fuel_temp,
         nameForm,
         kode_jam,
-        createdAt,
+        user_id,
       } = req.body;
 
+      const date = new Date();
+      let vDate = date.toLocaleString("en-GB");
+      let createdAt = vDate.split(",");
+      let setcreatedAt = createdAt[0];
       let checkDate = await tbl_historyDate.findOne({
-        where: { createdAt: createdAt },
+        where: { createdAt: setcreatedAt },
+      });
+      //
+
+      let checkLastRow = [
+        await tbl_firststage_wheelspace.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await tbl_second_wheelspace.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await tbl_fuel_temp.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        // await tbl_comp_temp.findOne({
+        //   attributes: ["id", "name_table"],
+        //   order: [["id", "DESC"]],
+        // }),
+      ];
+
+      let lastRowtbl_form = await tbl_form05.findOne({
+        attributes: ["id_form"],
+        order: [["id_form", "DESC"]],
       });
 
-      let check = checkDate
-        ? ""
-        : await tbl_historyDate.create({
-            createdAt,
-            updatedAt,
-            user_id: 1,
+      let data = checkLastRow.map((item) => {
+        console.log("item", item.id, lastRowtbl_form.id_form);
+        return item.id == lastRowtbl_form.id_form;
+      });
+
+      let checkInclude = data.includes(false);
+
+      let checkDateNow = date.toISOString().split("T")[0];
+      let db_comp_temp = await tbl_comp_temp.findAll({
+        attributes: ["id", "kode_jam", "createdAt", "value_discharge_anulr"],
+        where: {
+          createdAt: checkDateNow,
+          kode_jam: req.body.kode_jam,
+        },
+        order: [["id", "DESC"]],
+        limit: 1,
+      });
+      let checkClockNow = req.body.kode_jam;
+      let db_comp = { checkDateNow, db_comp_temp, checkClockNow };
+
+      console.log(
+        "==>",
+        checkDateNow,
+        db_comp_temp[0]?.createdAt,
+        "||",
+        checkClockNow,
+        db_comp_temp[0]?.kode_jam,
+        db_comp_temp[0]?.id,
+        db_comp_temp[0]?.value_discharge_anulr
+      );
+      // ---
+      // -----
+      // let db_comp_temp = await tbl_comp_temp.findOne({
+      //   attributes: ["id", "name_table"],
+      //   order: [["id", "DESC"]],
+      // });
+
+      // let checkRowtbl_form = lastRowtbl_form.id_form;
+      // let checkRowComp_temp = db_comp_temp.id;
+
+      // -----
+      // console.log(req.body);
+      const t = await db.sequelize.transaction();
+
+      if (checkInclude == false) {
+        try {
+          let check =
+            checkDate == null || ""
+              ? ""
+              : await tbl_historyDate.create(
+                  {
+                    setcreatedAt,
+                    setcreatedAt,
+                    user_id: user_id,
+                  },
+                  { transaction: t }
+                );
+
+          const gettbl_firststage_wheelspace =
+            await tbl_firststage_wheelspace.create(
+              {
+                value_first_fwd2: value_first_fwd2,
+                value_first_fwd3: value_first_fwd3,
+                value_first_afd2: value_first_afd2,
+                value_first_afd3: value_first_afd3,
+                kode_jam: kode_jam,
+                name_table: "FIRST STAGE WHEEL SPACE",
+              },
+              { transaction: t }
+            );
+
+          const gettbl_second_wheelspace = await tbl_second_wheelspace.create(
+            {
+              value_second_fwd2: value_second_fwd2,
+              value_second_fwd3: value_second_fwd3,
+              value_second_aft1: value_second_aft1,
+              value_second_aft2: value_second_aft2,
+              kode_jam: kode_jam,
+              name_table: "SECOND WHEELSPACE",
+            },
+            { transaction: t }
+          );
+
+          let gettbl_comp_temp =
+            (checkDateNow == db_comp_temp[0]?.createdAt &&
+              checkClockNow == db_comp_temp[0]?.kode_jam &&
+              db_comp_temp[0]?.value_discharge_anulr == null) ||
+            ""
+              ? await tbl_comp_temp.update(
+                  {
+                    value_discharge_anulr: value_discharge_anulr,
+                    // value_discharge_anulr: value_discharge_anulr,
+                    kode_jam: kode_jam,
+                    name_table: "COMP TEMP",
+                  },
+                  { where: { id: db_comp_temp[0]?.id } },
+                  { transaction: t }
+                )
+              : await tbl_comp_temp.create(
+                  {
+                    value_discharge_anulr: value_discharge_anulr,
+                    // value_discharge_anulr: value_discharge_anulr,
+                    kode_jam: kode_jam,
+                    name_table: "COMP TEMP",
+                  },
+                  { transaction: t }
+                );
+
+          // let gettbl_comp_temp_ =
+          //   checkRowComp_temp == checkRowtbl_form
+          //     ? await tbl_comp_temp.create(
+          //         {
+          //           value_discharge_anulr: value_discharge_anulr,
+          //           // value_discharge_anulr: value_discharge_anulr,
+          //           kode_jam: kode_jam,
+          //           name_table: "COMP TEMP",
+          //         },
+          //         { transaction: t }
+          //       )
+          //     : await tbl_comp_temp.update(
+          //         {
+          //           value_discharge_anulr: value_discharge_anulr,
+          //           // value_discharge_anulr: value_discharge_anulr,
+          //           kode_jam: kode_jam,
+          //           name_table: "COMP TEMP",
+          //         },
+          //         { where: { id: checkRowtbl_form } },
+          //         { transaction: t }
+          //       );
+
+          // const gettbl_comp_temp = await tbl_comp_temp.create(
+          //   {
+          //     value_discharge_anulr: value_discharge_anulr,
+          //     // value_discharge_anulr: value_discharge_anulr,
+          //     kode_jam: kode_jam,
+          //     name_table: "COMP TEMP",
+          //   },
+          //   { transaction: t }
+          // );
+
+          const gettbl_fuel_temp = await tbl_fuel_temp.create(
+            {
+              value_fuel_temp: value_fuel_temp,
+              kode_jam: kode_jam,
+              name_table: "FUEL TEMPERATURE",
+            },
+            { transaction: t }
+          );
+
+          const postFormID = await tbl_form05.create(
+            {
+              nameForm: nameForm,
+              kode_jam: kode_jam,
+            },
+            { transaction: t }
+          );
+
+          await t.commit();
+
+          res.status(200).json({
+            check,
+            gettbl_firststage_wheelspace,
+            gettbl_second_wheelspace,
+            gettbl_comp_temp,
+            gettbl_fuel_temp,
+            postFormID,
+            msg: "success",
           });
-
-      const gettbl_firststage_wheelspace =
-        await tbl_firststage_wheelspace.create({
-          value_first_fwd2: value_first_fwd2,
-          value_first_fwd3: value_first_fwd3,
-          value_first_afd2: value_first_afd2,
-          value_first_afd3: value_first_afd3,
-          kode_jam: kode_jam,
-          name_table: "FIRST STAGE WHEEL SPACE",
+        } catch (err) {
+          console.log(err);
+          await t.rollback();
+        }
+      } else {
+        return res.status(500).json({
+          msg: "contact an IT engineer",
+          data: { db_comp },
         });
-
-      const gettbl_second_wheelspace = await tbl_second_wheelspace.create({
-        value_second_fwd2: value_second_fwd2,
-        value_second_fwd3: value_second_fwd3,
-        value_second_aft1: value_second_aft1,
-        value_second_aft2: value_second_aft2,
-        kode_jam: kode_jam,
-        name_table: "SECOND WHEELSPACE",
-      });
-
-      const gettbl_comp_temp = await tbl_comp_temp.create({
-        value_discharge_anulr: value_discharge_anulr,
-        // value_inletair: value_inletair,
-        kode_jam: kode_jam,
-        name_table: "COMP TEMP",
-      });
-
-      const gettbl_fuel_temp = await tbl_fuel_temp.create({
-        value_fuel_temp: value_fuel_temp,
-        kode_jam: kode_jam,
-        name_table: "FUEL TEMPERATURE",
-      });
-
-      const postFormID = await tbl_form05.create({
-        nameForm: nameForm,
-        kode_jam: kode_jam,
-      });
-
-      res.status(200).json({
-        check,
-        gettbl_firststage_wheelspace,
-        gettbl_second_wheelspace,
-        gettbl_comp_temp,
-        gettbl_fuel_temp,
-        postFormID,
-        msg: "success",
-      });
+      }
     } catch (error) {
       return res.status(500).json({ msg: error.message });
     }
@@ -228,7 +382,7 @@ const form5Ctrl = {
       const gettbl_comp_temp = await tbl_comp_temp.update(
         {
           value_discharge_anulr: value_discharge_anulr,
-          // value_inletair: value_inletair,
+          // value_discharge_anulr: value_discharge_anulr,
           kode_jam: kode_jam,
           name_table: "COMP TEMP",
         },
@@ -284,7 +438,7 @@ module.exports = form5Ctrl;
 // gettbl_comp_temp: async (req, res) => {
 // 	try {
 // 		const data = await db.sequelize.query(
-// 			"SELECT tbl_comp_temp.id, tbl_comp_temp.value_discharge_anulr, tbl_comp_temp.value_inletair, tbl_comp_temp.kode_jam, tbl_comp_temp.createdAt, tbl_comp_temp.updatedAt, tbl_jam.urutan_jam, tbl_jam.nilai_jam FROM tbl_comp_temp LEFT JOIN tbl_jam ON tbl_comp_temp.kode_jam = tbl_jam.nilai_jam"
+// 			"SELECT tbl_comp_temp.id, tbl_comp_temp.value_discharge_anulr, tbl_comp_temp.value_discharge_anulr, tbl_comp_temp.kode_jam, tbl_comp_temp.createdAt, tbl_comp_temp.updatedAt, tbl_jam.urutan_jam, tbl_jam.nilai_jam FROM tbl_comp_temp LEFT JOIN tbl_jam ON tbl_comp_temp.kode_jam = tbl_jam.nilai_jam"
 // 		)
 // 		res.status(200).json({ data, msg: "success" })
 // 	} catch (error) {

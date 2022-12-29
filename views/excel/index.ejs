@@ -8,43 +8,31 @@
     <link rel="stylesheet" href="/stylesheets/style-doc.css" />
   </head>
   <body>
-    <div style="width: 1230px">
-      <%= console.log(set_history); %>
+    <div>
       <!--  -->
-      <% if( checkDate && page == 1) { %>
       <!--  -->
+      <!-- <div style="width:297mm; height:210mm" ></div> -->
       <%- include ./sheet1.ejs %>
       <!--  -->
-      <%}%>
-
-      <!--  -->
-
-      <% if(checkDate && page == 2) { %>
+      <div style="page-break-after: always"></div>
       <!--  -->
       <%- include ./sheet2.ejs %>
       <!--  -->
-      <%}%>
-
-      <!--  -->
-      <% if(checkDate && page == 3) { %>
+      <div style="page-break-after: always"></div>
       <!--  -->
       <%- include ./sheet3.ejs %>
       <!--  -->
-      <%}%>
-
-      <!--  -->
-      <% if(checkDate && page == 4) { %>
+      <div style="page-break-after: always"></div>
       <!--  -->
       <%- include ./sheet4.ejs %>
       <!--  -->
-      <%}%>
-
-      <!--  -->
-      <% if(checkDate && page == 5) { %>
+      <div style="page-break-after: always"></div>
       <!--  -->
       <%- include ./sheet5.ejs %>
       <!--  -->
-      <%}%>
+      <div style="page-break-after: always"></div>
+      <!--  -->
+      <!--  -->
     </div>
   </body>
 </html>

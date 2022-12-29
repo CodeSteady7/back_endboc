@@ -47,93 +47,190 @@ const form1Ctrl = {
         valueMeter_mvar,
         valueRecord_mvar,
         nameForm,
-        createdAt,
-        updatedAt,
         user_id,
       } = req.body;
+      // console.log("req", req.body);
 
+      const date = new Date();
+      let vDate = date.toLocaleString("en-GB");
+      let createdAt = vDate.split(",");
+      let setcreatedAt = createdAt[0];
       let checkDate = await tbl_historyDate.findOne({
-        where: { createdAt: createdAt },
+        where: { createdAt: setcreatedAt },
       });
 
-      let check = checkDate
-        ? ""
-        : await tbl_historyDate.create({
-            createdAt,
-            updatedAt,
-            user_id: 1,
+      //
+      let checkLastRow = [
+        await Field.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await voltBeforeTrafo.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await voltAfterTrafo.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await loadAmp.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await powerFactor.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await loadMW.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await Mvar.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+      ];
+
+      let lastRowtbl_form01 = await tbl_form01.findOne({
+        attributes: ["id_form"],
+        order: [["id_form", "DESC"]],
+      });
+
+      let data = checkLastRow.map((item) => {
+        // console.log("item", item.id, lastRowtbl_form01.id_form);
+        return item.id == lastRowtbl_form01.id_form;
+      });
+
+      let checkInclude = data.includes(false);
+
+      // let setData = {
+      //   checkInclude,
+      //   checkLastRow,
+      //   lastRowtbl_form01,
+      // };
+
+      const t = await db.sequelize.transaction();
+
+      if (checkInclude == false) {
+        try {
+          let check =
+            checkDate == null || ""
+              ? ""
+              : await tbl_historyDate.create(
+                  {
+                    setcreatedAt,
+                    setcreatedAt,
+                    user_id: user_id,
+                  },
+                  { transaction: t }
+                );
+
+          const field = await Field.create(
+            {
+              valueVField: valueVField,
+              valueAField: valueAField,
+              kode_jam: kode_jam,
+              name_table: "FIELD",
+            },
+
+            { transaction: t }
+          );
+          const before = await voltBeforeTrafo.create(
+            {
+              valueV_BT: valueV_BT,
+              kode_jam: kode_jam,
+              name_table: "VOLTAGE BEFORE TRAFO",
+            },
+            { transaction: t }
+          );
+          const voltAfter = await voltAfterTrafo.create(
+            {
+              valueVolta1_2: valueVolta1_2,
+              valueVolta2_3: valueVolta2_3,
+              valueVolta3_1: valueVolta3_1,
+              kode_jam: kode_jam,
+              name_table: "VOLTAGE AFTER TRAFO",
+            },
+            { transaction: t }
+          );
+
+          const getloadAmp = await loadAmp.create(
+            {
+              value1Loadamp: value1Loadamp,
+              value2Loadamp: value2Loadamp,
+              value3Loadamp: value3Loadamp,
+              kode_jam: kode_jam,
+              name_table: "LOAD AMP",
+            },
+            { transaction: t }
+          );
+
+          const powerfactor = await powerFactor.create(
+            {
+              valuePowerfactor: valuePowerfactor,
+              kode_jam: kode_jam,
+              name_table: "POWER FACTOR",
+            },
+            { transaction: t }
+          );
+
+          const get_loadmw = await loadMW.create(
+            {
+              valueMeter_loadmw: valueMeter_loadmw,
+              valueRecord_loadmw: valueRecord_loadmw,
+              kode_jam: kode_jam,
+              name_table: "LOAD MW",
+            },
+            { transaction: t }
+          );
+
+          const get_mvar = await Mvar.create(
+            {
+              valueMeter_mvar: valueMeter_mvar,
+              valueRecord_mvar: valueRecord_mvar,
+              kode_jam: kode_jam,
+              name_table: "M VAR",
+            },
+            { transaction: t }
+          );
+
+          const postFormID = await tbl_form01.create(
+            {
+              nameForm: nameForm,
+              kode_jam: kode_jam,
+            },
+            { transaction: t }
+          );
+
+          await t.commit();
+
+          res.status(200).json({
+            data,
+            check,
+            // checkDate,
+            // data,
+            field,
+            before,
+            voltAfter,
+            loadAmp,
+            getloadAmp,
+            powerfactor,
+            get_loadmw,
+            get_mvar,
+            postFormID,
+            msg: "Success",
           });
+        } catch (err) {
+          console.log(err);
+          await t.rollback();
+        }
+      } else {
+        return res.status(500).json({ msg: "contact an IT engineer" });
+      }
 
-      const field = await Field.create({
-        valueVField: valueVField,
-        valueAField: valueAField,
-        kode_jam: kode_jam,
-        name_table: "FIELD",
-      });
-      const before = await voltBeforeTrafo.create({
-        valueV_BT: valueV_BT,
-        kode_jam: kode_jam,
-        name_table: "VOLTAGE BEFORE TRAFO",
-      });
-      const voltAfter = await voltAfterTrafo.create({
-        valueVolta1_2: valueVolta1_2,
-        valueVolta2_3: valueVolta2_3,
-        valueVolta3_1: valueVolta3_1,
-        kode_jam: kode_jam,
-        name_table: "VOLTAGE AFTER TRAFO",
-      });
-
-      const getloadAmp = await loadAmp.create({
-        value1Loadamp: value1Loadamp,
-        value2Loadamp: value2Loadamp,
-        value3Loadamp: value3Loadamp,
-        kode_jam: kode_jam,
-        name_table: "LOAD AMP",
-      });
-
-      const powerfactor = await powerFactor.create({
-        valuePowerfactor: valuePowerfactor,
-        kode_jam: kode_jam,
-        name_table: "POWER FACTOR",
-      });
-
-      const get_loadmw = await loadMW.create({
-        valueMeter_loadmw: valueMeter_loadmw,
-        valueRecord_loadmw: valueRecord_loadmw,
-        kode_jam: kode_jam,
-        name_table: "LOAD MW",
-      });
-
-      const get_mvar = await Mvar.create({
-        valueMeter_mvar: valueMeter_mvar,
-        valueRecord_mvar: valueRecord_mvar,
-        kode_jam: kode_jam,
-        name_table: "M VAR",
-      });
-
-      const postFormID = await tbl_form01.create({
-        nameForm: nameForm,
-        kode_jam: kode_jam,
-      });
-
-      let data = req.body;
-
-      res.status(200).json({
-        check,
-        // checkDate,
-        // data,
-        field,
-        before,
-        voltAfter,
-        loadAmp,
-        getloadAmp,
-        powerfactor,
-        get_loadmw,
-        get_mvar,
-        postFormID,
-        msg: "Success",
-      });
+      // let data = req.body;
     } catch (error) {
+      console.log("firstErr", error);
       return res.status(500).json({ msg: error.message });
     }
   },

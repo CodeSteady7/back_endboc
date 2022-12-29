@@ -28,11 +28,11 @@ module.exports = (sequelize, DataTypes) => {
         get: function () {
           let getStatus = this.getDataValue("status");
           if (getStatus === "01") {
-            getStatus = "Waiting";
+            getStatus = "Menunggu";
           } else if (getStatus === "02") {
-            getStatus = "Not Accepted";
+            getStatus = "Di Tolak";
           } else {
-            getStatus = " Accept";
+            getStatus = "Telah Di Proses";
           }
           return getStatus;
         },

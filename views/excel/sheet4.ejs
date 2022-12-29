@@ -1,4 +1,4 @@
-<div style="width: 1230px">
+<div style="width: 1230px;margin: 2rem 0px;">
   <div
     style="
       display: flex;
@@ -85,8 +85,7 @@
       <tbody style="text-align: center">
         <!--  -->
         <% for(let i = 0; i < data.temp.length; i++) { %>
-
-        <tr>
+          <tr>
           <td><%= data.temp[i].clock %></td>
           <td><%= data.temp[i].value.get_tbl_fuelgas_press[0]?.value_hpgas_before %></td>
           <td><%= data.temp[i].value.get_tbl_fuelgas_press[0]?.value_beforestop_value %></td>
@@ -167,36 +166,5 @@
       </div>
     </div>
   </div>
-  <div style="display: flex; justify-content: space-between; margin: 40px 10px 20px 0px">
-    <a
-      type="button"
-      href="/data/getonedata?queryDate=<%= data.queryDate %>&page=3"
-      style="
-        font-size: 15px;
-        background-color: #e35a67;
-        padding: 10px 20px;
-        border: none;
-        font-weight: 700;
-        color: white;
-        text-decoration: none;
-        border-radius: 7px;
-      "
-      >Next Page</a
-    >
-    <a
-      type="button"
-      href="/data/getonedata?queryDate=<%= data.queryDate %>&page=5"
-      style="
-        font-size: 15px;
-        background-color: #e35a67;
-        padding: 10px 20px;
-        border: none;
-        font-weight: 700;
-        color: white;
-        text-decoration: none;
-        border-radius: 7px;
-      "
-      >Next Page</a
-    >
-  </div>
+  
 </div>

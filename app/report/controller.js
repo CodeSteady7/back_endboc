@@ -4,8 +4,10 @@ module.exports = {
   index: async (req, res) => {
     try {
       // let isName = "hai";
-      const db_report = await tbl_report.findAll();
-      console.log("object", db_report);
+      const db_report = await tbl_report.findAll({
+        where: { status: "01" },
+      });
+      // console.log("object", db_report);
       res.render("admin/view_report.ejs", {
         data: db_report,
       });
@@ -76,59 +78,45 @@ module.exports = {
         status,
         report_id,
       } = req.body;
-      const { id } = req.params;
-      const img = req.file;
 
-      let checkHistory = await tbl_report.findOne({
-        where: { id: id },
-      });
-      console.log("object", checkHistory, req.body);
-
-      let selector = {
-        where: { id: id },
-      };
-      console.log("==>", id);
-      await tbl_report.update(
-        {
-          status: "03",
-        },
-        selector
-      );
-
-      // if (req.file) {
-      //   let tmp_path = file.path;
-      //   let originalExt =
-      //     file.originalname.split(".")[file.originalname.split(".").length - 1];
-      //   let filename = file.fieldname + "-" + file.filename + "." + originalExt;
-      //   let target_path = path.resolve(
-      //     config.rootPath,
-      //     `public/data/uploads/${filename}.jpeg`
-      //   );
-
-      //   const src = fs.createReadStream(tmp_path);
-      //   const dest = fs.createWriteStream(target_path);
-      //   src.pipe(dest);
-
-      //   src.on("end", async () => {
       try {
-        //
-        await tbl_historyReport.create({
+        const { id } = req.params;
+        const img = req.file;
+
+        let checkHistory = await tbl_report.findOne({
+          where: { id: id },
+        });
+
+        const db_historyReport = await tbl_historyReport.create({
           judul: checkHistory.judul,
           lokasi: checkHistory.lokasi,
           deskripsi: checkHistory.deskripsi,
           imageBase64: checkHistory.imageBase64,
-          status: checkHistory.status,
-          reportRepair: reportRepair,
-          user_id: 1,
           report_id: id,
+          reportRepair: reportRepair,
+          user_id: "1",
+          status: "03",
         });
 
+        const db_report = await tbl_report.update(
+          {
+            status: "03",
+          },
+          {
+            where: { id: id },
+          }
+        );
+
+        console.log(
+          ` msg: Success, data: { ${db_historyReport}, ${db_report} }`
+        );
         res.redirect("/report");
+        // res
+        //   .status(200)
+        //   .json({ msg: "Success", data: { db_historyReport, db_report } });
       } catch (err) {
         console.log(err);
       }
-      // });
-      // }
     } catch (err) {
       console.log(err);
     }

@@ -7,6 +7,7 @@ const {
   tbl_hvdtrip_circuitpress,
   tbl_lubeoil_press,
   tbl_lubeoil_tanktemp,
+  tbl_historyDate,
   tbl_form04,
 } = require("../models");
 
@@ -25,72 +26,152 @@ const form4Ctrl = {
         value_lubeoil_tanktemp,
         nameForm,
         kode_jam,
-        createdAt,
+        user_id,
       } = req.body;
 
-      // let data = req.body;
-
+      const date = new Date();
+      let vDate = date.toLocaleString("en-GB");
+      let createdAt = vDate.split(",");
+      let setcreatedAt = createdAt[0];
       let checkDate = await tbl_historyDate.findOne({
-        where: { createdAt: createdAt },
+        where: { createdAt: setcreatedAt },
+      });
+      //
+      let checkLastRow = [
+        await tbl_lubeoil_bearingtemperature.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await tbl_hvdoil_press.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await tbl_hvdtrip_circuitpress.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await tbl_lubeoil_press.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await tbl_lubeoil_tanktemp.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+      ];
+
+      let lastRowtbl_form = await tbl_form04.findOne({
+        attributes: ["id_form"],
+        order: [["id_form", "DESC"]],
       });
 
-      let check = checkDate
-        ? ""
-        : await tbl_historyDate.create({
-            createdAt,
-            updatedAt,
-            user_id: 1,
+      let data = checkLastRow.map((item) => {
+        console.log("item", item.id, lastRowtbl_form.id_form);
+        return item.id == lastRowtbl_form.id_form;
+      });
+
+      let checkInclude = data.includes(false);
+
+      let setData = {
+        checkInclude,
+        checkLastRow,
+        lastRowtbl_form,
+      };
+
+      const t = await db.sequelize.transaction();
+
+      if (checkInclude == false) {
+        try {
+          let check =
+            checkDate == null || ""
+              ? ""
+              : await tbl_historyDate.create(
+                  {
+                    setcreatedAt,
+                    setcreatedAt,
+                    user_id: user_id,
+                  },
+                  { transaction: t }
+                );
+
+          const gettbl_lubeoil_bearingtemperature =
+            await tbl_lubeoil_bearingtemperature.create(
+              {
+                value_lubeoil_bearingtemperature:
+                  value_lubeoil_bearingtemperature,
+                kode_jam: kode_jam,
+                name_table: "Lube Oil Bearing Temperature",
+              },
+              { transaction: t }
+            );
+
+          const gettbl_hvdoil_press = await tbl_hvdoil_press.create(
+            {
+              value_hvdoil_press: value_hvdoil_press,
+              kode_jam: kode_jam,
+              name_table: "HVD OIL PRESS",
+            },
+            { transaction: t }
+          );
+
+          const gettbl_hvdtrip = await tbl_hvdtrip_circuitpress.create(
+            {
+              value_hvdtrip_circuitpress: value_hvdtrip_circuitpress,
+              kode_jam: kode_jam,
+              name_table: "HVD TRIP CIRCUIT PRESS",
+            },
+            { transaction: t }
+          );
+
+          const gettbl_lubeoil_press = await tbl_lubeoil_press.create(
+            {
+              value_main_oil_pump: value_main_oil_pump,
+              value_fwdfilter: value_fwdfilter,
+              value_turbinebearing_header: value_turbinebearing_header,
+              value_gen_bearingheader: value_gen_bearingheader,
+              kode_jam: kode_jam,
+              name_table: "LUBE OIL PRESS",
+            },
+            { transaction: t }
+          );
+
+          const gettbl_lubeoil_tanktemp = await tbl_lubeoil_tanktemp.create(
+            {
+              value_lubeoil_tanktemp: value_lubeoil_tanktemp,
+              kode_jam: kode_jam,
+              name_table: "LUBE OIL TANK TEMPERATURE",
+            },
+            { transaction: t }
+          );
+
+          const postFormID = await tbl_form04.create(
+            {
+              nameForm: nameForm,
+              kode_jam: kode_jam,
+            },
+            { transaction: t }
+          );
+
+          await t.commit();
+
+          res.status(200).json({
+            setData,
+            check,
+            gettbl_lubeoil_bearingtemperature,
+            gettbl_hvdoil_press,
+            gettbl_hvdtrip,
+            gettbl_lubeoil_press,
+            gettbl_lubeoil_tanktemp,
+            postFormID,
+            msg: "success",
           });
-
-      const gettbl_lubeoil_bearingtemperature =
-        await tbl_lubeoil_bearingtemperature.create({
-          value_lubeoil_bearingtemperature: value_lubeoil_bearingtemperature,
-          kode_jam: kode_jam,
-          name_table: "Lube Oil Bearing Temperature",
-        });
-
-      const gettbl_hvdoil_press = await tbl_hvdoil_press.create({
-        value_hvdoil_press: value_hvdoil_press,
-        kode_jam: kode_jam,
-        name_table: "HVD OIL PRESS",
-      });
-
-      const gettbl_hvdtrip = await tbl_hvdtrip_circuitpress.create({
-        value_hvdtrip_circuitpress: value_hvdtrip_circuitpress,
-        kode_jam: kode_jam,
-        name_table: "HVD TRIP CIRCUIT PRESS",
-      });
-
-      const gettbl_lubeoil_press = await tbl_lubeoil_press.create({
-        value_main_oil_pump: value_main_oil_pump,
-        value_fwdfilter: value_fwdfilter,
-        value_turbinebearing_header: value_turbinebearing_header,
-        value_gen_bearingheader: value_gen_bearingheader,
-        kode_jam: kode_jam,
-        name_table: "LUBE OIL PRESS",
-      });
-
-      const gettbl_lubeoil_tanktemp = await tbl_lubeoil_tanktemp.create({
-        value_lubeoil_tanktemp: value_lubeoil_tanktemp,
-        kode_jam: kode_jam,
-        name_table: "LUBE OIL TANK TEMPERATURE",
-      });
-
-      const postFormID = await tbl_form04.create({
-        nameForm: nameForm,
-        kode_jam: kode_jam,
-      });
-
-      res.status(200).json({
-        check,
-        gettbl_lubeoil_bearingtemperature,
-        gettbl_hvdoil_press,
-        gettbl_hvdtrip,
-        gettbl_lubeoil_press,
-        gettbl_lubeoil_tanktemp,
-        postFormID,
-        msg: "success",
-      });
+        } catch (err) {
+          console.log(err);
+          await t.rollback();
+        }
+      } else {
+        return res.status(500).json({ msg: "contact an IT engineer" });
+      }
     } catch (error) {
       return res.status(500).json({ msg: error.message });
     }

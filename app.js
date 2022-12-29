@@ -16,6 +16,8 @@ const dashboardRouter = require("./app/dashboard/router");
 const dataRouter = require("./app/data/router");
 const reportRouter = require("./app/report/router");
 const chartsRouter = require("./app/charts/router");
+const authRouter = require("./app/auth/router");
+const historyRouter = require("./app/history/router");
 
 const app = express();
 
@@ -60,6 +62,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "app")));
+app.use(express.static(path.join(__dirname, "module-export")));
 app.use(express.static(path.join(__dirname, "src")));
 app.use(
   "/adminlte",
@@ -67,7 +70,7 @@ app.use(
 );
 
 // middleware
-app.use("/", indexRouter);
+app.use("/", authRouter);
 app.use("/users", usersRouter);
 app.use("/form", fromRouter);
 
@@ -76,6 +79,7 @@ app.use("/dashboard", dashboardRouter);
 app.use("/data", dataRouter);
 app.use("/report", reportRouter);
 app.use("/charts", chartsRouter);
+app.use("/history", historyRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

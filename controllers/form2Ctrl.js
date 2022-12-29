@@ -31,71 +31,145 @@ const form2Ctrl = {
         sound,
         nameForm,
         kode_jam,
-        createdAt,
+        user_id,
       } = req.body;
 
+      const date = new Date();
+      let vDate = date.toLocaleString("en-GB");
+      let createdAt = vDate.split(",");
+      let setcreatedAt = createdAt[0];
       let checkDate = await tbl_historyDate.findOne({
-        where: { createdAt: createdAt },
+        where: { createdAt: setcreatedAt },
       });
 
-      let check = checkDate
-        ? ""
-        : await tbl_historyDate.create({
-            createdAt,
-            updatedAt,
-            user_id: 1,
+      //
+
+      let checkLastRow = [
+        await genTrafo.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await visual_check.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await kw_hours.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await rect_trafo_liquid_temp.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+      ];
+
+      let lastRowtbl_form = await tbl_form02.findOne({
+        attributes: ["id_form"],
+        order: [["id_form", "DESC"]],
+      });
+
+      let data = checkLastRow.map((item) => {
+        console.log("item", item.id, lastRowtbl_form.id_form);
+        return item.id == lastRowtbl_form.id_form;
+      });
+
+      let checkInclude = data.includes(false);
+
+      let setData = {
+        checkInclude,
+        checkLastRow,
+        lastRowtbl_form,
+      };
+
+      const t = await db.sequelize.transaction();
+
+      if (checkInclude == false) {
+        try {
+          let check =
+            checkDate == null || ""
+              ? ""
+              : await tbl_historyDate.create(
+                  {
+                    setcreatedAt,
+                    setcreatedAt,
+                    user_id: user_id,
+                  },
+                  { transaction: t }
+                );
+
+          const getgenTrafo = await genTrafo.create(
+            {
+              liquid_level: liquid_level,
+              liquid_temp: liquid_temp,
+              wind_temp: wind_temp,
+              kode_jam: kode_jam,
+              name_table: "Gen Trafo",
+            },
+            { transaction: t }
+          );
+
+          const getvisual_check = await visual_check.create(
+            {
+              l_o: l_o,
+              temp: temp,
+              sound: sound,
+              kode_jam: kode_jam,
+              // createdAt: createdAt,
+              name_table: "Visual Check",
+            },
+            { transaction: t }
+          );
+
+          const getkw_hours = await kw_hours.create(
+            {
+              value_tblkw_hours: value_tblkw_hours,
+              kode_jam: kode_jam,
+              name_table: "KW Hours",
+            },
+            { transaction: t }
+          );
+
+          const getTblReact_trafoliquid = await rect_trafo_liquid_temp.create(
+            {
+              value_tblRect_trafo_liquid_temp: value_tblRect_trafo_liquid_temp,
+              kode_jam: kode_jam,
+              name_table: "React Trafo Liquid Temperature",
+            },
+            { transaction: t }
+          );
+
+          const postFormID = await tbl_form02.create(
+            {
+              nameForm: nameForm,
+              kode_jam: kode_jam,
+            },
+            { transaction: t }
+          );
+
+          await t.commit();
+
+          res.status(200).json({
+            setData,
+            check,
+            getTblReact_trafoliquid,
+            getkw_hours,
+            getgenTrafo,
+            getvisual_check,
+            postFormID,
+            msg: "success",
           });
-
-      const getgenTrafo = await genTrafo.create({
-        liquid_level: liquid_level,
-        liquid_temp: liquid_temp,
-        wind_temp: wind_temp,
-        kode_jam: kode_jam,
-        name_table: "Gen Trafo",
-      });
-
-      const getvisual_check = await visual_check.create({
-        l_o: l_o,
-        temp: temp,
-        sound: sound,
-        kode_jam: kode_jam,
-        // // createdAt: createdAt,
-        name_table: "Visual Check",
-      });
-
-      const getkw_hours = await kw_hours.create({
-        value_tblkw_hours: value_tblkw_hours,
-        kode_jam: kode_jam,
-        name_table: "KW Hours",
-      });
-
-      const getTblReact_trafoliquid = await rect_trafo_liquid_temp.create({
-        value_tblRect_trafo_liquid_temp: value_tblRect_trafo_liquid_temp,
-        kode_jam: kode_jam,
-        name_table: "React Trafo Liquid Temperature",
-      });
-
-      const postFormID = await tbl_form02.create({
-        nameForm: nameForm,
-        kode_jam: kode_jam,
-      });
-
-      // console.log(req.body);
-      // let data = req.body;
-
-      res.status(200).json({
-        check,
-        getTblReact_trafoliquid,
-        getkw_hours,
-        getgenTrafo,
-        getvisual_check,
-        postFormID,
-        msg: "success",
-      });
+        } catch (err) {
+          console.log(err);
+          await t.rollback();
+        }
+      } else {
+        return res.status(500).json({ msg: "contact an IT engineer" });
+      }
     } catch (error) {
       return res.status(500).json({ msg: error.message });
     }
   },
+  // 'SELECT * FROM TableName ORDER BY id DESC LIMIT 1',
 
   // postFormId02: async (req, res) => {
   // 	try {

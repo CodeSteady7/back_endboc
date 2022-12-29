@@ -7,6 +7,7 @@ const {
   tbl_exhaust_temp,
   tbl_comp_temp,
   tbl_form06,
+  tbl_historyDate,
 } = require("../models");
 
 const v = new Validator();
@@ -34,74 +35,209 @@ const form6Ctrl = {
         value_T5_exhaustFluegas,
         value_T6_exhaustFluegas,
         value_inletair,
+        user_id,
         nameForm,
         kode_jam,
-        createdAt,
       } = req.body;
-      // let data = req.body;
 
+      const date = new Date();
+      let vDate = date.toLocaleString("en-GB");
+      let createdAt = vDate.split(",");
+      let setcreatedAt = createdAt[0];
       let checkDate = await tbl_historyDate.findOne({
-        where: { createdAt: createdAt },
+        where: { createdAt: setcreatedAt },
       });
 
-      let check = checkDate
-        ? ""
-        : await tbl_historyDate.create({
-            createdAt,
-            updatedAt,
-            user_id: 1,
+      //
+      let checkLastRow = [
+        await tbl_exhaust_flue_gas_temperature.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        await tbl_exhaust_temp.findOne({
+          attributes: ["id"],
+          order: [["id", "DESC"]],
+        }),
+        // await tbl_comp_temp.findOne({
+        //   attributes: ["id"],
+        //   order: [["id", "DESC"]],
+        // }),
+      ];
+
+      let lastRowtbl_form = await tbl_form06.findOne({
+        attributes: ["id_form"],
+        order: [["id_form", "DESC"]],
+      });
+
+      let data = checkLastRow.map((item) => {
+        // console.log("item", item.id, lastRowtbl_form.id_form);
+        return item.id == lastRowtbl_form.id_form;
+      });
+
+      let checkInclude = data.includes(false);
+
+      // -----
+      let checkDateNow = date.toISOString().split("T")[0];
+      let db_comp_temp = await tbl_comp_temp.findAll({
+        attributes: ["id", "kode_jam", "createdAt", "value_inletair"],
+        where: {
+          createdAt: checkDateNow,
+          kode_jam: req.body.kode_jam,
+        },
+        order: [["id", "DESC"]],
+        limit: 1,
+      });
+
+      // console.log("db_comp_temp", db_comp_temp);
+
+      // let checkRowtbl_form = lastRowtbl_form.id_form;
+      // let checkRowComp_temp = db_comp_temp[0]?.createdAt;
+      //
+
+      let checkClockNow = req.body.kode_jam;
+      // let checkClockNowcreatedAt = setcreatedAt;
+      let db_comp = { checkDateNow, db_comp_temp, checkClockNow };
+
+      console.log(
+        "==>",
+        checkDateNow,
+        db_comp_temp[0]?.createdAt,
+        "||",
+        checkClockNow,
+        db_comp_temp[0]?.kode_jam,
+        db_comp_temp[0]?.id,
+        db_comp_temp[0]?.value_inletair
+      );
+      const t = await db.sequelize.transaction();
+
+      if (checkInclude == false) {
+        try {
+          let check =
+            checkDate == null || ""
+              ? ""
+              : await tbl_historyDate.create({
+                  setcreatedAt,
+                  setcreatedAt,
+                  user_id: user_id,
+                });
+
+          const gettbl_exhaust_flue_gas_temperature =
+            await tbl_exhaust_flue_gas_temperature.create(
+              {
+                value_5_exhaustFluegas: value_5_exhaustFluegas,
+                value_6_exhaustFluegas: value_6_exhaustFluegas,
+                value_7_exhaustFluegas: value_7_exhaustFluegas,
+                value_8_exhaustFluegas: value_8_exhaustFluegas,
+                value_9_exhaustFluegas: value_9_exhaustFluegas,
+                value_10_exhaustFluegas: value_10_exhaustFluegas,
+                value_11_exhaustFluegas: value_11_exhaustFluegas,
+                value_12_exhaustFluegas: value_12_exhaustFluegas,
+                value_AVETX_exhaustFluegas: value_AVETX_exhaustFluegas,
+                value_T1_exhaustFluegas: value_T1_exhaustFluegas,
+                value_T2_exhaustFluegas: value_T2_exhaustFluegas,
+                value_T3_exhaustFluegas: value_T3_exhaustFluegas,
+                value_T4_exhaustFluegas: value_T4_exhaustFluegas,
+                value_T5_exhaustFluegas: value_T5_exhaustFluegas,
+                value_T6_exhaustFluegas: value_T6_exhaustFluegas,
+                kode_jam: kode_jam,
+                name_table: "EXHAUST FLUE GAS",
+              },
+              { transaction: t }
+            );
+
+          const gettbl_exhaust_temp = await tbl_exhaust_temp.create(
+            {
+              value_1_exhaustTemp: value_1_exhaustTemp,
+              value_2_exhaustTemp: value_2_exhaustTemp,
+              value_3_exhaustTemp: value_3_exhaustTemp,
+              value_4_exhaustTemp: value_4_exhaustTemp,
+              kode_jam: kode_jam,
+              name_table: "EXHAUST TEMP",
+            },
+            { transaction: t }
+          );
+
+          let gettbl_comp_temp =
+            (checkDateNow == db_comp_temp[0]?.createdAt &&
+              checkClockNow == db_comp_temp[0]?.kode_jam &&
+              db_comp_temp[0]?.value_inletair == null) ||
+            ""
+              ? await tbl_comp_temp.update(
+                  {
+                    value_inletair: value_inletair,
+                    kode_jam: kode_jam,
+                    name_table: "COMP TEMP",
+                  },
+                  { where: { id: db_comp_temp[0]?.id } },
+                  { transaction: t }
+                )
+              : await tbl_comp_temp.create(
+                  {
+                    value_inletair: value_inletair,
+                    kode_jam: kode_jam,
+                    name_table: "COMP TEMP",
+                  },
+                  { transaction: t }
+                );
+
+          // let gettbl_comp_temp_ =
+          //   checkRowComp_temp == checkRowtbl_form
+          //     ? await tbl_comp_temp.create(
+          //         {
+          //           value_inletair: value_inletair,
+          //           kode_jam: kode_jam,
+          //           name_table: "COMP TEMP",
+          //         },
+          //         { transaction: t }
+          //       )
+          //     : await tbl_comp_temp.update(
+          //         {
+          //           value_inletair: value_inletair,
+          //           kode_jam: kode_jam,
+          //           name_table: "COMP TEMP",
+          //         },
+          //         { where: { id: checkRowtbl_form } },
+          //         { transaction: t }
+          //       );
+
+          // const gettbl_comp_temp = await tbl_comp_temp.create(
+          //   {
+          //     // value_inletair: value_inletair,
+          //     value_inletair: value_inletair,
+          //     kode_jam: kode_jam,
+          //     name_table: "COMP TEMPERATURE",
+          //   },
+          //   { transaction: t }
+          // );
+
+          const postFormID = await tbl_form06.create(
+            {
+              nameForm: nameForm,
+              kode_jam: kode_jam,
+            },
+            { transaction: t }
+          );
+
+          await t.commit();
+
+          res.status(200).json({
+            check,
+            gettbl_exhaust_flue_gas_temperature,
+            gettbl_exhaust_temp,
+            gettbl_comp_temp,
+            postFormID,
+            msg: "success",
           });
-
-      const gettbl_exhaust_flue_gas_temperature =
-        await tbl_exhaust_flue_gas_temperature.create({
-          value_5_exhaustFluegas: value_5_exhaustFluegas,
-          value_6_exhaustFluegas: value_6_exhaustFluegas,
-          value_7_exhaustFluegas: value_7_exhaustFluegas,
-          value_8_exhaustFluegas: value_8_exhaustFluegas,
-          value_9_exhaustFluegas: value_9_exhaustFluegas,
-          value_10_exhaustFluegas: value_10_exhaustFluegas,
-          value_11_exhaustFluegas: value_11_exhaustFluegas,
-          value_12_exhaustFluegas: value_12_exhaustFluegas,
-          value_AVETX_exhaustFluegas: value_AVETX_exhaustFluegas,
-          value_T1_exhaustFluegas: value_T1_exhaustFluegas,
-          value_T2_exhaustFluegas: value_T2_exhaustFluegas,
-          value_T3_exhaustFluegas: value_T3_exhaustFluegas,
-          value_T4_exhaustFluegas: value_T4_exhaustFluegas,
-          value_T5_exhaustFluegas: value_T5_exhaustFluegas,
-          value_T6_exhaustFluegas: value_T6_exhaustFluegas,
-          kode_jam: kode_jam,
-          name_table: "EXHAUST FLUE GAS",
+        } catch (err) {
+          console.log(err);
+          await t.rollback();
+        }
+      } else {
+        return res.status(500).json({
+          db_comp,
+          msg: "contact an IT engineer",
         });
-
-      const gettbl_exhaust_temp = await tbl_exhaust_temp.create({
-        value_1_exhaustTemp: value_1_exhaustTemp,
-        value_2_exhaustTemp: value_2_exhaustTemp,
-        value_3_exhaustTemp: value_3_exhaustTemp,
-        value_4_exhaustTemp: value_4_exhaustTemp,
-        kode_jam: kode_jam,
-        name_table: "EXHAUST TEMP",
-      });
-
-      const gettbl_comp_temp = await tbl_comp_temp.create({
-        // value_discharge_anulr: value_discharge_anulr,
-        value_inletair: value_inletair,
-        kode_jam: kode_jam,
-        name_table: "COMP TEMPERATURE",
-      });
-
-      const postFormID = await tbl_form06.create({
-        nameForm: nameForm,
-        kode_jam: kode_jam,
-      });
-
-      res.status(200).json({
-        check,
-        gettbl_exhaust_flue_gas_temperature,
-        gettbl_exhaust_temp,
-        gettbl_comp_temp,
-        postFormID,
-        msg: "success",
-      });
+      }
     } catch (error) {
       return res.status(500).json({
         msg: error.message,
@@ -255,7 +391,7 @@ const form6Ctrl = {
 
       const gettbl_comp_temp = await tbl_comp_temp.update(
         {
-          // value_discharge_anulr: value_discharge_anulr,
+          // value_inletair: value_inletair,
           value_inletair: value_inletair,
           kode_jam: kode_jam,
           name_table: "COMP TEMPERATURE",

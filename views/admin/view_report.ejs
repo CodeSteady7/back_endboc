@@ -41,21 +41,18 @@
                       <img
                         src="http://localhost:4000/data/uploads/<%=data[i].imageBase64%>"
                         alt="img"
-                        style="width: 100px; height: 100px"
-                      />
+                        style="width: 100px; height: 100px" />
                     </td>
                     <td>
                       <div
-                        class="badge badge-<%= data[i].status === 'Waiting' ?'warning':'success' %> p-2"
-                      >
+                        class="badge badge-<%= data[i].status === 'Menunggu' ?'warning':'success' %> p-2">
                         <%= data[i].status %>
                       </div>
                     </td>
                     <td>
                       <form
                         action="/report/<%=data[i].id%>?_method=DELETE>"
-                        method="POST"
-                      >
+                        method="POST">
                         <div class="row" style="justify-content: center">
                           <a
                             href="/report/<%= data[i].id %>"
@@ -67,8 +64,7 @@
 
                           <button
                             class="btn btn-danger"
-                            style="margin: 0px 5px"
-                          >
+                            style="margin: 0px 5px">
                             <i class="fa fa-trash"></i>
                           </button>
                         </div>
