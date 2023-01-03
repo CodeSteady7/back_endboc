@@ -701,6 +701,7 @@
     //- BAR CHART FIELD -
     //-------------
     let fieldChartCanvas = $("#barChart").get(0).getContext("2d");
+    let fieldChartCanvas2 = $("#barChart2").get(0).getContext("2d");
     let fieldChartData = $.extend(true, {}, chartField);
     let field_temp0 = chartField.datasets[0];
     let field_temp1 = chartField.datasets[1];
@@ -714,6 +715,11 @@
     };
 
     new Chart(fieldChartCanvas, {
+      type: "bar",
+      data: fieldChartData,
+      options: fieldChartOptions,
+    });
+    new Chart(fieldChartCanvas2, {
       type: "bar",
       data: fieldChartData,
       options: fieldChartOptions,
@@ -744,9 +750,36 @@
     //-------------
     //- LINE CHART - VOLTAGE AFTER TRAFO
     //--------------
-    let voltafterChartCanvas = $("#voltAfterTrafoChart")
-      .get(0)
-      .getContext("2d");
+    // let voltafterChartCanvas = $("#voltAfterTrafoChart")
+    //   .get(0)
+    //   .getContext("2d");
+    const observer = new MutationObserver(handleDataChange);
+
+    observer.observe(document.getElementById("setCheckChart"), {
+      childList: true,
+      characterData: true,
+    });
+
+    let voltafterChartCanvas =
+      document.getElementById("voltAfterTrafoChart")?.getContext("2d") ?? false;
+
+    let voltafterChartCanvas2 =
+      document.getElementById("voltAfterTrafoChart2")?.getContext("2d") ??
+      false;
+
+    function handleDataChange() {
+      let voltafterChartCanvas2 = document
+        .getElementById("voltAfterTrafoChart2")
+        ?.getContext("2d");
+
+      console.log("volta", observer);
+      return voltafterChartCanvas2;
+    }
+
+    let volta = handleDataChange();
+
+    console.log("first", document.getElementById("voltAfterTrafoChar2"));
+
     let voltafterChartOptions = $.extend(true, {}, areaChartOptions);
     let voltafterChartData = $.extend(true, {}, voltAfterChartData);
     voltafterChartData.datasets[0].fill = false;
@@ -754,11 +787,21 @@
     voltafterChartData.datasets[2].fill = false;
     voltafterChartOptions.datasetFill = false;
 
-    let voltafterChart = new Chart(voltafterChartCanvas, {
-      type: "line",
-      data: voltafterChartData,
-      options: voltafterChartOptions,
-    });
+    voltafterChartCanvas == false
+      ? ""
+      : new Chart(voltafterChartCanvas, {
+          type: "line",
+          data: voltafterChartData,
+          options: voltafterChartOptions,
+        });
+
+    voltafterChartCanvas2 == false
+      ? ""
+      : new Chart(voltafterChartCanvas2, {
+          type: "line",
+          data: voltafterChartData,
+          options: voltafterChartOptions,
+        });
 
     //-------------
     //- LINE CHART -LOAD AMP CHART

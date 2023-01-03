@@ -54,8 +54,14 @@ module.exports = {
           },
         ],
       });
+      let setChart = "lorem";
+
+      setTimeout(() => {}, 300);
+
+      console.log("setParams", req.query);
 
       res.render("admin/view_charts", {
+        setChart,
         valuesdata: check,
         query,
         date,
