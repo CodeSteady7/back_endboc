@@ -32,8 +32,8 @@ const form5Ctrl = {
       } = req.body;
 
       const date = new Date();
-      let vDate = date.toLocaleString("en-GB");
-      let createdAt = vDate.split(",");
+      let vDate = date.toJSON();
+      let createdAt = vDate.split("T");
       let setcreatedAt = createdAt[0];
       let checkDate = await tbl_historyDate.findOne({
         where: { createdAt: setcreatedAt },
@@ -65,7 +65,7 @@ const form5Ctrl = {
       });
 
       let data = checkLastRow.map((item) => {
-        console.log("item", item.id, lastRowtbl_form.id_form);
+        // console.log("item", item.id, lastRowtbl_form.id_form);
         return item.id == lastRowtbl_form.id_form;
       });
 
@@ -84,16 +84,16 @@ const form5Ctrl = {
       let checkClockNow = req.body.kode_jam;
       let db_comp = { checkDateNow, db_comp_temp, checkClockNow };
 
-      console.log(
-        "==>",
-        checkDateNow,
-        db_comp_temp[0]?.createdAt,
-        "||",
-        checkClockNow,
-        db_comp_temp[0]?.kode_jam,
-        db_comp_temp[0]?.id,
-        db_comp_temp[0]?.value_discharge_anulr
-      );
+      // console.log(
+      //   "==>",
+      //   checkDateNow,
+      //   db_comp_temp[0]?.createdAt,
+      //   "||",
+      //   checkClockNow,
+      //   db_comp_temp[0]?.kode_jam,
+      //   db_comp_temp[0]?.id,
+      //   db_comp_temp[0]?.value_discharge_anulr
+      // );
       // ---
       // -----
       // let db_comp_temp = await tbl_comp_temp.findOne({
@@ -112,15 +112,15 @@ const form5Ctrl = {
         try {
           let check =
             checkDate == null || ""
-              ? ""
-              : await tbl_historyDate.create(
+              ? await tbl_historyDate.create(
                   {
                     setcreatedAt,
                     setcreatedAt,
                     user_id: user_id,
                   },
                   { transaction: t }
-                );
+                )
+              : "";
 
           const gettbl_firststage_wheelspace =
             await tbl_firststage_wheelspace.create(

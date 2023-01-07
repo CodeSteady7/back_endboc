@@ -3,7 +3,7 @@ $(async function () {
    * -------
    * Here we will create a few charts using ChartJS
    */
-  let api_date = `http://localhost:4000/charts/date`;
+  let api_date = `/charts/date`;
   let setData;
   await fetch(api_date, { method: "GET" })
     .then((response) => response.json())

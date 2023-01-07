@@ -41,8 +41,8 @@ const form6Ctrl = {
       } = req.body;
 
       const date = new Date();
-      let vDate = date.toLocaleString("en-GB");
-      let createdAt = vDate.split(",");
+      let vDate = date.toJSON();
+      let createdAt = vDate.split("T");
       let setcreatedAt = createdAt[0];
       let checkDate = await tbl_historyDate.findOne({
         where: { createdAt: setcreatedAt },
@@ -98,28 +98,31 @@ const form6Ctrl = {
       // let checkClockNowcreatedAt = setcreatedAt;
       let db_comp = { checkDateNow, db_comp_temp, checkClockNow };
 
-      console.log(
-        "==>",
-        checkDateNow,
-        db_comp_temp[0]?.createdAt,
-        "||",
-        checkClockNow,
-        db_comp_temp[0]?.kode_jam,
-        db_comp_temp[0]?.id,
-        db_comp_temp[0]?.value_inletair
-      );
+      // console.log(
+      //   "==>",
+      //   checkDateNow,
+      //   db_comp_temp[0]?.createdAt,
+      //   "||",
+      //   checkClockNow,
+      //   db_comp_temp[0]?.kode_jam,
+      //   db_comp_temp[0]?.id,
+      //   db_comp_temp[0]?.value_inletair
+      // );
       const t = await db.sequelize.transaction();
 
       if (checkInclude == false) {
         try {
           let check =
             checkDate == null || ""
-              ? ""
-              : await tbl_historyDate.create({
-                  setcreatedAt,
-                  setcreatedAt,
-                  user_id: user_id,
-                });
+              ? await tbl_historyDate.create(
+                  {
+                    setcreatedAt,
+                    setcreatedAt,
+                    user_id: user_id,
+                  },
+                  { transaction: t }
+                )
+              : "";
 
           const gettbl_exhaust_flue_gas_temperature =
             await tbl_exhaust_flue_gas_temperature.create(

@@ -10,7 +10,12 @@ module.exports = {
       const db_report = await tbl_report.findAll();
       let db_report_length = db_report.length;
       let db_history_length = history.length;
-      console.log("history", history.length);
+      // console.log("history", history.length);
+
+      // res.status(200).json({
+      //   msg: "success",
+      //   data: { db_report_length, db_history_length },
+      // });
       res.render("admin/dashboard", {
         data: { db_report_length, db_history_length },
       });

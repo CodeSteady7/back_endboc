@@ -38,8 +38,8 @@ const form3Ctrl = {
 
       // console.log("req", req.body);
       const date = new Date();
-      let vDate = date.toLocaleString("en-GB");
-      let createdAt = vDate.split(",");
+      let vDate = date.toJSON();
+      let createdAt = vDate.split("T");
       let setcreatedAt = createdAt[0];
       let checkDate = await tbl_historyDate.findOne({
         where: { createdAt: setcreatedAt },
@@ -92,15 +92,15 @@ const form3Ctrl = {
         try {
           let check =
             checkDate == null || ""
-              ? ""
-              : await tbl_historyDate.create(
+              ? await tbl_historyDate.create(
                   {
                     setcreatedAt,
                     setcreatedAt,
                     user_id: user_id,
                   },
                   { transaction: t }
-                );
+                )
+              : "";
 
           const gettbl_dsp = await tbl_dsp.create(
             {
@@ -168,7 +168,12 @@ const form3Ctrl = {
 
           res.status(200).json({
             // setData,
-            check,
+            dataClock: {
+              vDate,
+              setcreatedAt,
+              checkDate,
+              check,
+            },
             gettbl_dsp,
             gettbl_gasflow,
             gettbl_lube_oil_temp,

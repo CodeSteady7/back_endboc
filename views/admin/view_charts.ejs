@@ -71,8 +71,9 @@
                 <div
                   class="card-header"
                   style="display: flex; justify-content: center">
-                  <h3 class="card-title">FIELD</h3>
+                  <h3 class="card-title textModal">FIELD</h3>
                 </div>
+
                 <div
                   class="card-body chart_id"
                   data-toggle="modal"
@@ -109,9 +110,13 @@
                 <div
                   class="card-header"
                   style="display: flex; justify-content: center">
-                  <h3 class="card-title">VOLTAGE BEFORE TRAFO</h3>
+                  <h3 class="card-title textModal">VOLTAGE BEFORE TRAFO</h3>
                 </div>
-                <div class="card-body">
+
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="voltBeforeTrafoChart"
@@ -129,13 +134,14 @@
               <!-- LINE CHART  VOLTAGE AFTER TRAFO-->
               <div class="card card-info">
                 <div class="card-header">
-                  <h3 class="card-title">VOLTAGE AFTER TRAFO</h3>
+                  <h3 class="card-title textModal">VOLTAGE AFTER TRAFO</h3>
                 </div>
+
                 <div class="card-body chart_id">
                   <div
                     class="chart"
                     data-toggle="modal"
-                    data-target="#modal-xl-voltAfterTrafoChart">
+                    data-target="#modal-xl">
                     <canvas
                       id="voltAfterTrafoChart"
                       style="
@@ -150,148 +156,13 @@
               </div>
               <!-- /.card -->
             </div>
-            <div class="modal fade" id="modal-xl">
-              <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h4 class="modal-title">Extra Large Modal</h4>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="card-body" id="chart_id">
-                      <div class="chart">
-                        <canvas
-                          id="barChart2"
-                          style="
-                            min-height: 250px;
-                            height: 250px;
-                            max-height: 250px;
-                            max-width: 100%;
-                          "></canvas>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer justify-content-between">
-                    <button
-                      type="button"
-                      class="btn btn-default"
-                      data-dismiss="modal">
-                      Close
-                    </button>
-                    <button type="button" class="btn btn-primary">
-                      Save changes
-                    </button>
-                  </div>
-                </div>
-                <!-- /.modal-content -->
-              </div>
-              <!-- /.modal-dialog -->
-            </div>
-            <% let setTest = "nilaiawal";%>
-            <div class="modal fade" id="modal-xl-voltAfterTrafoChart">
-              <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h4 id="hi" class="modal-title hello">Extra Large</h4>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="card-body" id="chart_id">
-                      <div class="chart">
-                        <%= console.log('setTest =>',setTest) %>
-                        <canvas
-                          id="setCheckChart"
-                          class="setCheckChart"
-                          style="
-                            min-height: 250px;
-                            height: 250px;
-                            max-height: 250px;
-                            max-width: 100%;
-                          "></canvas>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer justify-content-between">
-                    <button
-                      type="button"
-                      class="btn btn-default"
-                      data-dismiss="modal">
-                      Close
-                    </button>
-                    <button type="button" class="btn btn-primary">
-                      Save changes
-                    </button>
-                  </div>
-                </div>
-                <!-- /.modal-content -->
-              </div>
-              <!-- /.modal-dialog -->
-            </div>
 
-            <script>
-              let getChart = document.getElementsByClassName("chart_id");
-              let hello = document.getElementById("hi");
-              let setHello = document.getElementById("hi");
-              let setCheckChart = document.getElementById("setCheckChart");
-              // let setCheckChart = document.getElementById("setCheckChart").id;
-
-              console.log("setCheckChart", setCheckChart);
-
-              for (let i = 0; i < getChart.length; i++) {
-                getChart[i].addEventListener("click", (event) => {
-                  history.pushState(null, null, `/charts?${event.target.id}2`);
-                  let data = (setCheckChart.id = `${event.target.id}2`);
-                  console.log("setCheckChart_", setCheckChart);
-                  console.log("getChart[i]", event.target.id);
-                  let sPageURL = window.location.search.substring(1);
-
-                  console.log("sPageURL", sPageURL);
-                  //
-                  `<%setTest%> = ${event.target.id} `;
-                  // console.log("setTest", setTest);
-                  // `<%setChart%> = ${setTest}`;
-                  console.log(
-                    "setChart =<",
-                    "<%=setTest%>",
-                    event.target.id,
-                    data
-                  );
-                  return data;
-                  // console.log("hello", hello);
-                  // hello.id = "haiii ikhsan";
-                  // console.log("hello_", hello);
-                  // setTimeout(() => {
-                  // console.log("setHello", setHello);
-                  // }, 3000);
-                  // console.log("hello", (hello.innerHTML = "haiii ikhsan"));
-
-                  // console.log("data", data);
-                  // console.log("update", event.target.id);
-                  // setChart = `${event.target.id}2`;
-                  // console.log("setChart", setChart, (setCheckChart = "hai"));
-                });
-              }
-
-              // console.log("return", data);
-            </script>
             <!-- /.col (RIGHT) -->
             <div class="col-md-6">
               <!-- LINE CHART LOAD AMP-->
               <div class="card card-info">
                 <div class="card-header">
-                  <h3 class="card-title">LOAD AMP</h3>
+                  <h3 class="card-title textModal">LOAD AMP</h3>
 
                   <div class="card-tools">
                     <button
@@ -308,7 +179,10 @@
                     </button>
                   </div>
                 </div>
-                <div class="card-body">
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="loadAmpChart"
@@ -328,9 +202,13 @@
                 <div
                   class="card-header"
                   style="display: flex; justify-content: center">
-                  <h3 class="card-title">POWER FACTOR</h3>
+                  <h3 class="card-title textModal">POWER FACTOR</h3>
                 </div>
-                <div class="card-body">
+
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="powerfactorChart"
@@ -350,9 +228,13 @@
                 <div
                   class="card-header"
                   style="display: flex; justify-content: center">
-                  <h3 class="card-title">LOAD MW</h3>
+                  <h3 class="card-title textModal">LOAD MW</h3>
                 </div>
-                <div class="card-body">
+
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="loadmwChart"
@@ -377,9 +259,13 @@
                 <div
                   class="card-header"
                   style="display: flex; justify-content: center">
-                  <h3 class="card-title">M VAR</h3>
+                  <h3 class="card-title textModal">M VAR</h3>
                 </div>
-                <div class="card-body">
+
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="mvarChart"
@@ -399,9 +285,13 @@
                 <div
                   class="card-header"
                   style="display: flex; justify-content: center">
-                  <h3 class="card-title">RECT. TRAFO LIQUID TEMP.</h3>
+                  <h3 class="card-title textModal">RECT. TRAFO LIQUID TEMP.</h3>
                 </div>
-                <div class="card-body">
+
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="rectTrafoTempChart"
@@ -419,7 +309,7 @@
               <!-- LINE CHART  GEN TRAFO-->
               <div class="card card-info">
                 <div class="card-header">
-                  <h3 class="card-title">VISUAL CHECK</h3>
+                  <h3 class="card-title textModal">VISUAL CHECK</h3>
 
                   <div class="card-tools">
                     <button
@@ -436,7 +326,10 @@
                     </button>
                   </div>
                 </div>
-                <div class="card-body">
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="visualCheckChart"
@@ -456,7 +349,7 @@
               <!-- LINE CHART  GEN TRAFO-->
               <div class="card card-info">
                 <div class="card-header">
-                  <h3 class="card-title">GEN TRAFO</h3>
+                  <h3 class="card-title textModal">GEN TRAFO</h3>
 
                   <div class="card-tools">
                     <button
@@ -473,7 +366,10 @@
                     </button>
                   </div>
                 </div>
-                <div class="card-body">
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="genTrafoChart"
@@ -493,9 +389,13 @@
                 <div
                   class="card-header"
                   style="display: flex; justify-content: center">
-                  <h3 class="card-title">KW HOURS</h3>
+                  <h3 class="card-title textModal">KW HOURS</h3>
                 </div>
-                <div class="card-body">
+
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="kwHoursChart"
@@ -515,9 +415,13 @@
                 <div
                   class="card-header"
                   style="display: flex; justify-content: center">
-                  <h3 class="card-title">TURBINE SPEED</h3>
+                  <h3 class="card-title textModal">TURBINE SPEED</h3>
                 </div>
-                <div class="card-body">
+
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="turbineSpeedChart"
@@ -541,9 +445,12 @@
                 <div
                   class="card-header"
                   style="display: flex; justify-content: center">
-                  <h3 class="card-title">VCE</h3>
+                  <h3 class="card-title textModal">VCE</h3>
                 </div>
-                <div class="card-body">
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="VCEChart"
@@ -563,9 +470,13 @@
                 <div
                   class="card-header"
                   style="display: flex; justify-content: center">
-                  <h3 class="card-title">GAS FLOW</h3>
+                  <h3 class="card-title textModal">GAS FLOW</h3>
                 </div>
-                <div class="card-body">
+
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="gasFlowChart"
@@ -585,9 +496,13 @@
                 <div
                   class="card-header"
                   style="display: flex; justify-content: center">
-                  <h3 class="card-title">LUBE OIL TANK TEMP</h3>
+                  <h3 class="card-title textModal">LUBE OIL TANK TEMP</h3>
                 </div>
-                <div class="card-body">
+
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="lubeoilTankTempChart"
@@ -609,9 +524,12 @@
                 <div
                   class="card-header"
                   style="display: flex; justify-content: center">
-                  <h3 class="card-title">DSP</h3>
+                  <h3 class="card-title textModal">DSP</h3>
                 </div>
-                <div class="card-body">
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="DSPChart"
@@ -630,7 +548,9 @@
               <!-- LINE CHART LUBE OIL TEMPERATURE ( °C )-->
               <div class="card card-info">
                 <div class="card-header">
-                  <h3 class="card-title">LUBE OIL TEMPERATURE ( °C )</h3>
+                  <h3 class="card-title textModal">
+                    LUBE OIL TEMPERATURE ( °C )
+                  </h3>
 
                   <div class="card-tools">
                     <button
@@ -647,7 +567,10 @@
                     </button>
                   </div>
                 </div>
-                <div class="card-body">
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="lubeOilTempChart"
@@ -668,9 +591,13 @@
                 <div
                   class="card-header"
                   style="display: flex; justify-content: center">
-                  <h3 class="card-title">LUBE OIL BEARING TEMP</h3>
+                  <h3 class="card-title textModal">LUBE OIL BEARING TEMP</h3>
                 </div>
-                <div class="card-body">
+
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="lubeoilBearingTempChart"
@@ -693,9 +620,13 @@
                 <div
                   class="card-header"
                   style="display: flex; justify-content: center">
-                  <h3 class="card-title">HYD. TRIP CIRCUIT PRESS</h3>
+                  <h3 class="card-title textModal">HYD. TRIP CIRCUIT PRESS</h3>
                 </div>
-                <div class="card-body">
+
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="hydTripCircuitPressChart"
@@ -713,7 +644,7 @@
               <!-- LINE CHART LUBE OIL PRESS-->
               <div class="card card-info">
                 <div class="card-header">
-                  <h3 class="card-title">LUBE OIL PRESS</h3>
+                  <h3 class="card-title textModal">LUBE OIL PRESS</h3>
 
                   <div class="card-tools">
                     <button
@@ -730,7 +661,10 @@
                     </button>
                   </div>
                 </div>
-                <div class="card-body">
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="lubeOilPressChart"
@@ -753,9 +687,14 @@
                 <div
                   class="card-header"
                   style="display: flex; justify-content: center">
-                  <h3 class="card-title">HYD. OIL PRESS (FOR 63HQ)</h3>
+                  <h3 class="card-title textModal">
+                    HYD. OIL PRESS (FOR 63HQ)
+                  </h3>
                 </div>
-                <div class="card-body">
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
                   <div class="chart">
                     <canvas
                       id="hydOilPressChart"
@@ -778,6 +717,7 @@
       <!-- /.content -->
     </div>
   </div>
+  <%- include ../modal/modalChart.ejs %>
 </body>
 <!--  -->
 <%- include ../partials/footer.ejs %>

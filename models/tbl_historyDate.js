@@ -29,8 +29,9 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      tableName: "tbl_historyDate",
+      tableName: "tbl_historydate",
     }
   );
+
   return tbl_historyDate;
 };

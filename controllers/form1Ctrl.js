@@ -52,8 +52,8 @@ const form1Ctrl = {
       // console.log("req", req.body);
 
       const date = new Date();
-      let vDate = date.toLocaleString("en-GB");
-      let createdAt = vDate.split(",");
+      let vDate = date.toJSON();
+      let createdAt = vDate.split("T");
       let setcreatedAt = createdAt[0];
       let checkDate = await tbl_historyDate.findOne({
         where: { createdAt: setcreatedAt },
@@ -115,15 +115,15 @@ const form1Ctrl = {
         try {
           let check =
             checkDate == null || ""
-              ? ""
-              : await tbl_historyDate.create(
+              ? await tbl_historyDate.create(
                   {
                     setcreatedAt,
                     setcreatedAt,
                     user_id: user_id,
                   },
                   { transaction: t }
-                );
+                )
+              : "";
 
           const field = await Field.create(
             {
