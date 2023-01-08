@@ -116,7 +116,7 @@ module.exports = {
 
       console.log("setParams", req.query);
       let setParams = req.query;
-      res.render("admin/view_charts", {
+      res.render("admin/charts/view_charts", {
         setChart,
         setParams,
         valuesdata: check,

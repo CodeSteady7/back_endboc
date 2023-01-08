@@ -1,8 +1,8 @@
-<%- include ../partials/header.ejs %>
+<%- include ../../partials/header.ejs %>
 <!--  -->
-<%- include ../partials/navbar.ejs %>
+<%- include ../../partials/navbar.ejs %>
 <!--  -->
-<%- include ../partials/sidebar.ejs %>
+<%- include ../../partials/sidebar.ejs %>
 <!--  -->
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
@@ -679,6 +679,44 @@
                 <!-- /.card-body -->
               </div>
               <!-- /.card -->
+              <!-- LINE CHART EXHAUST TEMP ( °C ) -->
+              <div class="card card-info">
+                <div class="card-header">
+                  <h3 class="card-title textModal">EXHAUST TEMP ( °C )</h3>
+
+                  <div class="card-tools">
+                    <button
+                      type="button"
+                      class="btn btn-tool"
+                      data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-tool"
+                      data-card-widget="remove">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
+                  <div class="chart">
+                    <canvas
+                      id="exhaustTempChart"
+                      style="
+                        min-height: 250px;
+                        height: 250px;
+                        max-height: 250px;
+                        max-width: 100%;
+                      "></canvas>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
             </div>
 
             <div class="col-md-6">
@@ -709,6 +747,72 @@
                 <!-- /.card-body -->
               </div>
               <!-- /.card -->
+              <!-- LINE CHART SECOND STAGE WHEEL SPACE TEMPERATURE  °C-->
+              <div class="card card-info">
+                <div class="card-header">
+                  <h3 class="card-title textModal">
+                    SECOND STAGE WHEEL SPACE TEMPERATURE °C
+                  </h3>
+
+                  <div class="card-tools">
+                    <button
+                      type="button"
+                      class="btn btn-tool"
+                      data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-tool"
+                      data-card-widget="remove">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
+                  <div class="chart">
+                    <canvas
+                      id="secondWheelspaceChart"
+                      style="
+                        min-height: 250px;
+                        height: 250px;
+                        max-height: 250px;
+                        max-width: 100%;
+                      "></canvas>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+              <!-- BAR CHART COMP TEMP -->
+              <div class="card card-success">
+                <div
+                  class="card-header"
+                  style="display: flex; justify-content: center">
+                  <h3 class="card-title textModal">COMP TEMP</h3>
+                </div>
+
+                <div
+                  class="card-body chart_id"
+                  data-toggle="modal"
+                  data-target="#modal-xl">
+                  <div class="chart">
+                    <canvas
+                      id="compTempChart"
+                      style="
+                        min-height: 250px;
+                        height: 250px;
+                        max-height: 250px;
+                        max-width: 100%;
+                      "></canvas>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
             </div>
           </div>
         </div>
@@ -717,14 +821,15 @@
       <!-- /.content -->
     </div>
   </div>
-  <%- include ../modal/modalChart.ejs %>
+  <%- include ../../modal/modalChart.ejs %>
 </body>
 <!--  -->
-<%- include ../partials/footer.ejs %>
+<%- include ../../partials/footer.ejs %>
 <!--  -->
-<%- include ../partials/js.ejs %>
+<%- include ../../partials/js.ejs %>
 <!--  -->
 <%- include ./js_date.ejs %>
+<!--  -->
 
 <!-- <script src="/charts/valueChart.js">
   console.log("value query", "<%= query %>");
