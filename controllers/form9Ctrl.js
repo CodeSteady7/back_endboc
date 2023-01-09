@@ -5,6 +5,7 @@ const {
   tbl_seismic_vibration,
   tbl_form09,
   tbl_historyDate,
+  tbl_signatureform,
 } = require("../models");
 
 const v = new Validator();
@@ -12,8 +13,14 @@ const v = new Validator();
 const form9Ctrl = {
   form9Add: async (req, res) => {
     try {
-      const { IBRG_casing, comp_Casing, gen_BrgCasing, kode_jam, nameForm } =
-        req.body;
+      const {
+        IBRG_casing,
+        comp_Casing,
+        gen_BrgCasing,
+        kode_jam,
+        nameForm,
+        user_id,
+      } = req.body;
 
       const date = new Date();
       let vDate = date.toJSON();
@@ -51,14 +58,20 @@ const form9Ctrl = {
         try {
           let check =
             checkDate == null || ""
-              ? await tbl_historyDate.create(
+              ? (await tbl_historyDate.create(
                   {
                     setcreatedAt,
                     setcreatedAt,
                     user_id: user_id,
                   },
                   { transaction: t }
-                )
+                )) &&
+                (await tbl_signatureform.create(
+                  {
+                    createdAt: setcreatedAt,
+                  },
+                  { transaction: t }
+                ))
               : "";
 
           const gettbl_seismic_vibration = await tbl_seismic_vibration.create(

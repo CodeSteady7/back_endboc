@@ -150,58 +150,27 @@
       </tbody>
     </table>
   </div>
-  <div style="border: solid; border-width: 1px; display: flex">
-    <div class="signature" style="position: relative">
-      <span style="position: absolute; top: 10px; left: 10px"
-        >00:00 ~ 08:00</span
-      >
-      <div
-        style="
-          display: flex;
-          justify-content: space-between;
-          padding: 0px 5px;
-          position: absolute;
-          bottom: 0px;
-        "
-      >
-        <h4 style="padding-right: 10px">Opr.: ____________</h4>
-        <h4>Supv./Panelman : ____________</h4>
+  <div style="border: solid; border-width: 1px; display: flex;">
+    <div class="signature" style="position:relative">
+      <span style="position: absolute; top:10px; left:10px"><%= data.db_signature.range_date01 %></span>
+      <div class="signature_user" >
+        <h4 style="padding-right: 10px;">Opr.: <span class="signature_user_underline">
+       <%= data.db_signature.operation_name_signature01 %>  </span></h4>
+        <h4>Supv./Panelman : <span class="signature_user_underline"><%= data.db_signature.suprv_name_signature01 %></span></h4>
       </div>
     </div>
-    <div class="signature" style="position: relative">
-      <span style="position: absolute; top: 10px; left: 10px"
-        >08:00 ~ 16:00</span
-      >
-      <div
-        style="
-          display: flex;
-          justify-content: space-between;
-          padding: 0px 5px;
-          position: absolute;
-          bottom: 0px;
-        "
-      >
-        <h4 style="padding-right: 10px">Opr.: ____________</h4>
-        <h4>Supv./Panelman : ____________</h4>
+    <div class="signature" style="position:relative">
+      <span style="position: absolute; top:10px; left:10px"><%= data.db_signature.range_date02 %></span>
+      <div class="signature_user" >
+        <h4 style="padding-right: 10px;">Opr.:<span class="signature_user_underline"><%= data.db_signature.operation_name_signature02 %></span> </h4>
+        <h4>Supv./Panelman :<span class="signature_user_underline"><%= data.db_signature.suprv_name_signature02 %></span> </h4>
       </div>
     </div>
-    <div class="signature" style="position: relative">
-      <span style="position: absolute; top: 10px; left: 10px"
-        >16:00 ~ 00:00</span
-      >
-      <div
-        style="
-          display: flex;
-          justify-content: space-between;
-          padding: 0px 5px;
-          position: absolute;
-          bottom: 0px;
-        "
-      >
-        <h4 style="padding-right: 10px">Opr.: ____________</h4>
-        <h4>Supv./Panelman : ____________</h4>
+    <div class="signature" style="position:relative">
+      <span style="position: absolute; top:10px; left:10px"><%= data.db_signature.range_date03 %></span>
+      <div class="signature_user" >
+        <h4 style="padding-right: 10px;">Opr.:<span class="signature_user_underline"> <%= data.db_signature.operation_name_signature03 %></span></h4> <h4>Supv./Panelman :<span class="signature_user_underline"><%= data.db_signature.suprv_name_signature03 %></span> </h4>
       </div>
     </div>
   </div>
- 
 </div>

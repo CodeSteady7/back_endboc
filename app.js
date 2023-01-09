@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const cors = require("cors");
+const session = require("express-session");
 const methodOverride = require("method-override");
 
 const indexRouter = require("./routes/index");
@@ -34,7 +35,14 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: true,
+    saveUninitialized: true,
+    cookie: {},
+  })
+);
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
 

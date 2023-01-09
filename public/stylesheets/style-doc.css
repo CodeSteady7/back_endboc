@@ -70,3 +70,17 @@ td {
   grid-column-start: 1;
   grid-column-end: 3;
 }
+
+.signature_user {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 35px;
+  position: absolute;
+  bottom: 0px;
+}
+
+.signature_user_underline {
+  text-decoration: underline;
+  text-decoration-color: gray
+}

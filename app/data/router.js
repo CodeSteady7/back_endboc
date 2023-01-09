@@ -1,11 +1,20 @@
 let express = require("express");
 let router = express.Router();
 
-const { getOneData, getAllData, excel, paginatePage } = require("./controller");
+const {
+  getOneData,
+  getAllData,
+  excel,
+  paginatePage,
+  indexSignature,
+  actionSignature,
+} = require("./controller");
 
 router.get("/", getAllData);
+router.get("/signature/:createdat", indexSignature);
+router.put("/signature/:createdat", actionSignature);
 router.get("/getonedata", getOneData);
-router.post("/getonedata", paginatePage);
 router.get("/excel", excel);
+router.post("/getonedata", paginatePage);
 
 module.exports = router;

@@ -34,6 +34,7 @@ const {
   tbl_seismic_vibration,
   tbl_jam,
   tbl_historyDate,
+  tbl_signatureform,
 } = require("../../models");
 const { QueryTypes, Sequelize } = require("sequelize");
 const db = require("../../models");
@@ -44,10 +45,10 @@ module.exports = {
       let CreatedData = ["2022-09-23", "2022-12-03", "2022-09-25"];
       let history = await tbl_historyDate.findAll();
 
-      // set_history.push(history__);
       let temp = [];
-
+      // let setCreatedat = "";
       for (let i = 0; i < history.length; i++) {
+        setCreatedat = history[i].length;
         console.log("=>", history[i].createdAt);
         let value = [
           await Field.findAll({
@@ -220,11 +221,13 @@ module.exports = {
             },
           }),
         ];
-        // console.log("data => ", value);
         temp.push({ value, date: history[i].createdAt });
       }
 
-      // console.log("object", temp);
+      // const db_signature = await tbl_signatureform.findOne({
+      //   where: { createdat: setCreatedat },
+      // });
+      // console.log("db_signature", db_signature);
       res.render("admin/table.ejs", {
         data: temp,
       });
@@ -233,39 +236,108 @@ module.exports = {
       console.log(err);
     }
   },
+  indexSignature: async (req, res) => {
+    try {
+      const { createdat } = req.params;
+      console.log("req.params, index", createdat);
+      // let db_historyDate = await tbl_historyDate.findOne({
+      //   where: { createdat: createdat },
+      // });
+
+      const db_signature = await tbl_signatureform.findOne({
+        where: { createdat: createdat },
+      });
+
+      if (db_signature == null || "") {
+        res.redirect("/data");
+      } else {
+        res.render("admin/view_table/view_detailTable", {
+          data: { createdat, db_signature },
+        });
+      }
+    } catch (err) {
+      console.log("err");
+    }
+  },
+  actionSignature: async (req, res) => {
+    try {
+      const {
+        operation_name_signature01,
+        suprv_name_signature01,
+        operation_name_signature02,
+        suprv_name_signature02,
+        operation_name_signature03,
+        suprv_name_signature03,
+      } = req.body;
+
+      const { createdat } = req.params;
+
+      // console.log("req.params, action", req.params);
+      // await tbl_historyDate.findOne({
+      //   where: { createdat: createdat },
+      // });
+
+      // const db_signature = tbl_signatureform.findOne({
+      //   where: { createdAt: createdat },
+      // });
+
+      let updateSignature = await tbl_signatureform.update(
+        {
+          operation_name_signature01,
+          suprv_name_signature01,
+          operation_name_signature02,
+          suprv_name_signature02,
+          operation_name_signature03,
+          suprv_name_signature03,
+        },
+        {
+          where: {
+            createdat: createdat,
+          },
+        }
+      );
+
+      res.redirect("./data");
+
+      // res.status(200).json({ msg: "Success", updateSignature });
+    } catch (error) {
+      console.log("err", error);
+    }
+  },
   getOneData: async (req, res) => {
     try {
       const { queryDate } = req.query;
       console.log("queryDate", queryDate);
       const page = req.query.page * 1 || 5;
-      let createdAtdata = ["2022-09-23", "2022-12-03", "2022-09-25"];
+      // let createdAtdata = ["2022-09-23", "2022-12-03", "2022-09-25"];
 
       let set_history = [];
-      let history__ = await tbl_historyDate.findAll({
+      let historyDate = await tbl_historyDate.findAll({
         attributes: ["createdAt"],
       });
 
-      history__.map((item) => {
+      historyDate.map((item) => {
         set_history.push(item.createdAt);
       });
 
-      console.log("object", set_history);
-
       let checkDate;
       let temp;
+      let indexArray;
+
+      const db_signature = await tbl_signatureform.findOne({
+        where: { createdat: queryDate },
+      });
+
       checkDate = set_history.includes(`${queryDate}`);
       temp = await temp_(queryDate);
-      let indexArray = [2, 8, 12];
-      // let temp___ = indexArray.map((i) => => {} temp[i].clock);
-      // console.log("sample", temp___);
-      // console.log("temp_ ===> ", temp);
+      indexArray = [2, 8, 12];
 
       res.render("excel/index", {
         checkDate,
         indexArray,
         page,
         set_history,
-        data: { queryDate, temp },
+        data: { queryDate, temp, db_signature },
       });
 
       // res.status(200).json({
