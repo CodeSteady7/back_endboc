@@ -75,7 +75,7 @@ td {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 0px 35px;
+  padding: 0px 15px;
   position: absolute;
   bottom: 0px;
 }
