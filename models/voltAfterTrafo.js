@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       createdAt: {
         type: DataTypes.DATEONLY,
         get: function () {
-          return this.getDataValue("createdAt").toLocaleString("en-GB", {
+          return this.getDataValue("createdAt")?.toLocaleString("en-GB", {
             timeZone: "UTC",
           });
         },
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       updatedAt: {
         type: DataTypes.DATE,
         get: function () {
-          return this.getDataValue("updatedAt").toLocaleString("en-GB", {
+          return this.getDataValue("updatedAt")?.toLocaleString("en-GB", {
             timeZone: "UTC",
           });
         },

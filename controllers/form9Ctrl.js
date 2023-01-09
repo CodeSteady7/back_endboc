@@ -102,7 +102,7 @@ const form9Ctrl = {
             msg: "success",
           });
         } catch (err) {
-          console.log(err);
+          res.status(500).json({ msg: err.message });
           await t.rollback();
         }
       } else {
@@ -180,6 +180,7 @@ const form9Ctrl = {
 
       const { IBRG_casing, comp_Casing, gen_BrgCasing, kode_jam } = req.body;
 
+      // console.log("req", req.body);
       const gettbl_seismic_vibration = await tbl_seismic_vibration.update(
         {
           IBRG_casing: IBRG_casing,
@@ -193,6 +194,7 @@ const form9Ctrl = {
 
       res.status(200).json({ gettbl_seismic_vibration, msg: "success" });
     } catch (error) {
+      console.log("msg", error.message);
       return res.status(500).json({ msg: error.message });
     }
   },
