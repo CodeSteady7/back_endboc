@@ -190,6 +190,7 @@ const form3Ctrl = {
             msg: "success",
           });
         } catch (err) {
+          res.status(500).json({ msg: err.message });
           await t.rollback();
         }
       } else {
