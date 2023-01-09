@@ -8,6 +8,7 @@ const {
   tbl_cooling_water,
   tbl_form07,
   tbl_historyDate,
+  tbl_signatureform,
 } = require("../models");
 
 const v = new Validator();
@@ -76,14 +77,20 @@ const form7Ctrl = {
         try {
           let check =
             checkDate == null || ""
-              ? await tbl_historyDate.create(
+              ? (await tbl_historyDate.create(
                   {
                     setcreatedAt,
                     setcreatedAt,
                     user_id: user_id,
                   },
                   { transaction: t }
-                )
+                )) &&
+                (await tbl_signatureform.create(
+                  {
+                    createdAt: setcreatedAt,
+                  },
+                  { transaction: t }
+                ))
               : "";
 
           const gettbl_fuelgas_press = await tbl_fuelgas_press.create(

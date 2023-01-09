@@ -9,6 +9,7 @@ const {
   tbl_fuel_temp,
   tbl_form05,
   tbl_historyDate,
+  tbl_signatureform,
 } = require("../models");
 
 const v = new Validator();
@@ -112,14 +113,20 @@ const form5Ctrl = {
         try {
           let check =
             checkDate == null || ""
-              ? await tbl_historyDate.create(
+              ? (await tbl_historyDate.create(
                   {
                     setcreatedAt,
                     setcreatedAt,
                     user_id: user_id,
                   },
                   { transaction: t }
-                )
+                )) &&
+                (await tbl_signatureform.create(
+                  {
+                    createdAt: setcreatedAt,
+                  },
+                  { transaction: t }
+                ))
               : "";
 
           const gettbl_firststage_wheelspace =

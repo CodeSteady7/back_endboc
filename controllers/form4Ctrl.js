@@ -8,6 +8,7 @@ const {
   tbl_lubeoil_press,
   tbl_lubeoil_tanktemp,
   tbl_historyDate,
+  tbl_signatureform,
   tbl_form04,
 } = require("../models");
 
@@ -84,14 +85,20 @@ const form4Ctrl = {
         try {
           let check =
             checkDate == null || ""
-              ? await tbl_historyDate.create(
+              ? (await tbl_historyDate.create(
                   {
                     setcreatedAt,
                     setcreatedAt,
                     user_id: user_id,
                   },
                   { transaction: t }
-                )
+                )) &&
+                (await tbl_signatureform.create(
+                  {
+                    createdAt: setcreatedAt,
+                  },
+                  { transaction: t }
+                ))
               : "";
 
           const gettbl_lubeoil_bearingtemperature =

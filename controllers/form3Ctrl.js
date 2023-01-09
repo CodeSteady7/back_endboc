@@ -10,6 +10,7 @@ const {
   tbl_jam,
   tbl_historyDate,
   tbl_form03,
+  tbl_signatureform,
 } = require("../models");
 
 const v = new Validator();
@@ -92,14 +93,20 @@ const form3Ctrl = {
         try {
           let check =
             checkDate == null || ""
-              ? await tbl_historyDate.create(
+              ? (await tbl_historyDate.create(
                   {
                     setcreatedAt,
                     setcreatedAt,
                     user_id: user_id,
                   },
                   { transaction: t }
-                )
+                )) &&
+                (await tbl_signatureform.create(
+                  {
+                    createdAt: setcreatedAt,
+                  },
+                  { transaction: t }
+                ))
               : "";
 
           const gettbl_dsp = await tbl_dsp.create(
